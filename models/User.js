@@ -1,6 +1,6 @@
 /**
  * User schema
- * @author Shuja
+ * @author Shuja Naqvi
  */
 const mongoose = require("mongoose");
 
