@@ -36,15 +36,17 @@ const userSchema = new mongoose.Schema(
     },
     favourites: [
       {
-        brand: { type: mongoose.Schema.Types.ObjectId, ref: "brands" },
-        ads: { type: mongoose.Schema.Types.ObjectId, ref: "ads" },
+        brand: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
+        ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
       },
     ],
     interest: [
       {
-        brand: { type: mongoose.Schema.Types.ObjectId, ref: "brands" },
-        ads: { type: mongoose.Schema.Types.ObjectId, ref: "ads" },
-        sale_type: { type: mongoose.Schema.Types.ObjectId, ref: "sale_types" },
+        brand: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
+        ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
+        sale_type: [
+          { type: mongoose.Schema.Types.ObjectId, ref: "sale_types" },
+        ],
       },
     ],
   },
