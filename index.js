@@ -1,6 +1,6 @@
 /**
- * Node-JS Boilerplate
- * @author Yousuf Kalim
+ * AdZone
+ * @author Shuja Naqvi
  */
 require("dotenv").config();
 const app = require("express")();

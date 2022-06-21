@@ -1,8 +1,8 @@
 /**
  * Admin controllers
- * @author Yousuf Kalim
+ * @author Shuja Naqvi
  */
-const Admins = require("../models/Admins");
+const Admins = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const tokenSecret = process.env.JWT_SECRET;

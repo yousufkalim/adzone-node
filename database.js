@@ -1,6 +1,6 @@
 /**
  * Database connection
- * @author Yousuf Kalim
+ * @author Shuja Naqvi
  */
 const mongoose = require("mongoose");
 const db_url = process.env.MONGODB_URI;
