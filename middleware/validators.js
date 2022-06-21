@@ -19,24 +19,24 @@ exports.validateUser = [
     .notEmpty()
     .trim()
     .isLength({ min: 8 }),
-  check("number", "Number is required.").notEmpty().isNumeric().trim(),
-  check("gender").trim(),
-  check("role").trim(),
-  check("address").trim(),
-  check("city").trim(),
-  check("country").trim(),
 ];
 
 // User Signup Validation
 exports.validateUserUpdate = [
   check("name", "Name is required.").notEmpty().trim(),
-  check("email", "Email is required.").notEmpty().isEmail().trim(),
-  check("number", "Number is required.").notEmpty().isNumeric().trim(),
-  check("gender").trim(),
-  check("role").trim(),
-  check("address").trim(),
-  check("city").trim(),
-  check("country").trim(),
+];
+
+exports.validateAddress = [
+  check("address.area", "area is required.").notEmpty().trim(),
+  check("address.city", "city is required.").notEmpty().trim(),
+  check("address.lat", "lat is required.").notEmpty().trim(),
+  check("address.lng", "lng is required.").notEmpty().trim(),
+];
+exports.validateNotificationSetting = [
+  check("notification.brand", "Brand is required.").notEmpty().isBoolean(),
+  check("notification.phone", "Phone is required.").notEmpty().isBoolean(),
+  check("notification.email", "Email is required.").notEmpty().isBoolean(),
+  check("notification.sale", "sale is required.").notEmpty().isBoolean(),
 ];
 
 // Login validation
@@ -47,6 +47,8 @@ exports.validateLogin = [
     .trim()
     .isLength({ min: 8 }),
 ];
+
+exports.validateOtp = [check("otp", "otp is required.").notEmpty().trim()];
 
 // Change password validation
 exports.changePasswordValidate = [

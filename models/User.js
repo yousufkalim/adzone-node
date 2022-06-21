@@ -8,6 +8,10 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
     name: String,
+    photo: String,
+    otp: String,
+    phone_number: String,
+    is_verified: Boolean,
     email: {
       type: String,
       required: true,
@@ -19,6 +23,26 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 8,
     },
+    facebook_connected: {
+      type: Boolean,
+      default: false,
+    },
+    google_connected: {
+      type: Boolean,
+      default: false,
+    },
+    current_location: {
+      lat: Number,
+      lng: Number,
+      city: String,
+      area: String,
+    },
+    notification_setting: {
+      phone: { type: Boolean, default: false },
+      email: { type: Boolean, default: true },
+      brand: { type: Boolean, default: true },
+      sale: { type: Boolean, default: true },
+    },
     locations: [
       {
         lat: Number,
@@ -27,12 +51,6 @@ const userSchema = new mongoose.Schema(
         area: String,
       },
     ],
-    current_location: {
-      lat: Number,
-      lng: Number,
-      city: String,
-      area: String,
-    },
     favourites: [
       {
         brand: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],

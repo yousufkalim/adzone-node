@@ -119,18 +119,18 @@ exports.forgot = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    // Generating random password
-    let randomPassword = Math.random().toString(36).slice(-8);
+    // Generating otp
+    let otp = (Math.random() + 1).toString(36).substring(6);
 
     // Sending email to user
-    sendEmail(email, randomPassword)
+    sendEmail(email, otp)
       .then(async () => {
         // If email is sent then we have to update the password in db
-        user.password = await bcrypt.hash(randomPassword, parseInt(bcryptSalt));
+        user.otp = otp;
+        user.is_verified = false;
         await user.save();
-
         // Done
-        res.json({ success: true, message: "Email sent successfully" });
+        res.json({ success: true, message: "Email sent successfully", user });
       })
       .catch((err) => {
         // Error handling
@@ -139,6 +139,30 @@ exports.forgot = async (req, res) => {
           .status(500)
           .json({ success: false, message: "Internal server error" });
       });
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+//validateOtp
+exports.verifyOtp = async (req, res) => {
+  try {
+    let { userId } = req.params;
+    // return console.log(userId, "userId");
+    let { otp } = req.body; // Getting required fields from body
+    let user = await Users.findById(userId); //find otp by id
+    //if otp is invalid
+    if (user.otp != otp) {
+      return res
+        .status(404)
+        .json({ success: false, message: "OTP is invalid" });
+    }
+    res.json({
+      success: true,
+      message: "OTP verified",
+    });
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);
