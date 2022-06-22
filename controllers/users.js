@@ -166,3 +166,131 @@ exports.updateNotificationSetting = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+/**
+ * Add Product  into  favourites  of user
+ * @param {object} req
+ * @param {object} res
+ */
+exports.AddAdFavourites = async (req, res) => {
+  try {
+    const { userId } = req.params; // Getting user id from URL parameter
+    const { ad } = req.body;
+    const existingFav = await Users.findOne({
+      _id: userId,
+      "favourites.ads": ad,
+    });
+    if (existingFav) {
+      return res.status(404).json({
+        success: false,
+        message: "Already Added into Your Favourites",
+      });
+    }
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $push: { favourites: { ads: ad } } },
+      { new: true }
+    );
+    res.json({ success: true, user }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Remove Product  from  favourites  of user
+ * @param {object} req
+ * @param {object} res
+ */
+exports.RemoveAdFavourites = async (req, res) => {
+  try {
+    const { userId } = req.params; // Getting user id from URL parameter
+    const { ad } = req.body;
+    const existingFav = await Users.findOne({
+      _id: userId,
+      "favourites.ads": ad,
+    });
+    if (!existingFav) {
+      return res.status(404).json({
+        success: false,
+        message: "Already Removed",
+      });
+    }
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $pull: { favourites: { ads: ad } } },
+      { new: true }
+    );
+    res.json({ success: true, user }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Add Brand  into  favourites  of user
+ * @param {object} req
+ * @param {object} res
+ */
+exports.AddBrandFavourites = async (req, res) => {
+  try {
+    const { userId } = req.params; // Getting user id from URL parameter
+    const { brand } = req.body;
+    const existingFav = await Users.findOne({
+      _id: userId,
+      "favourites.brands": brand,
+    });
+    if (existingFav) {
+      return res.status(404).json({
+        success: false,
+        message: "Already Added into Your Favourites",
+      });
+    }
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $push: { favourites: { brands: brand } } },
+      { new: true }
+    );
+    res.json({ success: true, user }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Remove Brand  from  favourites  of user
+ * @param {object} req
+ * @param {object} res
+ */
+exports.RemoveBrandFavourites = async (req, res) => {
+  try {
+    const { userId } = req.params; // Getting user id from URL parameter
+    const { brand } = req.body;
+    const existingFav = await Users.findOne({
+      _id: userId,
+      "favourites.brands": brand,
+    });
+    if (!existingFav) {
+      return res.status(404).json({
+        success: false,
+        message: "Already Removed",
+      });
+    }
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $pull: { favourites: { brands: brand } } },
+      { new: true }
+    );
+    res.json({ success: true, user }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};

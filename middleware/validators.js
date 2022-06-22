@@ -39,6 +39,12 @@ exports.validateNotificationSetting = [
   check("notification.sale", "sale is required.").notEmpty().isBoolean(),
 ];
 
+exports.validateAdFavourites = [
+  check("ad", "AD Id is required.").notEmpty().trim(),
+];
+exports.validateBrandFavourites = [
+  check("brand", "Brand Id is required.").notEmpty().trim(),
+];
 // Login validation
 exports.validateLogin = [
   check("email", "Email is required").notEmpty().isEmail().trim().toLowerCase(),

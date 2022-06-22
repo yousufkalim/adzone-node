@@ -51,21 +51,15 @@ const userSchema = new mongoose.Schema(
         area: String,
       },
     ],
-    favourites: [
-      {
-        brand: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
-        ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
-      },
-    ],
-    interest: [
-      {
-        brand: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
-        ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
-        sale_type: [
-          { type: mongoose.Schema.Types.ObjectId, ref: "sale_types" },
-        ],
-      },
-    ],
+    favourites: {
+      brands: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
+      ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
+    },
+    interest: {
+      brands: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
+      ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
+      sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: "sale_types" }],
+    },
   },
   {
     timestamps: true,

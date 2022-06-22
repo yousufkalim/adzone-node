@@ -10,7 +10,9 @@ const {
   validateUser,
   validateUserUpdate,
   validateNotificationSetting,
+  validateAdFavourites,
   validateAddress,
+  validateBrandFavourites,
   isValidated,
 } = require("../middleware/validators");
 
@@ -43,22 +45,53 @@ router.put(
   validateUserUpdate,
   isValidated,
   users.update
-); // Update a specific user by it's id
+);
 // Add Adress
 router.put(
   "/addAddress/:userId",
   validateAddress,
   isValidated,
   users.addAddress
-); // Update a specific user by it's id
+);
 //updateNotificationSetting
 router.put(
   "/updateNotificationSetting/:userId",
   validateNotificationSetting,
   isValidated,
   users.updateNotificationSetting
-); // Update a specific user by it's id
+);
+//ADD Product to  Favourites
+router.put(
+  "/favouriteAd/:userId",
+  validateAdFavourites,
+  isValidated,
+  users.AddAdFavourites
+);
 
+//Removed Product to  Favourites
+router.put(
+  "/RemoveAdFavourites/:userId",
+  validateAdFavourites,
+  isValidated,
+  users.RemoveAdFavourites
+);
+
+//ADD Brand to  Favourites
+router.put(
+  "/favouriteBrand/:userId",
+  validateBrandFavourites,
+  isValidated,
+  users.AddBrandFavourites
+);
+
+//Removed Brand from  Favourites
+router.put(
+  "/RemoveBrandFavourites/:userId",
+  validateBrandFavourites,
+  isValidated,
+  users.RemoveBrandFavourites
+);
+//RemoveBrandFavourites
 // Delete
 router.delete("/:userId", checkAdminAuth, users.delete); // delete a specific user by it's id
 
