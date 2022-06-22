@@ -57,8 +57,8 @@ const userSchema = new mongoose.Schema(
     },
     interest: {
       brands: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
-      ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
-      sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: "sale_types" }],
+      categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
+      sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: "sale_type" }],
     },
   },
   {

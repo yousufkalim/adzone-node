@@ -1,6 +1,6 @@
 /**
  * User CRUD routes
- * @author Yousuf Kalim
+ * @author Shuja Naqvi
  */
 const router = require("express").Router();
 const users = require("../controllers/users");
@@ -13,6 +13,8 @@ const {
   validateAdFavourites,
   validateAddress,
   validateBrandFavourites,
+  validateCategoryInterest,
+  validateSaleInterest,
   isValidated,
 } = require("../middleware/validators");
 
@@ -91,7 +93,29 @@ router.put(
   isValidated,
   users.RemoveBrandFavourites
 );
-//RemoveBrandFavourites
+
+//ADD Sale to  Interest
+router.put(
+  "/InterestSale/:userId",
+  validateSaleInterest,
+  isValidated,
+  users.AddSaleInterest
+);
+//ADD Brand to  Interest
+router.put(
+  "/InterestBrand/:userId",
+  validateBrandFavourites,
+  isValidated,
+  users.AddBrandInterest
+);
+//ADD Category to  Interest
+router.put(
+  "/InterestCategory/:userId",
+  validateCategoryInterest,
+  isValidated,
+  users.AddCatgoryInterest
+);
+
 // Delete
 router.delete("/:userId", checkAdminAuth, users.delete); // delete a specific user by it's id
 
