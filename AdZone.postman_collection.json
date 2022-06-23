@@ -1,0 +1,1197 @@
+{
+	"info": {
+		"_postman_id": "1bf25ef8-03b4-40c7-b273-fd4d5f84a365",
+		"name": "AdZone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13373609"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create-User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Shuja Naqvi\",\"email\":\"shujanaqvi281@gmail.com\",\"password\":\"123456789\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/62b199563db764ca367d769e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"62b199563db764ca367d769e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upadate user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/falconitconsulting/Downloads/Logo Kidcab new fond blanc 1.png"
+								},
+								{
+									"key": "name",
+									"value": "shuja naqvi",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "+923127378945",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Address",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"address\":{\"lat\":\"31.5204\",\"lng\":\"74.3587\",\"city\":\"lahore\",\"area\":\"Model Town\"},\"name\":\"Shuja Naqvi\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/addAddress/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"addAddress",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Notification",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"notification\":{\"brand\":true,\"phone\":true,\"sale\":true,\"email\":false}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/updateNotificationSetting/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"updateNotificationSetting",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Push Ad into my favourites",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ad\":\"62b2ad1a335e4007cfda2798\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/favouriteAd/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"favouriteAd",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Ad From My Favourites",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ad\":\"62b2ad1a335e4007cfda2798\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/RemoveAdFavourites/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"RemoveAdFavourites",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Push Brand into my Favourites",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"brand\":\"62b2abf3335e4007cfda2794\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/favouriteBrand/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"favouriteBrand",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Brand From My Favourites",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"brand\":\"62b2abf3335e4007cfda2794\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/RemoveBrandFavourites/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"RemoveBrandFavourites",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Push Sale Type into  Interest",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"sale\":\"62b2c0aa335e4007cfda27a7\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/InterestSale/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"InterestSale",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Push Brand into Interest",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"brand\":\"62b2abf3335e4007cfda2794\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/InterestBrand/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"InterestBrand",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Push Category into Interest",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"category\":\"62b2ab96335e4007cfda278d\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/InterestCategory/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"InterestCategory",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"shujanaqvi288@gmail.com\",\"password\":\"123456789\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"oldPassword\":\"1234567890\",\"newPassword\":\"123456789\",\"confirmPassword\":\"123456789\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/password/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"password",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "verify Otp",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"otp\":\"dhxjcz\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/otp/62b1985f4de963c8c04d3bd2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"otp",
+								"62b1985f4de963c8c04d3bd2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SaleType",
+			"item": [
+				{
+					"name": "Create Sale Type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Black Friday\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/saletypes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"saletypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Sale Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/saletypes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"saletypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/saletypes/62b2c9f2beb9bafd00d49afb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"saletypes",
+								"62b2c9f2beb9bafd00d49afb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update TYPW",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"WINTER SALE\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/saletypes/62b2c9f2beb9bafd00d49afb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"saletypes",
+								"62b2c9f2beb9bafd00d49afb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admins",
+			"item": [
+				{
+					"name": "create-admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"shuja@pkmail.com\",\"password\":\"12345678\",\"confirmPassword\":\"12345678\",\"name\":\"shuja\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/admins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"admins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"shuja@pkmail.com\",\"password\":\"12345678\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/admins/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"admins",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "Add Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"restaurants\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Restaurants\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/categories/62b2dd692accee021b036edf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categories",
+								"62b2dd692accee021b036edf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Brands",
+			"item": [
+				{
+					"name": "Create Brand",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"BreakOut\",\"about\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit.\",\"category\":\"62b2ab50335e4007cfda278c\",\"founded_on\":\"2009\",\"annual_sale\":\"34-55\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/brands",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Brands",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/brands",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Brand",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/falconitconsulting/Desktop/download.png"
+								},
+								{
+									"key": "name",
+									"value": "OutFitters",
+									"type": "text"
+								},
+								{
+									"key": "about",
+									"value": "Hurry up and grab your faves at a Flat 30% off before the best ones are gone. Don’t miss out on this exclusively online sale. Mon-Fri Call Support. Subscribe For Newsletter. Download Apps. Highlights: Order Tracking Facility Available, Multiple Payment Options Available.",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "62b2ab50335e4007cfda278c",
+									"type": "text"
+								},
+								{
+									"key": "founded_on",
+									"value": "2010",
+									"type": "text"
+								},
+								{
+									"key": "annual_sale",
+									"value": "78-90",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/brands/62b2f4fa2a3448074fddad45",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"brands",
+								"62b2f4fa2a3448074fddad45"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Brand by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/brands/62b2f4fa2a3448074fddad45",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"brands",
+								"62b2f4fa2a3448074fddad45"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "store",
+			"item": [
+				{
+					"name": "Create Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"OutFitter Store\",\"brand\":\"62b2f4fa2a3448074fddad45\",\"location\":{\"lat\":\"31.5204\",\"lng\":\"74.3587\",\"city\":\"Lahore\",\"area\":\"johar town\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Store By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/stores/62b2fbbdf4fb4d0b64cca250",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"stores",
+								"62b2fbbdf4fb4d0b64cca250"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all stores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/stores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/falconitconsulting/Desktop/download.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/stores/62b2fbbdf4fb4d0b64cca250",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"stores",
+								"62b2fbbdf4fb4d0b64cca250"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ads",
+			"item": [
+				{
+					"name": "Create-Ad",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Ad By id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/ads/62b304b91961a210a766f762",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ads",
+								"62b304b91961a210a766f762"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Ads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/ads",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Ad",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/falconitconsulting/Desktop/download.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/ads/62b304b91961a210a766f762",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ads",
+								"62b304b91961a210a766f762"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

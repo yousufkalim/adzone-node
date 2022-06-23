@@ -7,6 +7,7 @@ const auth = require("../controllers/auth");
 const { checkAuth } = require("../middleware/checkAuth");
 const {
   validateLogin,
+  validateOtp,
   isValidated,
   changePasswordValidate,
 } = require("../middleware/validators");
@@ -28,6 +29,7 @@ router.put(
   isValidated,
   auth.changePassword
 ); // Change password route
+router.put("/otp/:userId", validateOtp, isValidated, auth.verifyOtp); // Change password route
 router.put("/forgot/:email", auth.forgot);
 
 // Export
