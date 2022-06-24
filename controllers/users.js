@@ -3,6 +3,8 @@
  * @author Shuja Naqvi
  */
 const Users = require("../models/User");
+const Ads = require("../models/Ad");
+const Brands = require("../models/Brand");
 const bcrypt = require("bcryptjs");
 const bcryptSalt = process.env.BCRYPT_SALT || 10;
 
@@ -172,26 +174,49 @@ exports.updateNotificationSetting = async (req, res) => {
  * @param {object} req
  * @param {object} res
  */
-exports.AddAdFavourites = async (req, res) => {
+exports.AddtoFavourites = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
-    const { ad } = req.body;
-    const existingFav = await Users.findOne({
-      _id: userId,
-      "favourites.ads": ad,
-    });
-    if (existingFav) {
-      return res.status(404).json({
-        success: false,
-        message: "Already Added into Your Favourites",
+    const { favid } = req.body;
+    const ad = await Ads.findById(favid);
+    if (ad) {
+      const existingFav = await Users.findOne({
+        _id: userId,
+        "favourites.ads": favid,
       });
+      if (existingFav) {
+        return res.status(404).json({
+          success: false,
+          message: "Already Added into Your Favourites",
+        });
+      }
+      const user = await Users.findByIdAndUpdate(
+        userId,
+        { $push: { favourites: { ads: ad } } },
+        { new: true }
+      );
+      return res.json({ success: true, user }); // Success
     }
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $push: { favourites: { ads: ad } } },
-      { new: true }
-    );
-    res.json({ success: true, user }); // Success
+    const brand = await Brands.findById(favid);
+    if (brand) {
+      const existingFav = await Users.findOne({
+        _id: userId,
+        "favourites.brands": favid,
+      });
+      if (existingFav) {
+        return res.status(404).json({
+          success: false,
+          message: "Already Added into Your Favourites",
+        });
+      }
+      const user = await Users.findByIdAndUpdate(
+        userId,
+        { $push: { favourites: { brands: favid } } },
+        { new: true }
+      );
+      return res.json({ success: true, user }); // Success
+    }
+    return res.json({ success: false, message: "Id not found" }); // Success
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);
@@ -204,90 +229,49 @@ exports.AddAdFavourites = async (req, res) => {
  * @param {object} req
  * @param {object} res
  */
-exports.RemoveAdFavourites = async (req, res) => {
+exports.RemoveFavourites = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
-    const { ad } = req.body;
-    const existingFav = await Users.findOne({
-      _id: userId,
-      "favourites.ads": ad,
-    });
-    if (!existingFav) {
-      return res.status(404).json({
-        success: false,
-        message: "Already Removed",
+    const { favid } = req.body;
+    const ad = await Ads.findById(favid);
+    if (ad) {
+      const existingFav = await Users.findOne({
+        _id: userId,
+        "favourites.ads": favid,
       });
+      if (!existingFav) {
+        return res.status(404).json({
+          success: false,
+          message: "Already Removed",
+        });
+      }
+      const user = await Users.findByIdAndUpdate(
+        userId,
+        { $pull: { favourites: { ads: favid } } },
+        { new: true }
+      );
+      return res.json({ success: true, user }); // Success
     }
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $pull: { favourites: { ads: ad } } },
-      { new: true }
-    );
-    res.json({ success: true, user }); // Success
-  } catch (err) {
-    // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
-};
-
-/**
- * Add Brand  into  favourites  of user
- * @param {object} req
- * @param {object} res
- */
-exports.AddBrandFavourites = async (req, res) => {
-  try {
-    const { userId } = req.params; // Getting user id from URL parameter
-    const { brand } = req.body;
-    const existingFav = await Users.findOne({
-      _id: userId,
-      "favourites.brands": brand,
-    });
-    if (existingFav) {
-      return res.status(404).json({
-        success: false,
-        message: "Already Added into Your Favourites",
+    const brand = await Brands.findById(favid);
+    if (brand) {
+      const existingFav = await Users.findOne({
+        _id: userId,
+        "favourites.brands": favid,
       });
+      if (!existingFav) {
+        return res.status(404).json({
+          success: false,
+          message: "Already Removed",
+        });
+      }
+      const user = await Users.findByIdAndUpdate(
+        userId,
+        { $pull: { favourites: { brands: favid } } },
+        { new: true }
+      );
+      return res.json({ success: true, user }); // Success
     }
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $push: { favourites: { brands: brand } } },
-      { new: true }
-    );
-    res.json({ success: true, user }); // Success
-  } catch (err) {
-    // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
-};
-
-/**
- * Remove Brand  from  favourites  of user
- * @param {object} req
- * @param {object} res
- */
-exports.RemoveBrandFavourites = async (req, res) => {
-  try {
-    const { userId } = req.params; // Getting user id from URL parameter
-    const { brand } = req.body;
-    const existingFav = await Users.findOne({
-      _id: userId,
-      "favourites.brands": brand,
-    });
-    if (!existingFav) {
-      return res.status(404).json({
-        success: false,
-        message: "Already Removed",
-      });
-    }
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $pull: { favourites: { brands: brand } } },
-      { new: true }
-    );
-    res.json({ success: true, user }); // Success
+    res.json({ success: false, message: "Id not found" }); // Success
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);
@@ -384,6 +368,16 @@ exports.AddCatgoryInterest = async (req, res) => {
       { new: true }
     );
     res.json({ success: true, user }); // Success
+  } catch (err) {
+    // Error handling-
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+exports.checkUser = async (req, res) => {
+  try {
+    console.log("Hi");
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);

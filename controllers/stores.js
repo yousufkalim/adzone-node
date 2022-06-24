@@ -4,6 +4,7 @@
  */
 const Stores = require("../models/Store");
 const Brands = require("../models/Brand");
+const { findStores } = require("../utils/findDistance");
 
 /**
  * Create  store
@@ -39,7 +40,7 @@ exports.create = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const stores = await Stores.find(); // Finding all the stores from db
+    const stores = await Stores.find().populate("brand"); // Finding all the stores from db
     res.json({ success: true, stores }); // Success
   } catch (err) {
     // Error handling
@@ -56,10 +57,7 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const storeId = req.params.storeId; // Getting store id from URL parameter
-    const store = await Stores.findById(storeId)
-      .populate("brand")
-      .populate("category")
-      .populate("sale_type"); // Finding store by id
+    const store = await Stores.findById(storeId).populate("brand");
     res.json({ success: true, store }); // Success
   } catch (err) {
     // Error handling
@@ -101,6 +99,22 @@ exports.delete = async (req, res) => {
     const storeId = req.params.storeId; // Getting store id from URL parameter
     const store = await Stores.findByIdAndDelete(storeId); // Deleting the store
     res.json({ success: true, store }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+//Get NearBy Stores
+exports.nearByStores = async (req, res) => {
+  try {
+    const stores = await Stores.find().populate("brand"); // Finding all the stores from db
+    const nearByStores = findStores(
+      req.body.address.lat,
+      req.body.address.lng,
+      stores
+    );
+    res.json({ success: true, nearByStores }); // Success
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);

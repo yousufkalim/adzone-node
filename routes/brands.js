@@ -5,7 +5,11 @@
 const router = require("express").Router();
 const brand = require("../controllers/brands");
 const { checkAdminAuth } = require("../middleware/adminAuth");
-const { validateBrand, isValidated } = require("../middleware/validators");
+const {
+  validateBrand,
+  validateBrandFavourites,
+  isValidated,
+} = require("../middleware/validators");
 const { upload } = require("../middleware/multer");
 
 /**
@@ -44,5 +48,13 @@ router.put(
 // Delete
 router.delete("/:brandId", checkAdminAuth, brand.delete); // delete a specific Sale by it's id
 
+//Group
+router.post("/groupbyCategory", brand.groupbyCategory); // Group Brands by categories
+router.post(
+  "/groupAdsbySaleType",
+  validateBrandFavourites,
+  isValidated,
+  brand.groupAdsbySaleType
+); // Group Brands by categories
 // Export
 module.exports = router;

@@ -3,7 +3,8 @@
  * @author Shuja Naqvi
  */
 const Brands = require("../models/Brand");
-
+const Ads = require("../models/Ad");
+const mongoose = require("mongoose");
 /**
  * Create brand
  * @param {object} req
@@ -91,6 +92,130 @@ exports.delete = async (req, res) => {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
     const brand = await Brands.findByIdAndDelete(brandId); // Deleting the brand
     res.json({ success: true, brand }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Get All Brands Group on the basis of category
+ * @param {object} req
+ * @param {object} res
+ */
+exports.groupbyCategory = async (req, res) => {
+  try {
+    let brands = await Brands.aggregate([
+      {
+        $lookup: {
+          from: "stores",
+          localField: "stores",
+          foreignField: "_id",
+          as: "stores",
+        },
+      },
+      {
+        $unwind: {
+          path: "$stores",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "ads",
+          localField: "ads",
+          foreignField: "_id",
+          as: "ads",
+        },
+      },
+      {
+        $unwind: {
+          path: "$ads",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $unwind: {
+          path: "$category",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$category._id",
+          data: {
+            $push: "$$ROOT",
+          },
+        },
+      },
+    ]);
+    res.status(200).json({ success: true, brands });
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Get All Brands Group on the basis of category
+ * @param {object} req
+ * @param {object} res
+ */
+exports.groupAdsbySaleType = async (req, res) => {
+  try {
+    const brandId = mongoose.Types.ObjectId(req.body.brand);
+    let ads = await Ads.aggregate([
+      {
+        $match: { brand: brandId },
+      },
+      {
+        $lookup: {
+          from: "brands",
+          localField: "brand",
+          foreignField: "_id",
+          as: "brand",
+        },
+      },
+      {
+        $unwind: {
+          path: "$brand",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "stores",
+          localField: "brand.stores",
+          foreignField: "_id",
+          as: "brand.stores",
+        },
+      },
+      {
+        $unwind: {
+          path: "$brand.stores",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$sale_type._id",
+          data: {
+            $push: "$$ROOT",
+          },
+        },
+      },
+    ]);
+    res.status(200).json({ success: true, ads });
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);

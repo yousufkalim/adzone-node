@@ -5,12 +5,15 @@
 const router = require("express").Router();
 const users = require("../controllers/users");
 const { checkAdminAuth } = require("../middleware/adminAuth");
+const { checkAuth } = require("../middleware/checkAuth");
+
+// const { validateUserId } = require("../middleware/validateIds");
 const { upload } = require("../middleware/multer");
 const {
   validateUser,
   validateUserUpdate,
   validateNotificationSetting,
-  validateAdFavourites,
+  validateFavourites,
   validateAddress,
   validateBrandFavourites,
   validateCategoryInterest,
@@ -43,6 +46,7 @@ router.get("/:userId", users.getById); // Get one user by it's id
 // Update
 router.put(
   "/:userId",
+  checkAuth,
   upload.single("image"),
   validateUserUpdate,
   isValidated,
@@ -51,6 +55,7 @@ router.put(
 // Add Adress
 router.put(
   "/addAddress/:userId",
+  checkAuth,
   validateAddress,
   isValidated,
   users.addAddress
@@ -58,45 +63,33 @@ router.put(
 //updateNotificationSetting
 router.put(
   "/updateNotificationSetting/:userId",
+  checkAuth,
   validateNotificationSetting,
   isValidated,
   users.updateNotificationSetting
 );
 //ADD Product to  Favourites
 router.put(
-  "/favouriteAd/:userId",
-  validateAdFavourites,
+  "/Addtofavourite/:userId",
+  checkAuth,
+  validateFavourites,
   isValidated,
-  users.AddAdFavourites
+  users.AddtoFavourites
 );
 
 //Removed Product to  Favourites
 router.put(
-  "/RemoveAdFavourites/:userId",
-  validateAdFavourites,
+  "/RemoveFavourites/:userId",
+  checkAuth,
+  validateFavourites,
   isValidated,
-  users.RemoveAdFavourites
-);
-
-//ADD Brand to  Favourites
-router.put(
-  "/favouriteBrand/:userId",
-  validateBrandFavourites,
-  isValidated,
-  users.AddBrandFavourites
-);
-
-//Removed Brand from  Favourites
-router.put(
-  "/RemoveBrandFavourites/:userId",
-  validateBrandFavourites,
-  isValidated,
-  users.RemoveBrandFavourites
+  users.RemoveFavourites
 );
 
 //ADD Sale to  Interest
 router.put(
   "/InterestSale/:userId",
+  checkAuth,
   validateSaleInterest,
   isValidated,
   users.AddSaleInterest
@@ -104,6 +97,7 @@ router.put(
 //ADD Brand to  Interest
 router.put(
   "/InterestBrand/:userId",
+  checkAuth,
   validateBrandFavourites,
   isValidated,
   users.AddBrandInterest
@@ -111,10 +105,13 @@ router.put(
 //ADD Category to  Interest
 router.put(
   "/InterestCategory/:userId",
+  checkAuth,
   validateCategoryInterest,
   isValidated,
   users.AddCatgoryInterest
 );
+
+// router.post("/checkuser/:userId", validateUserId, users.checkUser);
 
 // Delete
 router.delete("/:userId", checkAdminAuth, users.delete); // delete a specific user by it's id

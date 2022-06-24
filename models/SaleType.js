@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const SaleTypeSchema = new mongoose.Schema(
   {
     name: String,
+    views: Number,
   },
   {
     timestamps: true,

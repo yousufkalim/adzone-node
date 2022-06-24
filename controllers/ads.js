@@ -109,3 +109,90 @@ exports.delete = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+/**
+ * Get Brand By Id
+ * @param {object} req
+ * @param {object} res
+ */
+exports.getAdsbySaleId = async (req, res) => {
+  try {
+    const saleId = req.body.sale; // Getting ad id from URL parameter
+    const ads = await Ads.find({ sale_type: saleId })
+      .populate("category")
+      .populate("sale_type")
+      .populate("brand"); // Finding ad by id
+    res.json({ success: true, ads }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Get All Brands Group on the basis of category
+ * @param {object} req
+ * @param {object} res
+ */
+exports.groupbySaleType = async (req, res) => {
+  try {
+    let ads = await Ads.aggregate([
+      {
+        $lookup: {
+          from: "brands",
+          localField: "brand",
+          foreignField: "_id",
+          as: "brand",
+        },
+      },
+      {
+        $unwind: {
+          path: "$brand",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "stores",
+          localField: "brand.stores",
+          foreignField: "_id",
+          as: "brand.stores",
+        },
+      },
+      {
+        $unwind: {
+          path: "$brand.stores",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "sale_type",
+          localField: "sale_type",
+          foreignField: "_id",
+          as: "sale_type",
+        },
+      },
+      {
+        $unwind: {
+          path: "$sale_type",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$sale_type._id",
+          data: {
+            $push: "$$ROOT",
+          },
+        },
+      },
+    ]);
+    res.status(200).json({ success: true, ads });
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};

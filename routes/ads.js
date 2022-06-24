@@ -5,7 +5,11 @@
 const router = require("express").Router();
 const ad = require("../controllers/ads");
 const { checkAdminAuth } = require("../middleware/adminAuth");
-const { validateAd, isValidated } = require("../middleware/validators");
+const {
+  validateAd,
+  validateSaleInterest,
+  isValidated,
+} = require("../middleware/validators");
 const { upload } = require("../middleware/multer");
 
 /**
@@ -36,13 +40,25 @@ router.put(
   "/:adId",
   checkAdminAuth,
   upload.single("image"),
-  //   validateAd,
-  //   isValidated,
+  validateAd,
+  isValidated,
   ad.update
 );
 
 // Delete
 router.delete("/:adId", checkAdminAuth, ad.delete); // delete a specific Sale by it's id
+
+//getAdsbySaleId
+
+router.post(
+  "/getAdsbySaleId",
+  validateSaleInterest,
+  isValidated,
+  ad.getAdsbySaleId
+);
+
+//groupbySaleType
+router.post("/groupbySaleType", ad.groupbySaleType);
 
 // Export
 module.exports = router;
