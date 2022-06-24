@@ -1,4 +1,4 @@
-# Node-JS Boilerplate
+# Adzone Project
 
 Installation steps to run server locally
 
