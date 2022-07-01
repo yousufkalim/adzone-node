@@ -5,7 +5,9 @@
 const Users = require("../models/User");
 const Ads = require("../models/Ad");
 const Brands = require("../models/Brand");
+const Stores = require("../models/Store");
 const bcrypt = require("bcryptjs");
+const { findNearByStores } = require("../utils/findDistance");
 const bcryptSalt = process.env.BCRYPT_SALT || 10;
 
 /**
@@ -68,7 +70,12 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const userId = req.params.userId; // Getting user id from URL parameter
-    const user = await Users.findById(userId); // Finding user by id
+    const user = await Users.findById(userId)
+      .populate("interest.categories")
+      .populate("interest.brands")
+      .populate("interest.sale_type")
+      .populate("favourites.brands")
+      .populate("favourites.ads"); // Finding user by id
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -154,13 +161,13 @@ exports.delete = async (req, res) => {
  */
 exports.updateNotificationSetting = async (req, res) => {
   try {
-    const userId = req.params; // Getting user id from URL parameter
+    const userId = req.params.userId; // Getting user id from URL parameter
     const { notification } = req.body;
     const user = await Users.findByIdAndUpdate(
       userId,
       { notification_setting: notification },
       { new: true }
-    ); // Deleting the user
+    ); // Setting notification
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -192,7 +199,7 @@ exports.AddtoFavourites = async (req, res) => {
       }
       const user = await Users.findByIdAndUpdate(
         userId,
-        { $push: { favourites: { ads: ad } } },
+        { $push: { "favourites.ads": favid } },
         { new: true }
       );
       return res.json({ success: true, user }); // Success
@@ -211,7 +218,7 @@ exports.AddtoFavourites = async (req, res) => {
       }
       const user = await Users.findByIdAndUpdate(
         userId,
-        { $push: { favourites: { brands: favid } } },
+        { $push: { "favourites.brands": favid } },
         { new: true }
       );
       return res.json({ success: true, user }); // Success
@@ -247,7 +254,7 @@ exports.RemoveFavourites = async (req, res) => {
       }
       const user = await Users.findByIdAndUpdate(
         userId,
-        { $pull: { favourites: { ads: favid } } },
+        { $pull: { "favourites.ads": favid } },
         { new: true }
       );
       return res.json({ success: true, user }); // Success
@@ -266,7 +273,7 @@ exports.RemoveFavourites = async (req, res) => {
       }
       const user = await Users.findByIdAndUpdate(
         userId,
-        { $pull: { favourites: { brands: favid } } },
+        { $pull: { "favourites.brands": favid } },
         { new: true }
       );
       return res.json({ success: true, user }); // Success
@@ -300,7 +307,7 @@ exports.AddSaleInterest = async (req, res) => {
     }
     const user = await Users.findByIdAndUpdate(
       userId,
-      { $push: { interest: { sale_type: sale } } },
+      { $push: { "interest.sale_type": sale } },
       { new: true }
     );
     res.json({ success: true, user }); // Success
@@ -332,7 +339,7 @@ exports.AddBrandInterest = async (req, res) => {
     }
     const user = await Users.findByIdAndUpdate(
       userId,
-      { $push: { interest: { brands: brand } } },
+      { $push: { "interest.brands": brand } },
       { new: true }
     );
     res.json({ success: true, user }); // Success
@@ -364,7 +371,7 @@ exports.AddCatgoryInterest = async (req, res) => {
     }
     const user = await Users.findByIdAndUpdate(
       userId,
-      { $push: { interest: { categories: category } } },
+      { $push: { "interest.categories": category } },
       { new: true }
     );
     res.json({ success: true, user }); // Success
@@ -375,9 +382,105 @@ exports.AddCatgoryInterest = async (req, res) => {
   }
 };
 
-exports.checkUser = async (req, res) => {
+/**
+ * Find user
+ * @param {object} req
+ * @param {object} res
+ */
+exports.FavouriteSale = async (req, res) => {
   try {
-    console.log("Hi");
+    const { user } = req.body; // Getting sale id from URL parameter
+    const userInterest = await Users.findById(user);
+    const ads = await Ads.find({
+      sale_type: { $in: userInterest.interest.sale_type },
+    }).populate({
+      path: "brand",
+      populate: {
+        path: "stores",
+      },
+    });
+    res.json({ success: true, ads: ads }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Get All Brands Group on the basis of category
+ * @param {object} req
+ * @param {object} res
+ */
+exports.nearByStores = async (req, res) => {
+  try {
+    let stores = await Stores.aggregate([
+      {
+        $lookup: {
+          from: "brands",
+          localField: "brand",
+          foreignField: "_id",
+          as: "brand",
+        },
+      },
+      {
+        $unwind: {
+          path: "$brand",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$brand._id",
+          storeData: {
+            $push: "$$ROOT",
+          },
+        },
+      },
+    ]);
+    const NearByStores = await findNearByStores(
+      req.body.address.lat,
+      req.body.address.lng,
+      stores
+    );
+    const user = await Users.findByIdAndUpdate(
+      req.body.userId,
+      { nearby_stores: NearByStores },
+      { new: true }
+    );
+    console.log(user, "u");
+    res.status(200).json({ success: true, user });
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Get Favourite Sale
+ * @param {object} req
+ * @param {object} res
+ */
+exports.getFavouriteBrands = async (req, res) => {
+  try {
+    const userId = req.params.userId; // Getting sale id from URL parameter
+    const user = await Users.findById(userId)
+      .populate({
+        path: "nearby_stores",
+        populate: {
+          path: "brand",
+        },
+      })
+      .populate("nearby_stores.store");
+
+    const favBrand = user.nearby_stores.filter((e) =>
+      user.favourites.brands.includes(e.brand._id)
+    );
+    res.json({
+      success: true,
+      nearby_stores: favBrand,
+    }); // Success
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);

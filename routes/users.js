@@ -18,6 +18,7 @@ const {
   validateBrandFavourites,
   validateCategoryInterest,
   validateSaleInterest,
+  validateFindFavourite,
   isValidated,
 } = require("../middleware/validators");
 
@@ -116,5 +117,18 @@ router.put(
 // Delete
 router.delete("/:userId", checkAdminAuth, users.delete); // delete a specific user by it's id
 
+// Favourite sale
+router.post(
+  "/FavouriteSale",
+  validateFindFavourite,
+  isValidated,
+  users.FavouriteSale
+);
+
+// Set nearBY Stores
+router.post("/nearByStores", validateAddress, isValidated, users.nearByStores);
+//
+
+router.get("/getFavouriteBrands/:userId", checkAuth, users.getFavouriteBrands);
 // Export
 module.exports = router;

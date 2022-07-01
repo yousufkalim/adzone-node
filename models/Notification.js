@@ -9,6 +9,8 @@ const notificationSchema = new mongoose.Schema(
   {
     title: String,
     description: String,
+    brandImage: String,
+    AdImage: String,
     seen: {
       type: Boolean,
       default: false,

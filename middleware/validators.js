@@ -97,6 +97,10 @@ exports.validateLogin = [
     .isLength({ min: 8 }),
 ];
 
+// User Signup Validation
+exports.validateFindFavourite = [
+  check("user", "UserId is required.").notEmpty().trim(),
+];
 exports.validateOtp = [check("otp", "otp is required.").notEmpty().trim()];
 
 // Change password validation

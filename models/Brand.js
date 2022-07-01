@@ -15,7 +15,7 @@ const brandsSchema = new mongoose.Schema(
     founded_on: String,
     annual_sale: String,
     picture: String,
-     views:Number,
+    views: { type: Number, default: 0 },
     category: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
     stores: [{ type: mongoose.Schema.Types.ObjectId, ref: "stores" }],
     ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],

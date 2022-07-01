@@ -8,6 +8,7 @@ const { checkAdminAuth } = require("../middleware/adminAuth");
 const {
   validateBrand,
   validateBrandFavourites,
+  validateAddress,
   isValidated,
 } = require("../middleware/validators");
 const { upload } = require("../middleware/multer");
@@ -33,6 +34,12 @@ router.post(
 
 // Read
 router.get("/", brand.getAll); // Get all brands at once
+router.get(
+  "/getTrendingBrands",
+  validateAddress,
+  isValidated,
+  brand.trendingBrands
+); //Get Trending Brands
 router.get("/:brandId", brand.getById); // Get one brand by it's id
 
 // Update
@@ -56,5 +63,22 @@ router.post(
   isValidated,
   brand.groupAdsbySaleType
 ); // Group Brands by categories
+
+//get NearBy stores of a brand
+router.get(
+  "/getStoresByBrand/:brandId",
+  validateAddress,
+  isValidated,
+  brand.getStoresByBrand
+);
+
+router.get(
+  "/getPopulatStore/:brandId",
+  validateAddress,
+  isValidated,
+  brand.getStoresByBrand
+);
+//Increase view of a brand
+router.put("/increaseView/:brandId", brand.increaseView);
 // Export
 module.exports = router;

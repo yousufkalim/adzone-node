@@ -5,7 +5,11 @@
 const router = require("express").Router();
 const sale = require("../controllers/saletypes");
 const { checkAdminAuth } = require("../middleware/adminAuth");
-const { validateSale, isValidated } = require("../middleware/validators");
+const {
+  validateSale,
+  validateFindFavourite,
+  isValidated,
+} = require("../middleware/validators");
 
 /**
  * ////////////////////////// Routes /////////////////////////
@@ -28,6 +32,8 @@ router.put("/:saleId", checkAdminAuth, validateSale, isValidated, sale.update);
 
 // Delete
 router.delete("/:saleId", checkAdminAuth, sale.delete); // delete a specific Sale by it's id
+//
+router.post("/getFavouriteSale/:userId", sale.getFavouriteSale);
 
 // Export
 module.exports = router;

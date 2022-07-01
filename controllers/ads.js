@@ -4,6 +4,10 @@
  */
 const Brands = require("../models/Brand");
 const Ads = require("../models/Ad");
+const Users = require("../models/User");
+const SaleType = require("../models/SaleType");
+const io = require("../index");
+const Notifications = require("../models/Notification");
 /**
  * Create brand
  * @param {object} req
@@ -18,6 +22,26 @@ exports.create = async (req, res) => {
     const brand = await Brands.findById(req.body.brand); // Finding brand by id
     if (!brand) {
       return res.json({ success: false, message: "Brand not exist" }); //Success
+    }
+    const sale_type = await SaleType.findById(req.body.sale_type); // Finding brand by id
+    if (!sale_type) {
+      return res.json({ success: false, message: "Invalid Sale Id" }); //Success
+    }
+    const users = await Users.find({
+      $or: [
+        {
+          "notification_setting.brand": true,
+          "notification_setting.sale": true,
+        },
+      ],
+      $or: [
+        { "interest.brands": brand },
+        { "favourites.brands": brand },
+        { "interest.sale_type": sale_type },
+      ],
+    });
+    if (users.length > 0) {
+      await sendNotifications(users, brand, req.body.picture, sale_type.name);
     }
     const ad = await Ads.create(req.body); // Adding store in db
     brand.ads.push(ad._id);
@@ -57,12 +81,40 @@ exports.getAll = async (req, res) => {
  */
 exports.getById = async (req, res) => {
   try {
+    console.log("Trending ads req getBy id");
     const adId = req.params.adId; // Getting ad id from URL parameter
     const ad = await Ads.findById(adId)
       .populate("category")
       .populate("sale_type")
       .populate("brand"); // Finding ad by id
     res.json({ success: true, ad }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Get Treanding Ads
+ * @param {object} req
+ * @param {object} res
+ */
+exports.trendingAds = async (req, res) => {
+  try {
+    console.log("Trending ads req");
+    const ads = await Ads.find()
+      .populate("category")
+      .populate("sale_type")
+      .populate({
+        path: "brand",
+        populate: {
+          path: "stores",
+        },
+      })
+      .sort({ views: -1 })
+      .limit(8); // Finding ad by id
+    res.json({ success: true, ads }); // Success
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);
@@ -85,6 +137,28 @@ exports.update = async (req, res) => {
     const ad = await Ads.findByIdAndUpdate(adId, req.body, {
       new: true,
     }); // Updating the ad
+    res.json({ success: true, ad }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Increase ad's view
+ * @param {object} req
+ * @param {object} res
+ */
+exports.increaseView = async (req, res) => {
+  try {
+    const adId = req.params.adId; // Getting ad id from URL parameter
+    const ad = await Ads.findById(adId);
+    if (!ad) {
+      return res.status(400).json({ success: false, message: "Ad not found" });
+    }
+    ad.views = +ad.views + 1; //Increment in views
+    await ad.save();
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
@@ -194,5 +268,22 @@ exports.groupbySaleType = async (req, res) => {
     // Error handling
     console.log("Error ----> ", err);
     res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+const sendNotifications = async (users, brand, AdImage, sale) => {
+  for (i = 0; i < users.length; i++) {
+    if (io.socket) {
+      io.socket.emit(`${users[i]._id}adcreated`, {
+        message: `${brand.name} is offering  ${sale}`,
+      });
+    }
+    await Notifications.create({
+      user: users[i]._id,
+      title: `${brand.name} is offering  ${sale}`,
+      description: `${brand.name} is offering  ${sale}`,
+      brandImage: brand.picture,
+      AdIamge: AdImage,
+    });
   }
 };

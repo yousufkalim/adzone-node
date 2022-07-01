@@ -33,6 +33,7 @@ router.post(
 
 // Read
 router.get("/", ad.getAll); // Get all ads at once
+router.get("/getTrendingAds", ad.trendingAds);
 router.get("/:adId", ad.getById); // Get one ad by it's id
 
 // Update
@@ -59,6 +60,8 @@ router.post(
 
 //groupbySaleType
 router.post("/groupbySaleType", ad.groupbySaleType);
+//Increase view of an ad
+router.put("/increaseView/:adId", ad.increaseView);
 
 // Export
 module.exports = router;

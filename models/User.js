@@ -60,6 +60,13 @@ const userSchema = new mongoose.Schema(
       categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
       sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: "sale_type" }],
     },
+    nearby_stores: [
+      {
+        brand: { type: mongoose.Schema.Types.ObjectId, ref: "brands" },
+        store: { type: mongoose.Schema.Types.ObjectId, ref: "stores" },
+        distance: Number,
+      },
+    ],
   },
   {
     timestamps: true,

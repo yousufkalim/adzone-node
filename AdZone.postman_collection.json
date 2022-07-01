@@ -64,7 +64,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/api/users/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -73,7 +73,7 @@
 							"path": [
 								"api",
 								"users",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -136,7 +136,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -145,7 +145,7 @@
 							"path": [
 								"api",
 								"users",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -154,6 +154,16 @@
 				{
 					"name": "Add Address",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -166,7 +176,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/addAddress/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/addAddress/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -176,7 +186,7 @@
 								"api",
 								"users",
 								"addAddress",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -185,6 +195,16 @@
 				{
 					"name": "Set Notification",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -197,7 +217,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/updateNotificationSetting/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/updateNotificationSetting/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -207,20 +227,30 @@
 								"api",
 								"users",
 								"updateNotificationSetting",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Add to favourites",
+					"name": "Add to favourite",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"favid\":\"62b2f4fa2a3448074fddad45\"}",
+							"raw": "{\"favid\":\"62b58853492cc1083a0460f4\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -228,7 +258,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/Addtofavourite/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/Addtofavourite/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -238,7 +268,7 @@
 								"api",
 								"users",
 								"Addtofavourite",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -247,11 +277,21 @@
 				{
 					"name": "Remove  From My Favourites",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{}",
+							"raw": "{\"favid\":\"62b304b91961a210a766f762\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -259,7 +299,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/RemoveFavourites/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/RemoveFavourites/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -269,7 +309,7 @@
 								"api",
 								"users",
 								"RemoveFavourites",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -278,11 +318,21 @@
 				{
 					"name": "Push Sale Type into  Interest",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"sale\":\"62b2c0aa335e4007cfda27a7\"}",
+							"raw": "{\"sale\":\"62b2ca11beb9bafd00d49afd\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -290,7 +340,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/InterestSale/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/InterestSale/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -300,7 +350,7 @@
 								"api",
 								"users",
 								"InterestSale",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -309,11 +359,21 @@
 				{
 					"name": "Push Brand into Interest",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"brand\":\"62b2abf3335e4007cfda2794\"}",
+							"raw": "{\"brand\":\"62b58853492cc1083a0460f4\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -321,7 +381,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/InterestBrand/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/InterestBrand/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -331,7 +391,7 @@
 								"api",
 								"users",
 								"InterestBrand",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -340,11 +400,21 @@
 				{
 					"name": "Push Category into Interest",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"category\":\"62b2ab96335e4007cfda278d\"}",
+							"raw": "{\"category\":\"62b2ab50335e4007cfda278c\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -352,7 +422,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/users/InterestCategory/62b1985f4de963c8c04d3bd2",
+							"raw": "http://localhost:5000/api/users/InterestCategory/62b93e98ff0dc540ecf0da8c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -362,7 +432,131 @@
 								"api",
 								"users",
 								"InterestCategory",
-								"62b1985f4de963c8c04d3bd2"
+								"62b93e98ff0dc540ecf0da8c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Favourite sale of a user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user\":\"62b93e98ff0dc540ecf0da8c\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/FavouriteSale",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"FavouriteSale"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set NearBY Store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"address\":{\"lat\":\"31.5204\",\"lng\":\"74.3587\",\"city\":\"lahore\",\"area\":\"Model Town\"},\"userId\":\"62b93e98ff0dc540ecf0da8c\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/saletypes/nearByStores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"saletypes",
+								"nearByStores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Ads with fav sale",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/saletypes/getFavouriteSale/62b93e98ff0dc540ecf0da8c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"saletypes",
+								"getFavouriteSale",
+								"62b93e98ff0dc540ecf0da8c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Fav Brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImN1cnJlbnRfbG9jYXRpb24iOnsibGF0IjozMS41MjA0LCJsbmciOjc0LjM1ODcsImNpdHkiOiJsYWhvcmUiLCJhcmVhIjoiTW9kZWwgVG93biJ9LCJub3RpZmljYXRpb25fc2V0dGluZyI6eyJwaG9uZSI6dHJ1ZSwiZW1haWwiOmZhbHNlLCJicmFuZCI6dHJ1ZSwic2FsZSI6dHJ1ZX0sImZhdm91cml0ZXMiOlt7ImFkcyI6IjYyYjMwNGI5MTk2MWEyMTBhNzY2Zjc2MiJ9XSwiaW50ZXJlc3QiOlt7InNhbGVfdHlwZSI6IjYyYjJjYTExYmViOWJhZmQwMGQ0OWFmZCJ9LHsiYnJhbmRzIjoiNjJiMmFiZjMzMzVlNDAwN2NmZGEyNzk0In0seyJjYXRlZ29yaWVzIjoiNjJiMmFiOTYzMzVlNDAwN2NmZGEyNzhkIn1dLCJmYWNlYm9va19jb25uZWN0ZWQiOmZhbHNlLCJnb29nbGVfY29ubmVjdGVkIjpmYWxzZSwiX2lkIjoiNjJiMTk4NWY0ZGU5NjNjOGMwNGQzYmQyIiwibmFtZSI6InNodWphIG5hcXZpIiwiZW1haWwiOiJzaHVqYW5hcXZpMjg4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHB1OUg5MlpuVFF3Qm1KaXZ0RUc2N3VvcXlNTXVCY081cnJlLkZydWdydi9YTlIuRUFESzEyIiwibG9jYXRpb25zIjpbeyJfaWQiOiI2MmIxYTFjYmJiZmVkM2NlN2EwYzkwN2EiLCJsYXQiOjMxLjUyMDQsImxuZyI6NzQuMzU4NywiY2l0eSI6ImxhaG9yZSIsImFyZWEiOiJNb2RlbCBUb3duIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTA2LTIxVDEwOjA3OjI3LjQwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTA2LTI0VDA2OjMyOjM5LjgxMFoiLCJfX3YiOjAsInBob3RvIjoidXBsb2Fkcy8xNjU2MDUyMzU5Nzg2LUxvZ28gS2lkY2FiIG5ldyBmb25kIGJsYW5jIDEucG5nIiwicGhvbmVfbnVtYmVyIjoiKzkyMzEyNzM3ODk0NSIsImlzX3ZlcmlmaWVkIjpmYWxzZSwib3RwIjoiZGh4amNzIn0sImlhdCI6MTY1NjMwNjY2NywiZXhwIjoxNjU2NjY2NjY3fQ.-ecVe8RrsKOufpXpO1ahifuI1mRtTGUHGoLlJyLWvHo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/getFavouriteBrands/62b93e98ff0dc540ecf0da8c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"getFavouriteBrands",
+								"62b93e98ff0dc540ecf0da8c"
 							]
 						}
 					},
@@ -380,7 +574,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"email\":\"shujanaqvi288@gmail.com\",\"password\":\"123456789\"}",
+							"raw": "{\"email\":\"shujanaqvi281@gmail.com\",\"password\":\"123456789\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -611,6 +805,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Find Your Favourite sale",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user\":\"62b1985f4de963c8c04d3bd2\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/FavouriteSale",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"FavouriteSale"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -765,6 +989,27 @@
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:5000/api/categories/62b2dd692accee021b036edf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"categories",
+								"62b2dd692accee021b036edf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:5000/api/categories/62b2dd692accee021b036edf",
 							"protocol": "http",
@@ -982,6 +1227,95 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Stores with brand",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"address\":{\"lat\":\"31.5204\",\"lng\":\"74.3587\",\"city\":\"lahore\",\"area\":\"Model Town\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/brands/getStoresByBrand/62b58853492cc1083a0460f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"brands",
+								"getStoresByBrand",
+								"62b58853492cc1083a0460f4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Increase View",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/brands/increaseView/62b58853492cc1083a0460f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"brands",
+								"increaseView",
+								"62b58853492cc1083a0460f4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trending Brands with Distance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"address\":{\"area\":\"Kareem Block\",\"city\":\"lahore\",\"lat\":\"31.6211\",\"lng\":\"74.2824\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/brands/getTrendingBrands",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"brands",
+								"getTrendingBrands"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -996,7 +1330,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU1ODg0MjMzLCJleHAiOjE2NTYyNDQyMzN9.qoeEklDQBO1CoelJ4_ePN0pzlyo_SVVWZ0d1xal9vb8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU2NjUzMjIzLCJleHAiOjE2NTcwMTMyMjN9.U5nmoens53Ew840r-c1y-PjJGbJonYiBxj27jjPHYp8",
 									"type": "string"
 								}
 							]
@@ -1005,7 +1339,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\":\"Phone samsung\",\"brand\":\"62b58853492cc1083a0460f4\",\"category\":\"62b2dd472accee021b036edd\",\"sale_type\":\"62b2c0aa335e4007cfda27a7\",\"sale_date\":{\"start_date\":\"2022/07/22\",\"end_date\":\"2022/07/29\"}}",
+							"raw": "{\"name\":\"Phone samsung\",\"brand\":\"62b58853492cc1083a0460f4\",\"category\":\"62b2dd472accee021b036edd\",\"sale_type\":\"62b2ca11beb9bafd00d49afd\",\"sale_date\":{\"start_date\":\"2022/07/22\",\"end_date\":\"2022/07/29\"}}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1159,6 +1493,49 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Increase Ad Views",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/ads/increaseView/62b5a81ba968471d01d79fde",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ads",
+								"increaseView",
+								"62b5a81ba968471d01d79fde"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trending Ads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/ads/getTrendingAds",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ads",
+								"getTrendingAds"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1173,7 +1550,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU2MDU1NTIwLCJleHAiOjE2NTY0MTU1MjB9.mJ3SybQRA-NHcqkFGaOkOwzFTNl7IRXQ8F--6q4JQjU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6eyJyb2xlIjoiYWRtaW4iLCJhY3RpdmUiOnRydWUsIl9pZCI6IjYyYjJjOTZmYmViOWJhZmQwMGQ0OWFmNSIsImVtYWlsIjoic2h1amFAcGttYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJEJvSXp2alVYZDB1QktsS0ZVN0x0TS44cGlhSEhiQlBnL2JyQTRSRURxY1k4cWZNZldhQnkuIiwibmFtZSI6InNodWphIiwiY3JlYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwidXBkYXRlZEF0IjoiMjAyMi0wNi0yMlQwNzo0OTowMy44OTZaIiwiX192IjowfSwiaWF0IjoxNjU2NTg2OTAyLCJleHAiOjE2NTY5NDY5MDJ9.VNx5I1tfVWRrrjGnl3lmPm2qE6Dzc0vrBeTKh1Z0Oas",
 									"type": "string"
 								}
 							]
@@ -1182,7 +1559,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"name\":\"TCSDJKLFKS\",\"brand\":\"62b58853492cc1083a0460f4\",\"location\":{\"area\":\"Kareem Block\",\"city\":\"lahore\",\"lat\":\"31.5033\",\"lng\":\"74.2781\"}}",
+							"raw": "{\"name\":\"hamza Electronics\",\"brand\":\"62b58853492cc1083a0460f4\",\"location\":{\"area\":\"Barket Market\",\"city\":\"lahore\",\"lat\":\"31.5010\",\"lng\":\"74.3216\"}}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1214,7 +1591,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"\"}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1322,6 +1699,109 @@
 								"api",
 								"stores",
 								"nearByStores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notifications",
+			"item": [
+				{
+					"name": "Get Notification of a user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/notifications/getByUser/62b93e98ff0dc540ecf0da8c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notifications",
+								"getByUser",
+								"62b93e98ff0dc540ecf0da8c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Notification By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notifications/62bd9d82274e105760b4d3e0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notifications",
+								"62bd9d82274e105760b4d3e0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Seen By User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notifications/seenByUser/62b93e98ff0dc540ecf0da8c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notifications",
+								"seenByUser",
+								"62b93e98ff0dc540ecf0da8c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Notification",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/notifications/62bd9d82274e105760b4d3e0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"notifications",
+								"62bd9d82274e105760b4d3e0"
 							]
 						}
 					},

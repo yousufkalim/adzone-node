@@ -5,6 +5,7 @@
 const Brands = require("../models/Brand");
 const Ads = require("../models/Ad");
 const mongoose = require("mongoose");
+const { findStores, findBrandStore } = require("../utils/findDistance");
 /**
  * Create brand
  * @param {object} req
@@ -50,8 +51,29 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
-    const brand = await Brands.findById(brandId); // Finding brand by id
+    const brand = await Brands.findById(brandId).populate("stores"); // Finding brand by id
     res.json({ success: true, brand }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**  Get getStoresByBrand
+ * @param {object} req
+ * @param {object} res
+ */
+exports.getStoresByBrand = async (req, res) => {
+  try {
+    const brandId = req.params.brandId; // Getting brand id from URL parameter
+    const brand = await Brands.findById(brandId).populate("stores"); // Finding brand by id
+    const stores = await findStores(
+      req.body.address.lat,
+      req.body.address.lng,
+      brand.stores
+    );
+    res.json({ success: true, stores }); // Success
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);
@@ -75,6 +97,56 @@ exports.update = async (req, res) => {
       new: true,
     }); // Updating the brand
     res.json({ success: true, brand }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Increase brand's view
+ * @param {object} req
+ * @param {object} res
+ */
+exports.increaseView = async (req, res) => {
+  try {
+    const brandId = req.params.brandId; // Getting brand id from URL parameter
+    const brand = await Brands.findById(brandId);
+    if (!brand) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Brand Not Found ...:(" });
+    }
+    brand.views = +brand.views + 1; //Increment in views
+    await brand.save();
+    res.json({ success: true, brand }); // Success
+  } catch (err) {
+    // Error handling
+    console.log("Error ----> ", err);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+/**
+ * Get Treanding Ads
+ * @param {object} req
+ * @param {object} res
+ */
+exports.trendingBrands = async (req, res) => {
+  try {
+    const brand = await Brands.find()
+      .populate("category")
+      .populate("stores")
+      .sort({ views: -1 })
+      .limit(8); // Finding ad by id
+
+    const stores = await findBrandStore(
+      req.body.address.lat,
+      req.body.address.lng,
+      brand
+    );
+    res.json({ success: true, stores }); // Success
   } catch (err) {
     // Error handling
     console.log("Error ----> ", err);
