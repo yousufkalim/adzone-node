@@ -9,6 +9,7 @@ const StoreSchema = new mongoose.Schema(
   {
     name: String,
     picture: String,
+    views:Number,
     brand: { type: mongoose.Schema.Types.ObjectId, ref: "brands" },
     location: {
       lat: Number,

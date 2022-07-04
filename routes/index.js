@@ -12,7 +12,9 @@ router.use("/saletypes", require("./saletypes")); // All the sale type routes
 router.use("/categories", require("./categories")); // All the categories routes
 router.use("/brands", require("./brands")); // All the brands routes
 router.use("/stores", require("./stores")); // All the Store routes
-router.use("/ads", require("./ads")); // All the Store routes
+router.use("/ads", require("./ads")); // All the Ads routes
+router.use("/notifications", require("./notifications")); // All the Notification routes
+
 
 // Export
 module.exports = router;

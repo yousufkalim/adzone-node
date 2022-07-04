@@ -11,6 +11,7 @@ const AdsSchema = new mongoose.Schema(
     description: String,
     picture: String,
     sale_description: String,
+    views: { type: Number, default: 0 },
     sale_date: { start_date: Date, end_date: Date },
     category: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
     sale_type: { type: mongoose.Schema.Types.ObjectId, ref: "sale_type" },

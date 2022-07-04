@@ -13,7 +13,7 @@ Validations
 // You can create multiple validations strategies (Read express-validator documentation for more details)
 // User Signup Validation
 exports.validateUser = [
-  check("name", "Name is required.").notEmpty().trim(),
+  check("name", "Name is required. ").notEmpty().trim(),
   check("email", "Email is required.").notEmpty().isEmail().trim(),
   check("password", "Password is required.")
     .notEmpty()
@@ -72,11 +72,11 @@ exports.validateNotificationSetting = [
   check("notification.brand", "Brand is required.").notEmpty().isBoolean(),
   check("notification.phone", "Phone is required.").notEmpty().isBoolean(),
   check("notification.email", "Email is required.").notEmpty().isBoolean(),
-  check("notification.sale", "sale is required.").notEmpty().isBoolean(),
+  check("notification.sale", "sale is required. ").notEmpty().isBoolean(),
 ];
 
-exports.validateAdFavourites = [
-  check("ad", "AD Id is required.").notEmpty().trim(),
+exports.validateFavourites = [
+  check("favid", "favid Id is required.").notEmpty().trim(),
 ];
 exports.validateBrandFavourites = [
   check("brand", "Brand Id is required.").notEmpty().trim(),
@@ -97,6 +97,10 @@ exports.validateLogin = [
     .isLength({ min: 8 }),
 ];
 
+// User Signup Validation
+exports.validateFindFavourite = [
+  check("user", "UserId is required.").notEmpty().trim(),
+];
 exports.validateOtp = [check("otp", "otp is required.").notEmpty().trim()];
 
 // Change password validation
@@ -131,7 +135,7 @@ exports.isValidated = (req, res, next) => {
   const errors = validationResult(req); // Validating the request by previous middleware's strategy
   if (!errors.isEmpty()) {
     // On error
-    res.status(400).send({ success: false, message: errors.array()[0].msg }); // Sending first error to the client from array of errors
+    res.status(400).send({ success: false, message: errors.array()[0] }); // Sending first error to the client from array of errors
   } else {
     // Validated successfully
     next(); // Pass the request to next middleware or controller

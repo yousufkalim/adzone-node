@@ -22,6 +22,9 @@ exports.checkAuth = (req, res, next) => {
     // Decrypting token
     const token = header.split(" ")[1];
     const decoded = jwt.verify(token, tokenSecret);
+    if (!decoded.user) {
+      return res.status(404).json({ success: false, message: "Invalid Token" });
+    }
     req.user = decoded.user;
 
     // If user authenticated
