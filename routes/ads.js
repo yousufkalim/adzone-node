@@ -2,15 +2,16 @@
  * ad CRUD routes
  * @author Shuja Naqvi
  */
-const router = require("express").Router();
-const ad = require("../controllers/ads");
-const { checkAdminAuth } = require("../middleware/adminAuth");
+const router = require('express').Router();
+const ad = require('../controllers/ads');
+const { checkAdminAuth } = require('../middleware/adminAuth');
 const {
   validateAd,
+  validateAddress,
   validateSaleInterest,
   isValidated,
-} = require("../middleware/validators");
-const { upload } = require("../middleware/multer");
+} = require('../middleware/validators');
+const { upload } = require('../middleware/multer');
 
 /**
  * ////////////////////////// Routes /////////////////////////
@@ -23,45 +24,45 @@ const { upload } = require("../middleware/multer");
 
 // Create -ad
 router.post(
-  "/",
+  '/',
   checkAdminAuth,
-  upload.single("image"),
+  upload.single('image'),
   validateAd,
   isValidated,
   ad.create
 );
 
 // Read
-router.get("/", ad.getAll); // Get all ads at once
-router.get("/getTrendingAds", ad.trendingAds);
-router.get("/:adId", ad.getById); // Get one ad by it's id
+router.get('/', ad.getAll); // Get all ads at once
+router.get('/getTrendingAds', ad.trendingAds);
+router.get('/:adId', ad.getById); // Get one ad by it's id
 
 // Update
 router.put(
-  "/:adId",
+  '/:adId',
   checkAdminAuth,
-  upload.single("image"),
+  upload.single('image'),
   validateAd,
   isValidated,
   ad.update
 );
 
 // Delete
-router.delete("/:adId", checkAdminAuth, ad.delete); // delete a specific Sale by it's id
+router.delete('/:adId', checkAdminAuth, ad.delete); // delete a specific Sale by it's id
 
 //getAdsbySaleId
 
 router.post(
-  "/getAdsbySaleId",
+  '/getAdsbySaleId',
   validateSaleInterest,
   isValidated,
   ad.getAdsbySaleId
 );
 
 //groupbySaleType
-router.post("/groupbySaleType", ad.groupbySaleType);
+router.post('/groupbySaleType', ad.groupbySaleType);
 //Increase view of an ad
-router.put("/increaseView/:adId", ad.increaseView);
+router.put('/increaseView/:adId', ad.increaseView);
 
 // Export
 module.exports = router;

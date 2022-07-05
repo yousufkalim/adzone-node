@@ -2,10 +2,10 @@
  * Brand CRUD controllers
  * @author Shuja Naqvi
  */
-const Brands = require("../models/Brand");
-const Ads = require("../models/Ad");
-const mongoose = require("mongoose");
-const { findStores, findBrandStore } = require("../utils/findDistance");
+const Brands = require('../models/Brand');
+const Ads = require('../models/Ad');
+const mongoose = require('mongoose');
+const { findStores, findBrandStore } = require('../utils/findDistance');
 /**
  * Create brand
  * @param {object} req
@@ -22,8 +22,8 @@ exports.create = async (req, res) => {
     res.json({ success: true, brand }); //Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -38,8 +38,8 @@ exports.getAll = async (req, res) => {
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -51,12 +51,12 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
-    const brand = await Brands.findById(brandId).populate("stores"); // Finding brand by id
+    const brand = await Brands.findById(brandId).populate('stores'); // Finding brand by id
     res.json({ success: true, brand }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -67,7 +67,7 @@ exports.getById = async (req, res) => {
 exports.getStoresByBrand = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
-    const brand = await Brands.findById(brandId).populate("stores"); // Finding brand by id
+    const brand = await Brands.findById(brandId).populate('stores'); // Finding brand by id
     const stores = await findStores(
       req.body.address.lat,
       req.body.address.lng,
@@ -76,8 +76,8 @@ exports.getStoresByBrand = async (req, res) => {
     res.json({ success: true, stores }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -99,8 +99,8 @@ exports.update = async (req, res) => {
     res.json({ success: true, brand }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -116,15 +116,15 @@ exports.increaseView = async (req, res) => {
     if (!brand) {
       return res
         .status(400)
-        .json({ success: false, message: "Brand Not Found ...:(" });
+        .json({ success: false, message: 'Brand Not Found ...:(' });
     }
     brand.views = +brand.views + 1; //Increment in views
     await brand.save();
     res.json({ success: true, brand }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -136,8 +136,8 @@ exports.increaseView = async (req, res) => {
 exports.trendingBrands = async (req, res) => {
   try {
     const brand = await Brands.find()
-      .populate("category")
-      .populate("stores")
+      .populate('category')
+      .populate('stores')
       .sort({ views: -1 })
       .limit(8); // Finding ad by id
 
@@ -149,8 +149,8 @@ exports.trendingBrands = async (req, res) => {
     res.json({ success: true, stores }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -166,8 +166,8 @@ exports.delete = async (req, res) => {
     res.json({ success: true, brand }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -181,51 +181,51 @@ exports.groupbyCategory = async (req, res) => {
     let brands = await Brands.aggregate([
       {
         $lookup: {
-          from: "stores",
-          localField: "stores",
-          foreignField: "_id",
-          as: "stores",
+          from: 'stores',
+          localField: 'stores',
+          foreignField: '_id',
+          as: 'stores',
         },
       },
       {
         $unwind: {
-          path: "$stores",
+          path: '$stores',
           preserveNullAndEmptyArrays: true,
         },
       },
+      // {
+      //   $lookup: {
+      //     from: "ads",
+      //     localField: "ads",
+      //     foreignField: "_id",
+      //     as: "ads",
+      //   },
+      // },
+      // {
+      //   $unwind: {
+      //     path: "$ads",
+      //     preserveNullAndEmptyArrays: true,
+      //   },
+      // },
       {
         $lookup: {
-          from: "ads",
-          localField: "ads",
-          foreignField: "_id",
-          as: "ads",
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category',
         },
       },
       {
         $unwind: {
-          path: "$ads",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $lookup: {
-          from: "categories",
-          localField: "category",
-          foreignField: "_id",
-          as: "category",
-        },
-      },
-      {
-        $unwind: {
-          path: "$category",
+          path: '$category',
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $group: {
-          _id: "$category._id",
+          _id: '$category.name',
           data: {
-            $push: "$$ROOT",
+            $push: '$$ROOT',
           },
         },
       },
@@ -233,8 +233,8 @@ exports.groupbyCategory = async (req, res) => {
     res.status(200).json({ success: true, brands });
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -252,37 +252,37 @@ exports.groupAdsbySaleType = async (req, res) => {
       },
       {
         $lookup: {
-          from: "brands",
-          localField: "brand",
-          foreignField: "_id",
-          as: "brand",
+          from: 'brands',
+          localField: 'brand',
+          foreignField: '_id',
+          as: 'brand',
         },
       },
       {
         $unwind: {
-          path: "$brand",
+          path: '$brand',
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $lookup: {
-          from: "stores",
-          localField: "brand.stores",
-          foreignField: "_id",
-          as: "brand.stores",
+          from: 'stores',
+          localField: 'brand.stores',
+          foreignField: '_id',
+          as: 'brand.stores',
         },
       },
       {
         $unwind: {
-          path: "$brand.stores",
+          path: '$brand.stores',
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $group: {
-          _id: "$sale_type._id",
+          _id: '$sale_type.name',
           data: {
-            $push: "$$ROOT",
+            $push: '$$ROOT',
           },
         },
       },
@@ -290,7 +290,7 @@ exports.groupAdsbySaleType = async (req, res) => {
     res.status(200).json({ success: true, ads });
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
