@@ -140,8 +140,8 @@ const sendNotifications = async (users, brand) => {
     }
     await Notifications.create({
       user: users[i]._id,
-      title: `congrats ${brand.name} created a new store... :`,
-      description: "congrats ${brand} created a new store... :)",
+      title: `congrats ${brand.name} created a new store... :)`,
+      description: `congrats ${brand.name} created a new store... :)`,
       brandImage: brand.picture,
     });
   }

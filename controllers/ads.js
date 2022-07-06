@@ -2,12 +2,12 @@
  * Brand CRUD controllers
  * @author Shuja Naqvi
  */
-const Brands = require("../models/Brand");
-const Ads = require("../models/Ad");
-const Users = require("../models/User");
-const SaleType = require("../models/SaleType");
-const io = require("../index");
-const Notifications = require("../models/Notification");
+const Brands = require('../models/Brand');
+const Ads = require('../models/Ad');
+const Users = require('../models/User');
+const SaleType = require('../models/SaleType');
+const io = require('../index');
+const Notifications = require('../models/Notification');
 /**
  * Create brand
  * @param {object} req
@@ -21,23 +21,23 @@ exports.create = async (req, res) => {
     }
     const brand = await Brands.findById(req.body.brand); // Finding brand by id
     if (!brand) {
-      return res.json({ success: false, message: "Brand not exist" }); //Success
+      return res.json({ success: false, message: 'Brand not exist' }); //Not Found
     }
     const sale_type = await SaleType.findById(req.body.sale_type); // Finding brand by id
     if (!sale_type) {
-      return res.json({ success: false, message: "Invalid Sale Id" }); //Success
+      return res.json({ success: false, message: 'Invalid Sale Id' }); //Not Found
     }
     const users = await Users.find({
       $or: [
         {
-          "notification_setting.brand": true,
-          "notification_setting.sale": true,
+          'notification_setting.brand': true,
+          'notification_setting.sale': true,
         },
       ],
       $or: [
-        { "interest.brands": brand },
-        { "favourites.brands": brand },
-        { "interest.sale_type": sale_type },
+        { 'interest.brands': brand },
+        { 'favourites.brands': brand },
+        { 'interest.sale_type': sale_type },
       ],
     });
     if (users.length > 0) {
@@ -50,8 +50,8 @@ exports.create = async (req, res) => {
     res.json({ success: true, ad }); //Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -63,14 +63,14 @@ exports.create = async (req, res) => {
 exports.getAll = async (req, res) => {
   try {
     const ad = await Ads.find()
-      .populate("category")
-      .populate("sale_type")
-      .populate("brand"); // Finding all the ad from db
+      .populate('category')
+      .populate('sale_type')
+      .populate('brand'); // Finding all the ad from db
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -81,17 +81,16 @@ exports.getAll = async (req, res) => {
  */
 exports.getById = async (req, res) => {
   try {
-    console.log("Trending ads req getBy id");
     const adId = req.params.adId; // Getting ad id from URL parameter
     const ad = await Ads.findById(adId)
-      .populate("category")
-      .populate("sale_type")
-      .populate("brand"); // Finding ad by id
+      .populate('category')
+      .populate('sale_type')
+      .populate('brand'); // Finding ad by id
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -102,14 +101,14 @@ exports.getById = async (req, res) => {
  */
 exports.trendingAds = async (req, res) => {
   try {
-    console.log("Trending ads req");
+    console.log('Trending ads req');
     const ads = await Ads.find()
-      .populate("category")
-      .populate("sale_type")
+      .populate('category')
+      .populate('sale_type')
       .populate({
-        path: "brand",
+        path: 'brand',
         populate: {
-          path: "stores",
+          path: 'stores',
         },
       })
       .sort({ views: -1 })
@@ -117,8 +116,8 @@ exports.trendingAds = async (req, res) => {
     res.json({ success: true, ads }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -140,8 +139,8 @@ exports.update = async (req, res) => {
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -155,15 +154,15 @@ exports.increaseView = async (req, res) => {
     const adId = req.params.adId; // Getting ad id from URL parameter
     const ad = await Ads.findById(adId);
     if (!ad) {
-      return res.status(400).json({ success: false, message: "Ad not found" });
+      return res.status(400).json({ success: false, message: 'Ad not found' });
     }
     ad.views = +ad.views + 1; //Increment in views
     await ad.save();
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -179,8 +178,8 @@ exports.delete = async (req, res) => {
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -193,14 +192,20 @@ exports.getAdsbySaleId = async (req, res) => {
   try {
     const saleId = req.body.sale; // Getting ad id from URL parameter
     const ads = await Ads.find({ sale_type: saleId })
-      .populate("category")
-      .populate("sale_type")
-      .populate("brand"); // Finding ad by id
+      .populate('category')
+      .populate('sale_type')
+      .populate({
+        path: 'brand',
+        populate: {
+          path: 'stores',
+        },
+      });
+    // Finding ad by id
     res.json({ success: true, ads }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -214,63 +219,64 @@ exports.groupbySaleType = async (req, res) => {
     let ads = await Ads.aggregate([
       {
         $lookup: {
-          from: "brands",
-          localField: "brand",
-          foreignField: "_id",
-          as: "brand",
+          from: 'brands',
+          localField: 'brand',
+          foreignField: '_id',
+          as: 'brand',
         },
       },
       {
         $unwind: {
-          path: "$brand",
+          path: '$brand',
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $lookup: {
-          from: "stores",
-          localField: "brand.stores",
-          foreignField: "_id",
-          as: "brand.stores",
+          from: 'sale_type',
+          localField: 'sale_type',
+          foreignField: '_id',
+          as: 'sale_type',
         },
       },
       {
         $unwind: {
-          path: "$brand.stores",
+          path: '$sale_type',
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $lookup: {
-          from: "sale_type",
-          localField: "sale_type",
-          foreignField: "_id",
-          as: "sale_type",
+          from: 'stores',
+          localField: 'brand.stores',
+          foreignField: '_id',
+          as: 'brand.stores',
         },
       },
       {
         $unwind: {
-          path: "$sale_type",
+          path: '$brand.stores',
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $group: {
-          _id: "$sale_type._id",
+          _id: '$sale_type.name',
           data: {
-            $push: "$$ROOT",
+            $push: '$$ROOT',
           },
         },
       },
     ]);
+
     res.status(200).json({ success: true, ads });
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
-
+//Function to send Notification
 const sendNotifications = async (users, brand, AdImage, sale) => {
   for (i = 0; i < users.length; i++) {
     if (io.socket) {
@@ -287,3 +293,57 @@ const sendNotifications = async (users, brand, AdImage, sale) => {
     });
   }
 };
+
+//calculate Distance
+
+//Multiple Brand With Multiple stores
+
+// const findBrandStore = async (latitude, longitude, ads) => {
+//   try {
+//     var R = 6371;
+//     var Stores = [];
+//     var tempStore = [];
+//     lat2 = parseFloat(latitude);
+//     lon2 = parseFloat(longitude);
+//     for (var i = 0; i < ads.length; i++) {
+
+//       for (var j = 0; j < ads.length; j++) {
+
+//       }
+//     }
+//     // for (var h = 0; h < brands.length; h++) {
+//     //   let brand = brands[h];
+//     //   for (var i = 0; i < brand.stores.length; i++) {
+//     //     var lat1 = brand.stores[i].location.lat;
+//     //     var lon1 = brand.stores[i].location.lng;
+//     //     var dLat = parseFloat(((lat2 - lat1) * Math.PI) / 180); // deg2rad below
+//     //     var dLon = parseFloat(((lon2 - lon1) * Math.PI) / 180);
+//     //     var a = parseFloat(
+//     //       0.5 -
+//     //         Math.cos(dLat) / 2 +
+//     //         (Math.cos((lat1 * Math.PI) / 180) *
+//     //           Math.cos((lat2 * Math.PI) / 180) *
+//     //           (1 - Math.cos(dLon))) /
+//     //           2
+//     //     );
+//     //     var distance = parseFloat(R * 2 * Math.asin(Math.sqrt(a)));
+//     //     tempStore.push({
+//     //       store: brand.stores[i],
+//     //       brand: brand,
+//     //       distance: distance,
+//     //     });
+//     //   }
+//     //   console.log(tempStore, 'tempStore');
+//     //   let max = tempStore.reduce(function (prev, current) {
+//     //     return prev.distance <= current.distance ? prev : current;
+//     //   }); //returns object
+//     //   Stores.push(max);
+//     //   max = '';
+//     //   tempStore = [];
+//     // }
+
+//     return Stores;
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// };
