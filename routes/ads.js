@@ -5,12 +5,7 @@
 const router = require('express').Router();
 const ad = require('../controllers/ads');
 const { checkAdminAuth } = require('../middleware/adminAuth');
-const {
-  validateAd,
-  validateAddress,
-  validateSaleInterest,
-  isValidated,
-} = require('../middleware/validators');
+const { validateAd, validateBrandsLength, validateSaleInterest, isValidated } = require('../middleware/validators');
 const { upload } = require('../middleware/multer');
 
 /**
@@ -23,41 +18,23 @@ const { upload } = require('../middleware/multer');
  */
 
 // Create -ad
-router.post(
-  '/',
-  checkAdminAuth,
-  upload.single('image'),
-  validateAd,
-  isValidated,
-  ad.create
-);
+router.post('/', checkAdminAuth, upload.single('image'), validateAd, isValidated, ad.create);
 
 // Read
 router.get('/', ad.getAll); // Get all ads at once
 router.get('/getTrendingAds', ad.trendingAds);
+router.get('/getAdsbyBrands', validateBrandsLength, isValidated, ad.getAdsbyBrands);
 router.get('/:adId', ad.getById); // Get one ad by it's id
 
 // Update
-router.put(
-  '/:adId',
-  checkAdminAuth,
-  upload.single('image'),
-  validateAd,
-  isValidated,
-  ad.update
-);
+router.put('/:adId', checkAdminAuth, upload.single('image'), ad.update);
 
 // Delete
 router.delete('/:adId', checkAdminAuth, ad.delete); // delete a specific Sale by it's id
 
 //getAdsbySaleId
 
-router.post(
-  '/getAdsbySaleId',
-  validateSaleInterest,
-  isValidated,
-  ad.getAdsbySaleId
-);
+router.post('/getAdsbySaleId', validateSaleInterest, isValidated, ad.getAdsbySaleId);
 
 //groupbySaleType
 router.post('/groupbySaleType', ad.groupbySaleType);

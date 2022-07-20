@@ -2,14 +2,10 @@
  * Sale CRUD routes
  * @author Shuja Naqvi
  */
-const router = require("express").Router();
-const sale = require("../controllers/saletypes");
-const { checkAdminAuth } = require("../middleware/adminAuth");
-const {
-  validateSale,
-  validateFindFavourite,
-  isValidated,
-} = require("../middleware/validators");
+const router = require('express').Router();
+const sale = require('../controllers/saletypes');
+const { checkAdminAuth } = require('../middleware/adminAuth');
+const { validateSale, validateFindFavourite, isValidated } = require('../middleware/validators');
 
 /**
  * ////////////////////////// Routes /////////////////////////
@@ -21,19 +17,18 @@ const {
  */
 
 // Create -Sale
-router.post("/", checkAdminAuth, validateSale, isValidated, sale.create);
+router.post('/', checkAdminAuth, validateSale, isValidated, sale.create);
 
 // Read
-router.get("/", sale.getAll); // Get all sales at once
-router.get("/:saleId", sale.getById); // Get one sale by it's id
+router.get('/', sale.getAll); // Get all sales at once
+router.get('/getFavouriteSale/:userId', sale.getFavouriteSale);
+router.get('/:saleId', sale.getById); // Get one sale by it's id
 
 // Update
-router.put("/:saleId", checkAdminAuth, validateSale, isValidated, sale.update);
+router.put('/:saleId', checkAdminAuth, validateSale, isValidated, sale.update);
 
 // Delete
-router.delete("/:saleId", checkAdminAuth, sale.delete); // delete a specific Sale by it's id
-//
-router.post("/getFavouriteSale/:userId", sale.getFavouriteSale);
+router.delete('/:saleId', checkAdminAuth, sale.delete); // delete a specific Sale by it's id
 
 // Export
 module.exports = router;

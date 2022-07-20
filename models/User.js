@@ -2,7 +2,7 @@
  * User schema
  * @author Shuja Naqvi
  */
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // Schema
 const userSchema = new mongoose.Schema(
@@ -52,18 +52,18 @@ const userSchema = new mongoose.Schema(
       },
     ],
     favourites: {
-      brands: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
-      ads: [{ type: mongoose.Schema.Types.ObjectId, ref: "ads" }],
+      brands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'brands' }],
+      ads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ads' }],
     },
     interest: {
-      brands: [{ type: mongoose.Schema.Types.ObjectId, ref: "brands" }],
-      categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
-      sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: "sale_type" }],
+      brands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'brands' }],
+      categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'categories' }],
+      sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'sale_types' }],
     },
     nearby_stores: [
       {
-        brand: { type: mongoose.Schema.Types.ObjectId, ref: "brands" },
-        store: { type: mongoose.Schema.Types.ObjectId, ref: "stores" },
+        brand: { type: mongoose.Schema.Types.ObjectId, ref: 'brands' },
+        store: { type: mongoose.Schema.Types.ObjectId, ref: 'stores' },
         distance: Number,
       },
     ],
@@ -74,4 +74,4 @@ const userSchema = new mongoose.Schema(
 );
 
 // Model
-module.exports = mongoose.model("users", userSchema);
+module.exports = mongoose.model('users', userSchema);

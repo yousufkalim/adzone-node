@@ -35,7 +35,7 @@ exports.findNearByStores = async (latitude, longitude, stores) => {
         return prev.distance > current.distance ? prev : current;
       }); //returns object
       Stores.push(max);
-      max = "";
+      max = '';
       tempStore = [];
     }
     return Stores;
@@ -66,7 +66,6 @@ exports.findStores = async (latitude, longitude, stores) => {
         );
         var distance = parseFloat(R * 2 * Math.asin(Math.sqrt(a)));
         nearByStores.push(distance, stores[i]);
-        console.log(nearByStores, "nearByStores");
       }
     }
 
@@ -107,12 +106,11 @@ exports.findBrandStore = async (latitude, longitude, brands) => {
           distance: distance,
         });
       }
-      console.log(tempStore, "tempStore");
       let max = tempStore.reduce(function (prev, current) {
         return prev.distance <= current.distance ? prev : current;
       }); //returns object
       Stores.push(max);
-      max = "";
+      max = '';
       tempStore = [];
     }
 

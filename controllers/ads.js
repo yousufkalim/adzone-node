@@ -1,6 +1,7 @@
 /**
  * Brand CRUD controllers
  * @author Shuja Naqvi
+ *
  */
 const Brands = require('../models/Brand');
 const Ads = require('../models/Ad');
@@ -34,11 +35,7 @@ exports.create = async (req, res) => {
           'notification_setting.sale': true,
         },
       ],
-      $or: [
-        { 'interest.brands': brand },
-        { 'favourites.brands': brand },
-        { 'interest.sale_type': sale_type },
-      ],
+      $or: [{ 'interest.brands': brand }, { 'favourites.brands': brand }, { 'interest.sale_type': sale_type }],
     });
     if (users.length > 0) {
       await sendNotifications(users, brand, req.body.picture, sale_type.name);
@@ -62,10 +59,7 @@ exports.create = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const ad = await Ads.find()
-      .populate('category')
-      .populate('sale_type')
-      .populate('brand'); // Finding all the ad from db
+    const ad = await Ads.find().populate('category').populate('sale_type').populate('brand'); // Finding all the ad from db
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
@@ -82,11 +76,24 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const adId = req.params.adId; // Getting ad id from URL parameter
-    const ad = await Ads.findById(adId)
-      .populate('category')
-      .populate('sale_type')
-      .populate('brand'); // Finding ad by id
+    const ad = await Ads.findById(adId).populate('category').populate('sale_type').populate('brand'); // Finding ad by id
     res.json({ success: true, ad }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+/**
+ * Get ad by id
+ * @param {object} req
+ * @param {object} res
+ */
+exports.getAdsbyBrands = async (req, res) => {
+  try {
+    const brands = req.body.brands;
+    const ads = await Ads.find({ brand: { $in: brands } }).populate('sale_type');
+    res.json({ success: true, ads }); // Success
   } catch (err) {
     // Error handling
     console.log('Error ----> ', err);
@@ -233,7 +240,7 @@ exports.groupbySaleType = async (req, res) => {
       },
       {
         $lookup: {
-          from: 'sale_type',
+          from: 'sale_types',
           localField: 'sale_type',
           foreignField: '_id',
           as: 'sale_type',
@@ -241,7 +248,7 @@ exports.groupbySaleType = async (req, res) => {
       },
       {
         $unwind: {
-          path: '$sale_type',
+          path: '$sale_types',
           preserveNullAndEmptyArrays: true,
         },
       },
@@ -254,12 +261,6 @@ exports.groupbySaleType = async (req, res) => {
         },
       },
       {
-        $unwind: {
-          path: '$brand.stores',
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
         $group: {
           _id: '$sale_type.name',
           data: {
@@ -268,7 +269,6 @@ exports.groupbySaleType = async (req, res) => {
         },
       },
     ]);
-
     res.status(200).json({ success: true, ads });
   } catch (err) {
     // Error handling

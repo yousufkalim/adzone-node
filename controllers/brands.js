@@ -1,6 +1,7 @@
 /**
  * Brand CRUD controllers
  * @author Shuja Naqvi
+ *
  */
 const Brands = require('../models/Brand');
 const Ads = require('../models/Ad');
@@ -68,12 +69,43 @@ exports.getStoresByBrand = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
     const brand = await Brands.findById(brandId).populate('stores'); // Finding brand by id
-    const stores = await findStores(
-      req.body.address.lat,
-      req.body.address.lng,
-      brand.stores
-    );
+    const stores = await findStores(req.body.address.lat, req.body.address.lng, brand.stores);
     res.json({ success: true, stores }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+/**  Get getStoresByBrand
+ * @param {object} req
+ * @param {object} res
+ */
+exports.getnewBrands = async (req, res) => {
+  try {
+    const brands = await Brands.find().populate('stores').sort({ createdAt: -1 }); // Finding brand by id
+    if (req.body.address) {
+      const stores = await findBrandStore(req.body.address.lat, req.body.address.lng, brands);
+      return res.json({ success: true, brands: stores }); // Success
+    }
+    res.json({ success: true, brands }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+/**  Get getBrandsfrom array of categories
+ * @param {object} req
+ * @param {object} res
+ */
+exports.getBrandsByCategory = async (req, res) => {
+  try {
+    const categories = req.body.categories;
+    const brands = await Brands.find({ category: { $in: categories } });
+    res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
     console.log('Error ----> ', err);
@@ -114,9 +146,7 @@ exports.increaseView = async (req, res) => {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
     const brand = await Brands.findById(brandId);
     if (!brand) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Brand Not Found ...:(' });
+      return res.status(400).json({ success: false, message: 'Brand Not Found ...:(' });
     }
     brand.views = +brand.views + 1; //Increment in views
     await brand.save();
@@ -135,17 +165,9 @@ exports.increaseView = async (req, res) => {
  */
 exports.trendingBrands = async (req, res) => {
   try {
-    const brand = await Brands.find()
-      .populate('category')
-      .populate('stores')
-      .sort({ views: -1 })
-      .limit(8); // Finding ad by id
+    const brand = await Brands.find().populate('category').populate('stores').sort({ views: -1 }).limit(8); // Finding ad by id
 
-    const stores = await findBrandStore(
-      req.body.address.lat,
-      req.body.address.lng,
-      brand
-    );
+    const stores = await findBrandStore(req.body.address.lat, req.body.address.lng, brand);
     res.json({ success: true, stores }); // Success
   } catch (err) {
     // Error handling
@@ -193,20 +215,6 @@ exports.groupbyCategory = async (req, res) => {
           preserveNullAndEmptyArrays: true,
         },
       },
-      // {
-      //   $lookup: {
-      //     from: "ads",
-      //     localField: "ads",
-      //     foreignField: "_id",
-      //     as: "ads",
-      //   },
-      // },
-      // {
-      //   $unwind: {
-      //     path: "$ads",
-      //     preserveNullAndEmptyArrays: true,
-      //   },
-      // },
       {
         $lookup: {
           from: 'categories',
@@ -266,16 +274,24 @@ exports.groupAdsbySaleType = async (req, res) => {
       },
       {
         $lookup: {
-          from: 'stores',
-          localField: 'brand.stores',
+          from: 'sale_types',
+          localField: 'sale_type',
           foreignField: '_id',
-          as: 'brand.stores',
+          as: 'sale_type',
         },
       },
       {
         $unwind: {
-          path: '$brand.stores',
+          path: '$sale_types',
           preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'stores',
+          localField: 'brand.stores',
+          foreignField: '_id',
+          as: 'brand.stores',
         },
       },
       {

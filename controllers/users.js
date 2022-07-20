@@ -2,12 +2,14 @@
  * User CRUD controllers
  * @author Shuja Naqvi
  */
-const Users = require("../models/User");
-const Ads = require("../models/Ad");
-const Brands = require("../models/Brand");
-const Stores = require("../models/Store");
-const bcrypt = require("bcryptjs");
-const { findNearByStores } = require("../utils/findDistance");
+const Users = require('../models/User');
+const Ads = require('../models/Ad');
+const Brands = require('../models/Brand');
+const Stores = require('../models/Store');
+const Category = require('../models/Category');
+const SaleType = require('../models/SaleType');
+const bcrypt = require('bcryptjs');
+const { findNearByStores } = require('../utils/findDistance');
 const bcryptSalt = process.env.BCRYPT_SALT || 10;
 
 /**
@@ -23,9 +25,7 @@ exports.create = async (req, res) => {
     // Extra Validations
     if (existingUser) {
       // If we found existing user in db
-      return res
-        .status(409)
-        .json({ success: false, message: "User already exists." });
+      return res.status(409).json({ success: false, message: 'User already exists.' });
     }
 
     // Getting url of the image
@@ -41,8 +41,8 @@ exports.create = async (req, res) => {
     res.json({ success: true, user }); //Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -57,8 +57,8 @@ exports.getAll = async (req, res) => {
     res.json({ success: true, users }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -71,16 +71,16 @@ exports.getById = async (req, res) => {
   try {
     const userId = req.params.userId; // Getting user id from URL parameter
     const user = await Users.findById(userId)
-      .populate("interest.categories")
-      .populate("interest.brands")
-      .populate("interest.sale_type")
-      .populate("favourites.brands")
-      .populate("favourites.ads"); // Finding user by id
+      .populate('interest.categories')
+      .populate('interest.brands')
+      .populate('interest.sale_type')
+      .populate('favourites.brands')
+      .populate('favourites.ads'); // Finding user by id
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -99,18 +99,15 @@ exports.update = async (req, res) => {
     // If user want to update it's password
 
     if (req.body.password) {
-      req.body.password = bcrypt.hashSync(
-        req.body.password,
-        parseInt(bcryptSalt)
-      );
+      req.body.password = bcrypt.hashSync(req.body.password, parseInt(bcryptSalt));
     }
 
     const user = await Users.findByIdAndUpdate(userId, req.body, { new: true }); // Updating the user
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -124,16 +121,12 @@ exports.addAddress = async (req, res) => {
     const userId = req.params.userId; // Getting user id from URL parameter
     const { address } = req.body;
 
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $push: { locations: address } },
-      { new: true }
-    ); // Updating the user
+    const user = await Users.findByIdAndUpdate(userId, { $push: { locations: address } }, { new: true }); // Updating the user
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -149,8 +142,8 @@ exports.delete = async (req, res) => {
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -163,16 +156,12 @@ exports.updateNotificationSetting = async (req, res) => {
   try {
     const userId = req.params.userId; // Getting user id from URL parameter
     const { notification } = req.body;
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { notification_setting: notification },
-      { new: true }
-    ); // Setting notification
+    const user = await Users.findByIdAndUpdate(userId, { notification_setting: notification }, { new: true }); // Setting notification
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -189,45 +178,37 @@ exports.AddtoFavourites = async (req, res) => {
     if (ad) {
       const existingFav = await Users.findOne({
         _id: userId,
-        "favourites.ads": favid,
+        'favourites.ads': favid,
       });
       if (existingFav) {
         return res.status(404).json({
           success: false,
-          message: "Already Added into Your Favourites",
+          message: 'Already Added into Your Favourites',
         });
       }
-      const user = await Users.findByIdAndUpdate(
-        userId,
-        { $push: { "favourites.ads": favid } },
-        { new: true }
-      );
+      const user = await Users.findByIdAndUpdate(userId, { $push: { 'favourites.ads': favid } }, { new: true });
       return res.json({ success: true, user }); // Success
     }
     const brand = await Brands.findById(favid);
     if (brand) {
       const existingFav = await Users.findOne({
         _id: userId,
-        "favourites.brands": favid,
+        'favourites.brands': favid,
       });
       if (existingFav) {
         return res.status(404).json({
           success: false,
-          message: "Already Added into Your Favourites",
+          message: 'Already Added into Your Favourites',
         });
       }
-      const user = await Users.findByIdAndUpdate(
-        userId,
-        { $push: { "favourites.brands": favid } },
-        { new: true }
-      );
+      const user = await Users.findByIdAndUpdate(userId, { $push: { 'favourites.brands': favid } }, { new: true });
       return res.json({ success: true, user }); // Success
     }
-    return res.json({ success: false, message: "Id not found" }); // Success
+    return res.json({ success: false, message: 'Id not found' }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -244,45 +225,37 @@ exports.RemoveFavourites = async (req, res) => {
     if (ad) {
       const existingFav = await Users.findOne({
         _id: userId,
-        "favourites.ads": favid,
+        'favourites.ads': favid,
       });
       if (!existingFav) {
         return res.status(404).json({
           success: false,
-          message: "Already Removed",
+          message: 'Already Removed',
         });
       }
-      const user = await Users.findByIdAndUpdate(
-        userId,
-        { $pull: { "favourites.ads": favid } },
-        { new: true }
-      );
+      const user = await Users.findByIdAndUpdate(userId, { $pull: { 'favourites.ads': favid } }, { new: true });
       return res.json({ success: true, user }); // Success
     }
     const brand = await Brands.findById(favid);
     if (brand) {
       const existingFav = await Users.findOne({
         _id: userId,
-        "favourites.brands": favid,
+        'favourites.brands': favid,
       });
       if (!existingFav) {
         return res.status(404).json({
           success: false,
-          message: "Already Removed",
+          message: 'Already Removed',
         });
       }
-      const user = await Users.findByIdAndUpdate(
-        userId,
-        { $pull: { "favourites.brands": favid } },
-        { new: true }
-      );
+      const user = await Users.findByIdAndUpdate(userId, { $pull: { 'favourites.brands': favid } }, { new: true });
       return res.json({ success: true, user }); // Success
     }
-    res.json({ success: false, message: "Id not found" }); // Success
+    res.json({ success: false, message: 'Id not found' }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -297,24 +270,20 @@ exports.AddSaleInterest = async (req, res) => {
     const { sale } = req.body;
     const existingFav = await Users.findOne({
       _id: userId,
-      "interest.sale_type": sale,
+      'interest.sale_type': sale,
     });
     if (existingFav) {
       return res.status(404).json({
         success: false,
-        message: "Already Added into Your Inetrest",
+        message: 'Already Added into Your Inetrest',
       });
     }
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $push: { "interest.sale_type": sale } },
-      { new: true }
-    );
+    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.sale_type': sale } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -329,24 +298,20 @@ exports.AddBrandInterest = async (req, res) => {
     const { brand } = req.body;
     const existingFav = await Users.findOne({
       _id: userId,
-      "interest.brands": brand,
+      'interest.brands': brand,
     });
     if (existingFav) {
       return res.status(404).json({
         success: false,
-        message: "Already Added into Your Inetrest",
+        message: 'Already Added into Your Inetrest',
       });
     }
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $push: { "interest.brands": brand } },
-      { new: true }
-    );
+    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.brands': brand } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -361,24 +326,20 @@ exports.AddCatgoryInterest = async (req, res) => {
     const { category } = req.body;
     const existingFav = await Users.findOne({
       _id: userId,
-      "interest.categories": category,
+      'interest.categories': category,
     });
     if (existingFav) {
       return res.status(404).json({
         success: false,
-        message: "Already Added into Your Inetrest",
+        message: 'Already Added into Your Inetrest',
       });
     }
-    const user = await Users.findByIdAndUpdate(
-      userId,
-      { $push: { "interest.categories": category } },
-      { new: true }
-    );
+    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.categories': category } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling-
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -394,16 +355,16 @@ exports.FavouriteSale = async (req, res) => {
     const ads = await Ads.find({
       sale_type: { $in: userInterest.interest.sale_type },
     }).populate({
-      path: "brand",
+      path: 'brand',
       populate: {
-        path: "stores",
+        path: 'stores',
       },
     });
     res.json({ success: true, ads: ads }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -417,43 +378,34 @@ exports.nearByStores = async (req, res) => {
     let stores = await Stores.aggregate([
       {
         $lookup: {
-          from: "brands",
-          localField: "brand",
-          foreignField: "_id",
-          as: "brand",
+          from: 'brands',
+          localField: 'brand',
+          foreignField: '_id',
+          as: 'brand',
         },
       },
       {
         $unwind: {
-          path: "$brand",
+          path: '$brand',
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $group: {
-          _id: "$brand._id",
+          _id: '$brand._id',
           storeData: {
-            $push: "$$ROOT",
+            $push: '$$ROOT',
           },
         },
       },
     ]);
-    const NearByStores = await findNearByStores(
-      req.body.address.lat,
-      req.body.address.lng,
-      stores
-    );
-    const user = await Users.findByIdAndUpdate(
-      req.body.userId,
-      { nearby_stores: NearByStores },
-      { new: true }
-    );
-    console.log(user, "u");
+    const NearByStores = await findNearByStores(req.body.address.lat, req.body.address.lng, stores);
+    const user = await Users.findByIdAndUpdate(req.body.userId, { nearby_stores: NearByStores }, { new: true });
     res.status(200).json({ success: true, user });
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -467,23 +419,73 @@ exports.getFavouriteBrands = async (req, res) => {
     const userId = req.params.userId; // Getting sale id from URL parameter
     const user = await Users.findById(userId)
       .populate({
-        path: "nearby_stores",
+        path: 'nearby_stores',
         populate: {
-          path: "brand",
+          path: 'brand',
         },
       })
-      .populate("nearby_stores.store");
+      .populate('nearby_stores.store');
 
-    const favBrand = user.nearby_stores.filter((e) =>
-      user.favourites.brands.includes(e.brand._id)
-    );
+    const favBrand = user.nearby_stores.filter((e) => user.favourites.brands.includes(e.brand._id));
     res.json({
       success: true,
       nearby_stores: favBrand,
     }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+/**
+ * Search by Keyword
+ * @param {object} req
+ * @param {object} res
+ */
+exports.search = async (req, res) => {
+  try {
+    const { keyword } = req.body;
+    let [categoriesIds, saleIds, brandIds] = [[], [], []];
+    const categories = await Category.find({ name: { $regex: keyword, $options: '$i' } });
+    const sales = await SaleType.find({ name: { $regex: keyword, $options: '$i' } });
+    if (categories.length > 0) {
+      categoriesIds = categories.map((e) => {
+        return e._id;
+      });
+    }
+    if (sales.length > 0) {
+      sales.forEach((e) => {
+        saleIds.push(e._id);
+      });
+    }
+    const brands = await Brands.find({
+      $or: [{ name: { $regex: keyword, $options: '$i' } }, { category: { $in: categoriesIds } }],
+    }).populate('stores');
+    if (brands.length > 0) {
+      for (let i = 0; i < brands.length; i++) {
+        brandIds.push(brands[i]._id);
+      }
+    }
+    const ads = await Ads.find({
+      $or: [
+        { name: { $regex: keyword, $options: '$i' } },
+        { category: { $in: categoriesIds } },
+        { brand: { $in: brands } },
+        { sale_type: { $in: saleIds } },
+      ],
+    })
+      .populate({
+        path: 'brand',
+        populate: {
+          path: 'stores',
+        },
+      })
+      .populate('sale_type')
+      .populate('category');
+    res.json({ brands: brands, ads: ads });
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
