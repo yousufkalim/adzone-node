@@ -59,7 +59,15 @@ exports.create = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const ad = await Ads.find().populate('category').populate('sale_type').populate('brand'); // Finding all the ad from db
+    const ad = await Ads.find()
+      .populate('category')
+      .populate('sale_type')
+      .populate({
+        path: 'brand',
+        populate: {
+          path: 'stores',
+        },
+      }); // Finding all the ad from db
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
@@ -76,7 +84,15 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const adId = req.params.adId; // Getting ad id from URL parameter
-    const ad = await Ads.findById(adId).populate('category').populate('sale_type').populate('brand'); // Finding ad by id
+    const ad = await Ads.findById(adId)
+      .populate('category')
+      .populate('sale_type')
+      .populate({
+        path: 'brand',
+        populate: {
+          path: 'stores',
+        },
+      }); // Finding ad by id
     res.json({ success: true, ad }); // Success
   } catch (err) {
     // Error handling
