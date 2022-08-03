@@ -268,16 +268,7 @@ exports.AddSaleInterest = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
     const { sale } = req.body;
-    const existingFav = await Users.findOne({
-      _id: userId,
-      'interest.sale_type': sale,
-    });
-    if (existingFav) {
-      return res.status(404).json({
-        success: false,
-        message: 'Already Added into Your Inetrest',
-      });
-    }
+
     const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.sale_type': sale } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
@@ -295,18 +286,8 @@ exports.AddSaleInterest = async (req, res) => {
 exports.AddBrandInterest = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
-    const { brand } = req.body;
-    const existingFav = await Users.findOne({
-      _id: userId,
-      'interest.brands': brand,
-    });
-    if (existingFav) {
-      return res.status(404).json({
-        success: false,
-        message: 'Already Added into Your Inetrest',
-      });
-    }
-    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.brands': brand } }, { new: true });
+    const { brands } = req.body;
+    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.brands': brands } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -323,18 +304,21 @@ exports.AddBrandInterest = async (req, res) => {
 exports.AddCatgoryInterest = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
-    const { category } = req.body;
-    const existingFav = await Users.findOne({
-      _id: userId,
-      'interest.categories': category,
-    });
-    if (existingFav) {
-      return res.status(404).json({
-        success: false,
-        message: 'Already Added into Your Inetrest',
-      });
-    }
-    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.categories': category } }, { new: true });
+    const { categories } = req.body;
+    // const existingFav = await Users.findOne({
+    //   _id: userId,
+    //   'interest.categories': category,
+    // });
+    // if (existingFav) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: 'Already Added into Your Inetrest',
+    //   });
+    // }
+    // const user = await Users.findById(userId);
+    // user.interest.categories.push(categories);
+    // await user.save();
+    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.categories': categories } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling-

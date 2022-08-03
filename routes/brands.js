@@ -28,14 +28,15 @@ router.post('/', checkAdminAuth, upload.single('image'), validateBrand, isValida
 
 // Read
 router.get('/', brand.getAll); // Get all brands at once
-router.get('/getTrendingBrands', validateAddress, isValidated, brand.trendingBrands); //Get Trending Brands
+router.post('/getTrendingBrands', validateAddress, isValidated, brand.trendingBrands); //Get Trending Brands
 router.get('/getnewBrands', brand.getnewBrands); //Get Trending Brands
 //Group
 router.get('/groupbyCategory', brand.groupbyCategory); // Group Brands by categories
 router.get('/groupAdsbySaleType', validateBrandFavourites, isValidated, brand.groupAdsbySaleType); // Group Brands by SaleType
 router.get('/getBrandsByCategory', validateCategoriesLength, isValidated, brand.getBrandsByCategory); //Get Brands by categories
-router.get('/:brandId', brand.getById); // Get one brand by it's id
-
+router.get('/relatedbrands/:categoryId', brand.relatedBrands); // Group Brands by SaleType
+router.put('/:brandId', brand.getById); // Get one brand by it's id
+//relatedbrands
 // Update
 router.put(
   '/:brandId',
@@ -50,7 +51,7 @@ router.put(
 router.delete('/:brandId', checkAdminAuth, brand.delete); // delete a specific Sale by it's id
 
 //get NearBy stores of a brand
-router.get('/getStoresByBrand/:brandId', validateAddress, isValidated, brand.getStoresByBrand);
+router.post('/getStoresByBrand/:brandId', validateAddress, isValidated, brand.getStoresByBrand);
 
 //Increase view of a brand
 router.put('/increaseView/:brandId', brand.increaseView);

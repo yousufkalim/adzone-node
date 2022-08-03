@@ -24,6 +24,7 @@ router.post('/', checkAdminAuth, upload.single('image'), validateAd, isValidated
 router.get('/', ad.getAll); // Get all ads at once
 router.get('/getTrendingAds', ad.trendingAds);
 router.get('/getAdsbyBrands', validateBrandsLength, isValidated, ad.getAdsbyBrands);
+router.get('/relatedAds/:categoryId', ad.relatedAds); // Group Brands by SaleType
 router.get('/:adId', ad.getById); // Get one ad by it's id
 
 // Update

@@ -71,11 +71,13 @@ exports.validateNotificationSetting = [
 
 exports.validateFavourites = [check('favid', 'favid Id is required.').notEmpty().trim()];
 exports.validateBrandFavourites = [check('brand', 'Brand Id is required.').notEmpty().trim()];
-
+//check('countries', 'countries required').isArray({ min: 1 }),
 exports.validateSaleInterest = [check('sale', 'SaleTypeId is required.').notEmpty().trim()];
+exports.validateSaleLength = [check('sale', 'saleId required').isArray({ min: 1 })];
 exports.validateCategoryInterest = [check('category', 'categoryId is required.').notEmpty().trim()];
 exports.validateCategoriesLength = [check('categories', 'categories  required.').isArray({ min: 1, max: 10 })];
 exports.validateBrandsLength = [check('brands', 'brands  required.').isArray({ min: 1, max: 10 })];
+
 // Login validation
 exports.validateLogin = [
   check('email', 'Email is required').notEmpty().isEmail().trim().toLowerCase(),

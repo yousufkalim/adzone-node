@@ -16,8 +16,9 @@ const {
   validateFavourites,
   validateAddress,
   validateBrandFavourites,
-  validateCategoryInterest,
-  validateSaleInterest,
+  validateBrandsLength,
+  validateCategoriesLength,
+  validateSaleLength,
   validateKeywords,
   validateFindFavourite,
   isValidated,
@@ -59,11 +60,11 @@ router.put('/Addtofavourite/:userId', checkAuth, validateFavourites, isValidated
 router.put('/RemoveFavourites/:userId', checkAuth, validateFavourites, isValidated, users.RemoveFavourites);
 
 //ADD Sale to  Interest
-router.put('/InterestSale/:userId', checkAuth, validateSaleInterest, isValidated, users.AddSaleInterest);
+router.put('/InterestSale/:userId', checkAuth, validateSaleLength, isValidated, users.AddSaleInterest);
 //ADD Brand to  Interest
-router.put('/InterestBrand/:userId', checkAuth, validateBrandFavourites, isValidated, users.AddBrandInterest);
+router.put('/InterestBrand/:userId', checkAuth, validateBrandsLength, isValidated, users.AddBrandInterest);
 //ADD Category to  Interest
-router.put('/InterestCategory/:userId', checkAuth, validateCategoryInterest, isValidated, users.AddCatgoryInterest);
+router.put('/InterestCategory/:userId', checkAuth, validateCategoriesLength, isValidated, users.AddCatgoryInterest);
 
 // router.post("/checkuser/:userId", validateUserId, users.checkUser);
 

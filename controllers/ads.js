@@ -189,7 +189,31 @@ exports.delete = async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
-
+/**
+ * Get ads by categoryId
+ *      realtedBrands
+ * @param {object} req
+ * @param {object} res
+ */
+exports.relatedAds = async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId; // Getting categoryId from URL parameter
+    const brands = await Ads.find({ category: categoryId })
+      .populate('category')
+      .populate('sale_type')
+      .populate({
+        path: 'brand',
+        populate: {
+          path: 'stores',
+        },
+      }); // Finding brand by categoryId
+    res.json({ success: true, brands }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
 /**
  * Get Brand By Id
  * @param {object} req

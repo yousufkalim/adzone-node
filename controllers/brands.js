@@ -6,7 +6,7 @@
 const Brands = require('../models/Brand');
 const Ads = require('../models/Ad');
 const mongoose = require('mongoose');
-const { findStores, findBrandStore } = require('../utils/findDistance');
+const { findStores, findBrandStore, findMybrandStores } = require('../utils/findDistance');
 /**
  * Create brand
  * @param {object} req
@@ -35,7 +35,7 @@ exports.create = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const brands = await Brands.find(); // Finding all the brands from db
+    const brands = await Brands.find().populate('stores').sort({ views: -1 }); // Finding all the brands from db
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
@@ -53,7 +53,31 @@ exports.getById = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
     const brand = await Brands.findById(brandId).populate('stores'); // Finding brand by id
+    //if user send location
+    if (req?.body?.location?.lat && req?.body?.location?.lng && brand.stores.length > 1) {
+      const NearByStore = await findMybrandStores(req.body.location.lat, req.body.location.lng, brand.stores);
+      console.log(NearByStore, 'NearByStore');
+      return res.json({ success: true, brand, nearByStore: NearByStore }); // Success
+    }
     res.json({ success: true, brand }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+/**
+ * Get brand by categoryId
+ *      realtedBrands
+ * @param {object} req
+ * @param {object} res
+ */
+exports.relatedBrands = async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId; // Getting categoryId from URL parameter
+    const brands = await Brands.find({ category: categoryId }).populate('stores'); // Finding brand by categoryId
+    res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
     console.log('Error ----> ', err);
@@ -85,7 +109,7 @@ exports.getStoresByBrand = async (req, res) => {
 exports.getnewBrands = async (req, res) => {
   try {
     const brands = await Brands.find().populate('stores').sort({ createdAt: -1 }); // Finding brand by id
-    if (req.body.address) {
+    if (req?.body?.address) {
       const stores = await findBrandStore(req.body.address.lat, req.body.address.lng, brands);
       return res.json({ success: true, brands: stores }); // Success
     }
