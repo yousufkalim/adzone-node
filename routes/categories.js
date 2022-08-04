@@ -2,10 +2,10 @@
  * category CRUD routes
  * @author Shuja Naqvi
  */
-const router = require("express").Router();
-const category = require("../controllers/categories");
-const { checkAdminAuth } = require("../middleware/adminAuth");
-const { validateCategory, isValidated } = require("../middleware/validators");
+const router = require('express').Router();
+const category = require('../controllers/categories');
+const { checkAdminAuth } = require('../middleware/adminAuth');
+const { validateCategory, isValidated } = require('../middleware/validators');
 
 /**
  * ////////////////////////// Routes /////////////////////////
@@ -17,29 +17,17 @@ const { validateCategory, isValidated } = require("../middleware/validators");
  */
 
 // Create -category
-router.post(
-  "/",
-  checkAdminAuth,
-  validateCategory,
-  isValidated,
-  category.create
-);
+router.post('/', checkAdminAuth, validateCategory, isValidated, category.create);
 
 // Read
-router.get("/", category.getAll); // Get all categorys at once
-router.get("/:categoryId", category.getById); // Get one category by it's id
+router.get('/', category.getAll); // Get all categorys at once
+router.get('/:categoryId', category.getById); // Get one category by it's id
 
 // Update
-router.put(
-  "/:categoryId",
-  checkAdminAuth,
-  validateCategory,
-  isValidated,
-  category.update
-);
+router.put('/:categoryId', checkAdminAuth, validateCategory, isValidated, category.update);
 
 // Delete
-router.delete("/:categoryId", checkAdminAuth, category.delete); // delete a specific Sale by it's id
+router.delete('/:categoryId', checkAdminAuth, category.delete); // delete a specific Sale by it's id
 
 // Export
 module.exports = router;

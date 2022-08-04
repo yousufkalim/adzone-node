@@ -1,8 +1,9 @@
 /**
  * Tags CRUD controllers
  * @author Shuja Naqvi
+ * //
  */
-const Tag = require('../models/tag');
+const Tag = require('../models/Tag');
 
 /**
  * Create tag

@@ -2,15 +2,11 @@
  * Store CRUD routes
  * @author Shuja Naqvi
  */
-const router = require("express").Router();
-const store = require("../controllers/stores");
-const { checkAdminAuth } = require("../middleware/adminAuth");
-const {
-  validatestore,
-  validateAddress,
-  isValidated,
-} = require("../middleware/validators");
-const { upload } = require("../middleware/multer");
+const router = require('express').Router();
+const store = require('../controllers/stores');
+const { checkAdminAuth } = require('../middleware/adminAuth');
+const { validatestore, validateAddress, isValidated } = require('../middleware/validators');
+const { upload } = require('../middleware/multer');
 
 /**
  * ////////////////////////// Routes /////////////////////////
@@ -22,34 +18,20 @@ const { upload } = require("../middleware/multer");
  */
 
 // Create -store
-router.post(
-  "/",
-  checkAdminAuth,
-  upload.single("image"),
-  validatestore,
-  isValidated,
-  store.create
-);
+router.post('/', checkAdminAuth, upload.single('image'), validatestore, isValidated, store.create);
 
 // Read
-router.get("/", store.getAll); // Get all stores at once
-router.get("/:storeId", store.getById); // Get one store by it's id
+router.get('/', store.getAll); // Get all stores at once
+router.get('/:storeId', store.getById); // Get one store by it's id
 
 // Update
-router.put(
-  "/:storeId",
-  checkAdminAuth,
-  upload.single("image"),
-  validatestore,
-  isValidated,
-  store.update
-);
+router.put('/:storeId', checkAdminAuth, upload.single('image'), validatestore, isValidated, store.update);
 
 //Find NearBy Stores
-router.post("/nearByStores", validateAddress, isValidated, store.nearByStores);
+router.post('/nearByStores', validateAddress, isValidated, store.nearByStores);
 
 // Delete
-router.delete("/:storeId", checkAdminAuth, store.delete); // delete a specific Sale by it's id
+router.delete('/:storeId', checkAdminAuth, store.delete); // delete a specific Sale by it's id
 
 // Export
 module.exports = router;

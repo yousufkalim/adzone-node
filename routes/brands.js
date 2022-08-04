@@ -32,8 +32,8 @@ router.post('/getTrendingBrands', validateAddress, isValidated, brand.trendingBr
 router.get('/getnewBrands', brand.getnewBrands); //Get Trending Brands
 //Group
 router.get('/groupbyCategory', brand.groupbyCategory); // Group Brands by categories
-router.get('/groupAdsbySaleType', validateBrandFavourites, isValidated, brand.groupAdsbySaleType); // Group Brands by SaleType
-router.get('/getBrandsByCategory', validateCategoriesLength, isValidated, brand.getBrandsByCategory); //Get Brands by categories
+router.post('/groupAdsbySaleType', validateBrandFavourites, isValidated, brand.groupAdsbySaleType); // Group Brands by SaleType
+router.post('/getBrandsByCategory', validateCategoriesLength, isValidated, brand.getBrandsByCategory); //Get Brands by categories
 router.get('/relatedbrands/:categoryId', brand.relatedBrands); // Group Brands by SaleType
 router.put('/:brandId', brand.getById); // Get one brand by it's id
 //relatedbrands
