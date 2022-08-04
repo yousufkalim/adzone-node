@@ -38,7 +38,7 @@ router.post('/', upload.single('image'), validateUser, isValidated, users.create
 
 // Read
 router.get('/', checkAdminAuth, users.getAll); // Get all users at once
-router.get('/search', validateKeywords, isValidated, users.search);
+router.post('/search', validateKeywords, isValidated, users.search);
 router.get('/:userId', users.getById); // Get one user by it's id
 
 // Update
