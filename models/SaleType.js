@@ -1,6 +1,7 @@
 /**
  * SaleType schema
  * @author Shuja Naqvi
+ *
  */
 const mongoose = require('mongoose');
 
@@ -15,4 +16,4 @@ const SaleTypeSchema = new mongoose.Schema(
 );
 
 // Model
-module.exports = mongoose.model('sale_type', SaleTypeSchema);
+module.exports = mongoose.model('sale_types', SaleTypeSchema);

@@ -2,12 +2,12 @@
  * Store CRUD controllers
  * @author Shuja Naqvi
  */
-const Stores = require("../models/Store");
-const Brands = require("../models/Brand");
-const Users = require("../models/User");
-const Notifications = require("../models/Notification");
-const { findStores } = require("../utils/findDistance");
-const io = require("../index");
+const Stores = require('../models/Store');
+const Brands = require('../models/Brand');
+const Users = require('../models/User');
+const Notifications = require('../models/Notification');
+const { findStores } = require('../utils/findDistance');
+const io = require('../index');
 /**
  * Create  store
  * @param {object} req
@@ -21,11 +21,11 @@ exports.create = async (req, res) => {
     }
     const brand = await Brands.findById(req.body.brand); // Finding brand by id
     if (!brand) {
-      return res.json({ success: false, message: "Brand not exist" }); //Success
+      return res.json({ success: false, message: 'Brand not exist' }); //Success
     }
     const users = await Users.find({
-      "notification_setting.brand": true,
-      $or: [{ "interest.brands": brand }, { "favourites.brands": brand }],
+      'notification_setting.brand': true,
+      $or: [{ 'interest.brands': brand }, { 'favourites.brands': brand }],
     });
     if (users.length > 0) {
       await sendNotifications(users, brand);
@@ -37,8 +37,8 @@ exports.create = async (req, res) => {
     res.json({ success: true, store }); //Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -49,12 +49,12 @@ exports.create = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const stores = await Stores.find().populate("brand"); // Finding all the stores from db
+    const stores = await Stores.find().populate('brand'); // Finding all the stores from db
     res.json({ success: true, stores }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -66,12 +66,12 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const storeId = req.params.storeId; // Getting store id from URL parameter
-    const store = await Stores.findById(storeId).populate("brand");
+    const store = await Stores.findById(storeId).populate('brand');
     res.json({ success: true, store }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -93,8 +93,8 @@ exports.update = async (req, res) => {
     res.json({ success: true, store }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -110,24 +110,20 @@ exports.delete = async (req, res) => {
     res.json({ success: true, store }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 //Get NearBy Stores
 exports.nearByStores = async (req, res) => {
   try {
-    const stores = await Stores.find().populate("brand"); // Finding all the stores from db
-    const nearByStores = findStores(
-      req.body.address.lat,
-      req.body.address.lng,
-      stores
-    );
+    const stores = await Stores.find().populate('brand'); // Finding all the stores from db
+    const nearByStores = findStores(req.body.address.lat, req.body.address.lng, stores);
     res.json({ success: true, nearByStores }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
