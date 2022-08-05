@@ -128,7 +128,7 @@ exports.getnewBrands = async (req, res) => {
 exports.getBrandsByCategory = async (req, res) => {
   try {
     const categories = req.body.categories;
-    const brands = await Brands.find({ category: { $in: categories } });
+    const brands = await Brands.find({ category: { $in: categories } }).populate('stores');
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
