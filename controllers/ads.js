@@ -108,7 +108,15 @@ exports.getById = async (req, res) => {
 exports.getAdsbyBrands = async (req, res) => {
   try {
     const brands = req.body.brands;
-    const ads = await Ads.find({ brand: { $in: brands } }).populate('sale_type');
+    const ads = await Ads.find({ brand: { $in: brands } })
+      .populate('sale_type')
+      .populate('category')
+      .populate({
+        path: 'brand',
+        populate: {
+          path: 'stores',
+        },
+      });
     res.json({ success: true, ads }); // Success
   } catch (err) {
     // Error handling
@@ -124,7 +132,6 @@ exports.getAdsbyBrands = async (req, res) => {
  */
 exports.trendingAds = async (req, res) => {
   try {
-    console.log('Trending ads req');
     const ads = await Ads.find()
       .populate('category')
       .populate('sale_type')
@@ -179,6 +186,7 @@ exports.increaseView = async (req, res) => {
     if (!ad) {
       return res.status(400).json({ success: false, message: 'Ad not found' });
     }
+
     ad.views = +ad.views + 1; //Increment in views
     await ad.save();
     res.json({ success: true, ad }); // Success
@@ -292,6 +300,21 @@ exports.groupbySaleType = async (req, res) => {
           preserveNullAndEmptyArrays: true,
         },
       },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+      {
+        $unwind: {
+          path: '$categories',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+
       {
         $lookup: {
           from: 'stores',
