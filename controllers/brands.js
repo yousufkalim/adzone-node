@@ -76,7 +76,7 @@ exports.getById = async (req, res) => {
 exports.relatedBrands = async (req, res) => {
   try {
     const categoryId = req.params.categoryId; // Getting categoryId from URL parameter
-    const brands = await Brands.find({ category: categoryId }).populate('stores'); // Finding brand by categoryId
+    const brands = await Brands.find({ category: categoryId }).populate('stores').populate('category'); // Finding brand by categoryId
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
@@ -92,7 +92,7 @@ exports.relatedBrands = async (req, res) => {
 exports.getStoresByBrand = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
-    const brand = await Brands.findById(brandId).populate('stores'); // Finding brand by id
+    const brand = await Brands.findById(brandId).populate('stores').populate('category'); // Finding brand by id
     const stores = await findStores(req.body.address.lat, req.body.address.lng, brand.stores);
     res.json({ success: true, stores }); // Success
   } catch (err) {
@@ -108,7 +108,7 @@ exports.getStoresByBrand = async (req, res) => {
  */
 exports.getnewBrands = async (req, res) => {
   try {
-    const brands = await Brands.find().populate('stores').sort({ createdAt: -1 }); // Finding brand by id
+    const brands = await Brands.find().populate('stores').populate('category').sort({ createdAt: -1 }); // Finding brand by id
     if (req?.body?.address) {
       const stores = await findBrandStore(req.body.address.lat, req.body.address.lng, brands);
       return res.json({ success: true, brands: stores }); // Success
@@ -128,7 +128,9 @@ exports.getnewBrands = async (req, res) => {
 exports.getBrandsByCategory = async (req, res) => {
   try {
     const categories = req.body.categories;
-    const brands = await Brands.find({ category: { $in: categories } }).populate('stores');
+    const brands = await Brands.find({ category: { $in: categories } })
+      .populate('stores')
+      .populate('category');
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
@@ -293,6 +295,20 @@ exports.groupAdsbySaleType = async (req, res) => {
       {
         $unwind: {
           path: '$brand',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+      {
+        $unwind: {
+          path: '$category',
           preserveNullAndEmptyArrays: true,
         },
       },
