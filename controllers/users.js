@@ -186,7 +186,15 @@ exports.AddtoFavourites = async (req, res) => {
           message: 'Already Added into Your Favourites',
         });
       }
-      const user = await Users.findByIdAndUpdate(userId, { $push: { 'favourites.ads': favid } }, { new: true });
+      let user = await Users.findByIdAndUpdate(userId, { $push: { 'favourites.ads': favid } }, { new: true });
+      const existingSale = await Users.findOne({
+        _id: userId,
+        'interest.sale_type': ad.sale_type,
+      });
+      if (!existingSale) {
+        user.interest.sale_type.push(ad.sale_type);
+        await user.save();
+      }
       return res.json({ success: true, user }); // Success
     }
     const brand = await Brands.findById(favid);
@@ -234,6 +242,13 @@ exports.RemoveFavourites = async (req, res) => {
         });
       }
       const user = await Users.findByIdAndUpdate(userId, { $pull: { 'favourites.ads': favid } }, { new: true });
+      const existingSale = await Users.findOne({
+        _id: userId,
+        'interest.sale_type': ad.sale_type,
+      });
+      if (existingSale) {
+        const user = await Users.findByIdAndUpdate(userId, { $pull: { 'interest.sale_type': ad.sale_type } }, { new: true });
+      }
       return res.json({ success: true, user }); // Success
     }
     const brand = await Brands.findById(favid);

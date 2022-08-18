@@ -69,7 +69,7 @@ router.put('/InterestCategory/:userId', checkAuth, validateCategoriesLength, isV
 // router.post("/checkuser/:userId", validateUserId, users.checkUser);
 
 // Delete
-router.delete('/:userId', checkAdminAuth, users.delete); // delete a specific user by it's id
+router.delete('/:userId', users.delete); // delete a specific user by it's id
 
 // Favourite sale
 router.post('/FavouriteSale', validateFindFavourite, isValidated, users.FavouriteSale);
