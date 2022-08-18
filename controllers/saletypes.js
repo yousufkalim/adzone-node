@@ -5,6 +5,7 @@
 const SaleType = require('../models/SaleType');
 const Users = require('../models/User');
 const Ads = require('../models/Ad');
+//
 
 /**
  * Create Sale-Type
