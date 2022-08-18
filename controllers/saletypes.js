@@ -5,6 +5,7 @@
 const SaleType = require('../models/SaleType');
 const Users = require('../models/User');
 const Ads = require('../models/Ad');
+//
 
 /**
  * Create Sale-Type
@@ -113,17 +114,17 @@ exports.getFavouriteSale = async (req, res) => {
       })
       .populate('category')
       .populate('sale_type');
-    let favsale = [];
-    for (let i = 0; i < ads.length; i++) {
-      for (let j = 0; j < userInterest.nearby_stores.length; j++) {
-        if (ads[i].brand._id.equals(userInterest.nearby_stores[j].brand)) {
-          favsale.push(ads[i], userInterest.nearby_stores[j].distance);
-        }
-      }
-    }
+    // let favsale = [];
+    // for (let i = 0; i < ads.length; i++) {
+    //   for (let j = 0; j < userInterest.nearby_stores.length; j++) {
+    //     if (ads[i].brand._id.equals(userInterest.nearby_stores[j].brand)) {
+    //       favsale.push(ads[i], userInterest.nearby_stores[j].distance);
+    //     }
+    //   }
+    // }
     res.json({
       success: true,
-      favsale: favsale,
+      favsale: ads,
     }); // Success
   } catch (err) {
     // Error handling
