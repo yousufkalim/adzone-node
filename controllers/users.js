@@ -352,7 +352,11 @@ exports.FavouriteSale = async (req, res) => {
     const { user } = req.body; // Getting sale id from URL parameter
     const userInterest = await Users.findById(user);
     const ads = await Ads.find({
-      sale_type: { $in: userInterest.interest.sale_type },
+      $or: [
+        { sale_type: { $in: userInterest.interest.sale_type } },
+        { brand: { $in: userInterest.interest.brands } },
+        { category: { $in: userInterest.interest.categories } },
+      ],
     }).populate({
       path: 'brand',
       populate: {
