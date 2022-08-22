@@ -77,8 +77,10 @@ router.post('/FavouriteSale', validateFindFavourite, isValidated, users.Favourit
 // Set nearBY Stores
 router.post('/nearByStores', validateAddress, isValidated, users.nearByStores);
 //
+//
 
 router.get('/getFavouriteBrands/:userId', users.FavouriteBrands);
 router.get('/getFavouriteAds/:userId', users.FavouriteAds);
+router.get('/brandsforyou/:userId', users.InterestBrands);
 // Export
 module.exports = router;
