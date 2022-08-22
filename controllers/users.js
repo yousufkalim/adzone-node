@@ -372,6 +372,28 @@ exports.FavouriteSale = async (req, res) => {
 };
 
 /**
+ * Find user
+ * @param {object} req
+ * @param {object} res
+ */
+exports.InterestBrands = async (req, res) => {
+  try {
+    const { userId } = req.params; // Getting sale id from URL parameter
+    const userInterest = await Users.findById(userId);
+    const brands = await Brands.find({
+      _id: { $in: userInterest.interest.brands },
+    }).populate({
+      path: 'stores',
+    });
+    res.json({ success: true, brands: brands }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+/**
  * Find FavouriteAds
  * @param {object} req
  * @param {object} res
