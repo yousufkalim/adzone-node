@@ -372,6 +372,53 @@ exports.FavouriteSale = async (req, res) => {
 };
 
 /**
+ * Find FavouriteAds
+ * @param {object} req
+ * @param {object} res
+ */
+exports.FavouriteAds = async (req, res) => {
+  try {
+    const { userId } = req.params; // Getting sale id from URL parameter
+    const userFav = await Users.findById(userId);
+    const ads = await Ads.find({
+      _id: { $in: userFav.favourites.ads },
+    }).populate({
+      path: 'brand',
+      populate: {
+        path: 'stores',
+      },
+    });
+    res.json({ success: true, ads: ads }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+/**
+ * Find FavouriteBrands
+ * @param {object} req
+ * @param {object} res
+ */
+exports.FavouriteBrands = async (req, res) => {
+  try {
+    const { userId } = req.params; // Getting sale id from URL parameter
+    const userFav = await Users.findById(userId);
+    const brands = await Brands.find({
+      _id: { $in: userFav.favourites.brands },
+    }).populate({
+      path: 'stores',
+    });
+    res.json({ success: true, brands: brands }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+/**
  * Get All Brands Group on the basis of category
  * @param {object} req
  * @param {object} res
@@ -402,7 +449,9 @@ exports.nearByStores = async (req, res) => {
         },
       },
     ]);
+
     const NearByStores = await findNearByStores(req.body.address.lat, req.body.address.lng, stores);
+    console.log(NearByStores, 'NearByStores');
     const user = await Users.findByIdAndUpdate(req.body.userId, { nearby_stores: NearByStores }, { new: true });
     res.status(200).json({ success: true, user });
   } catch (err) {
@@ -428,11 +477,21 @@ exports.getFavouriteBrands = async (req, res) => {
         },
       })
       .populate('nearby_stores.store');
-
+    if (user.nearby_stores.length < 1) {
+      const brands = await Brands.find({
+        _id: { $in: user.favourites.brands },
+      }).populate({
+        path: 'stores',
+      });
+      return res.json({
+        success: true,
+        brands: brands,
+      }); // Success
+    }
     const favBrand = user.nearby_stores.filter((e) => user.favourites.brands.includes(e.brand._id));
     res.json({
       success: true,
-      nearby_stores: favBrand,
+      brands: favBrand,
     }); // Success
   } catch (err) {
     // Error handling

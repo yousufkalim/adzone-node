@@ -11,9 +11,10 @@ exports.findNearByStores = async (latitude, longitude, stores) => {
     const lat2 = parseFloat(latitude);
     const lon2 = parseFloat(longitude);
     for (var i = 0; i < stores.length; i++) {
+      console.log(stores[i], 'stores[i]');
       for (var j = 0; j < stores[i].storeData.length; j++) {
-        var lat1 = stores[i].location.lat;
-        var lon1 = stores[i].location.lng;
+        var lat1 = stores[i].storeData[j].location.lat;
+        var lon1 = stores[i].storeData[j].location.lng;
         var dLat = parseFloat(((lat2 - lat1) * Math.PI) / 180); // deg2rad below
         var dLon = parseFloat(((lon2 - lon1) * Math.PI) / 180);
         var a = parseFloat(
@@ -23,8 +24,8 @@ exports.findNearByStores = async (latitude, longitude, stores) => {
         );
         var distance = parseFloat(R * 2 * Math.asin(Math.sqrt(a)));
         tempStore.push({
-          store: stores[i]._id,
-          brand: stores[i].brand._id,
+          store: stores[i].storeData[j]._id,
+          brand: stores[i].storeData[j].brand._id,
           distance: distance,
         });
       }

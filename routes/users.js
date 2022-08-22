@@ -54,7 +54,7 @@ router.put(
   users.updateNotificationSetting
 );
 //ADD Product to  Favourites
-router.put('/Addtofavourite/:userId', checkAuth, validateFavourites, isValidated, users.AddtoFavourites);
+router.put('/Addtofavourite/:userId', validateFavourites, isValidated, users.AddtoFavourites);
 
 //Removed Product to  Favourites
 router.put('/RemoveFavourites/:userId', checkAuth, validateFavourites, isValidated, users.RemoveFavourites);
@@ -78,6 +78,7 @@ router.post('/FavouriteSale', validateFindFavourite, isValidated, users.Favourit
 router.post('/nearByStores', validateAddress, isValidated, users.nearByStores);
 //
 
-router.get('/getFavouriteBrands/:userId', checkAuth, users.getFavouriteBrands);
+router.get('/getFavouriteBrands/:userId', users.FavouriteBrands);
+router.get('/getFavouriteAds/:userId', users.FavouriteAds);
 // Export
 module.exports = router;
