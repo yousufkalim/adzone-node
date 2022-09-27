@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "deploy": "sudo chmod 644 .git/index && git pull origin main && npm install && sudo pm2 restart 30 && sudo pm2 logs 30"
+    "deploy": "sudo chmod 644 .git/index && git pull origin main && npm install && sudo pm2 restart 30 && sudo pm2 logs 30",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -33,5 +34,10 @@
     "nodemailer": "^6.7.2",
     "socket.io": "^4.5.1",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "prettier": "^2.7.1",
+    "pretty-quick": "^3.1.3"
   }
 }
