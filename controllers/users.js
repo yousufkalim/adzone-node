@@ -374,7 +374,7 @@ exports.FavouriteSale = async (req, res) => {
 /**
  * Find user
  * @param {object} req
- * @param {object} resp
+ * @param {object} res
  */
 exports.InterestBrands = async (req, res) => {
   try {
