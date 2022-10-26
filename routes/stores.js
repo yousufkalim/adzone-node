@@ -18,14 +18,14 @@ const { upload } = require('../middleware/multer');
  */
 
 // Create -store
-router.post('/', upload.single('image'), validatestore, isValidated, store.create);
+router.post('/', checkAdminAuth, upload.single('image'), validatestore, isValidated, store.create);
 
 // Read
 router.get('/', store.getAll); // Get all stores at once
 router.get('/:storeId', store.getById); // Get one store by it's id
 
 // Update
-router.put('/:storeId', upload.single('image'),  store.update);
+router.put('/:storeId', checkAdminAuth, upload.single('image'), validatestore, isValidated, store.update);
 
 //Find NearBy Stores
 router.post('/nearByStores', validateAddress, isValidated, store.nearByStores);
