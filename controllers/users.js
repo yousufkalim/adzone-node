@@ -284,7 +284,7 @@ exports.AddSaleInterest = async (req, res) => {
     const { userId } = req.params; // Getting user id from URL parameter
     const { sale } = req.body;
 
-    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.sale_type': sale } }, { new: true });
+    const user = await Users.findByIdAndUpdate(userId, { $set: { 'interest.sale_type': sale } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -302,7 +302,7 @@ exports.AddBrandInterest = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
     const { brands } = req.body;
-    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.brands': brands } }, { new: true });
+    const user = await Users.findByIdAndUpdate(userId, { $set: { 'interest.brands': brands } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -320,20 +320,8 @@ exports.AddCatgoryInterest = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
     const { categories } = req.body;
-    // const existingFav = await Users.findOne({
-    //   _id: userId,
-    //   'interest.categories': category,
-    // });
-    // if (existingFav) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: 'Already Added into Your Inetrest',
-    //   });
-    // }
-    // const user = await Users.findById(userId);
-    // user.interest.categories.push(categories);
-    // await user.save();
-    const user = await Users.findByIdAndUpdate(userId, { $push: { 'interest.categories': categories } }, { new: true });
+   
+    const user = await Users.findByIdAndUpdate(userId, { $set: { 'interest.categories': categories } }, { new: true });
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling-
@@ -380,6 +368,7 @@ exports.InterestBrands = async (req, res) => {
   try {
     const { userId } = req.params; // Getting sale id from URL parameter
     const userInterest = await Users.findById(userId);
+    console.log(userInterest.interest.brands,"userInterest.interest.brands")
     const brands = await Brands.find({
       _id: { $in: userInterest.interest.brands },
     }).populate({

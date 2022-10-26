@@ -68,9 +68,8 @@ exports.update = async (req, res) => {
     
     const categoryId = req.params.categoryId; // Getting category id from URL parameter
     if(req.file){
-    req.body.photo=req.file.path
+      req.body.photo=req.file.path
       }
-     
     const category = await Category.findByIdAndUpdate(categoryId, req.body, {
       new: true,
     }); // Updating the category
