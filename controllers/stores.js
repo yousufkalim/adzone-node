@@ -16,9 +16,10 @@ const io = require('../index');
 exports.create = async (req, res) => {
   try {
     // Getting url of the image
-    if (req.file) {
+    if (!req.file) {
+      res.status(404).json({ success: false, message: 'Store Picture Required' });
+      }
       req.body.picture = req.file.path; // Creating a new property called photo in body object
-    }
     const brand = await Brands.findById(req.body.brand); // Finding brand by id
     if (!brand) {
       return res.json({ success: false, message: 'Brand not exist' }); //Success

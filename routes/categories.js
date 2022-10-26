@@ -5,6 +5,7 @@
 const router = require('express').Router();
 const category = require('../controllers/categories');
 const { checkAdminAuth } = require('../middleware/adminAuth');
+const {upload }=require("../middleware/multer")
 const { validateCategory, isValidated } = require('../middleware/validators');
 
 /**
@@ -17,14 +18,14 @@ const { validateCategory, isValidated } = require('../middleware/validators');
  */
 
 // Create -category
-router.post('/', checkAdminAuth, validateCategory, isValidated, category.create);
+router.post('/' ,checkAdminAuth,upload.single("image"), validateCategory, isValidated, category.create);
 
 // Read
 router.get('/', category.getAll); // Get all categorys at once
 router.get('/:categoryId', category.getById); // Get one category by it's id
 
 // Update
-router.put('/:categoryId', checkAdminAuth, validateCategory, isValidated, category.update);
+router.put('/:categoryId' ,checkAdminAuth,upload.single("image"), validateCategory, isValidated, category.update);
 
 // Delete
 router.delete('/:categoryId', checkAdminAuth, category.delete); // delete a specific Sale by it's id

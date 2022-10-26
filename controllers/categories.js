@@ -11,6 +11,10 @@ const Category = require("../models/Category");
  */
 exports.create = async (req, res) => {
   try {
+    if(!req.file){
+    return  res.status(404).json({ success: false, message: "File Not Found" });
+    }
+    req.body.photo=req.file.path
     const category = await Category.create(req.body); // Adding category in db
     // Done
     res.json({ success: true, category }); //Success
@@ -61,8 +65,11 @@ exports.getById = async (req, res) => {
  */
 exports.update = async (req, res) => {
   try {
+    
     const categoryId = req.params.categoryId; // Getting category id from URL parameter
-
+    if(req.file){
+      req.body.photo=req.file.path
+      }
     const category = await Category.findByIdAndUpdate(categoryId, req.body, {
       new: true,
     }); // Updating the category

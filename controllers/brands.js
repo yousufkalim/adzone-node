@@ -15,9 +15,11 @@ const { findStores, findBrandStore, findMybrandStores } = require('../utils/find
 exports.create = async (req, res) => {
   try {
     // Getting url of the image
-    if (req.file) {
-      req.body.picture = req.file.path; // Creating a new property called photo in body object
+    
+    if (!req.file) {
+    res.status(404).json({ success: false, message: 'Brand Picture Required' });
     }
+    req.body.picture = req.file.path; // Creating a new property called photo in body object
     const brand = await Brands.create(req.body); // Adding brand in db
     // Done
     res.json({ success: true, brand }); //Success
