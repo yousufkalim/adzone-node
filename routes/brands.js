@@ -35,15 +35,15 @@ router.get('/groupbyCategory', brand.groupbyCategory); // Group Brands by catego
 router.post('/groupAdsbySaleType', validateBrandFavourites, isValidated, brand.groupAdsbySaleType); // Group Brands by SaleType
 router.post('/getBrandsByCategory', validateCategoriesLength, isValidated, brand.getBrandsByCategory); //Get Brands by categories
 router.get('/relatedbrands/:categoryId', brand.relatedBrands); // Group Brands by SaleType
-router.put('/:brandId', brand.getById); // Get one brand by it's id
+router.get('/:brandId', brand.getById); // Get one brand by it's id
 //relatedbrands
 // Update
 router.put(
   '/:brandId',
   checkAdminAuth,
   upload.single('image'),
-  // validateBrand,
-  // isValidated,
+  validateBrand,
+  isValidated,
   brand.update
 );
 

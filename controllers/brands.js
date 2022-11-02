@@ -37,7 +37,7 @@ exports.create = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const brands = await Brands.find().populate('stores').sort({ views: -1 }); // Finding all the brands from db
+    const brands = await Brands.find().populate('stores').populate("category").sort({ views: -1 }); // Finding all the brands from db
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
@@ -54,7 +54,7 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
-    const brand = await Brands.findById(brandId).populate('stores'); // Finding brand by id
+    const brand = await Brands.findById(brandId).populate('stores').populate("category"); // Finding brand by id
     //if user send location
     if (req?.body?.location?.lat && req?.body?.location?.lng && brand.stores.length > 1) {
       const NearByStore = await findMybrandStores(req.body.location.lat, req.body.location.lng, brand.stores);
@@ -148,6 +148,7 @@ exports.getBrandsByCategory = async (req, res) => {
  */
 exports.update = async (req, res) => {
   try {
+    
     const brandId = req.params.brandId; // Getting brand id from URL parameter
     // Getting url of the image
     if (req.file) {
