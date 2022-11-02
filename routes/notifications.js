@@ -14,7 +14,7 @@ const { checkAuth } = require('../middleware/checkAuth');
  */
 
 // Read
-router.get('/getByUser/:userId', checkAuth, notifications.getByUser); // Get all notifications of servants
+router.get('/getByUser/:userId', notifications.getByUser); // Get all notifications of servants
 router.get('/:notificationId', checkAuth, notifications.getById); // Get one notification by it's id
 // Delete
 router.delete('/:notificationId', checkAuth, notifications.delete); // delete a specific quote by it's id

@@ -18,7 +18,7 @@ const { upload } = require('../middleware/multer');
  */
 
 // Create -ad
-router.post('/', checkAdminAuth, upload.single('image'), validateAd, isValidated, ad.create);
+router.post('/', upload.single('image'), validateAd, isValidated, ad.create);
 
 // Read
 router.get('/', ad.getAll); // Get all ads at once
@@ -28,7 +28,7 @@ router.get('/relatedAds/:categoryId', ad.relatedAds); // Group Brands by SaleTyp
 router.get('/:adId', ad.getById); // Get one ad by it's id
 
 // Update
-router.put('/:adId', checkAdminAuth, upload.single('image'), ad.update);
+router.put('/:adId', upload.single('image'), ad.update);
 
 // Delete
 router.delete('/:adId', checkAdminAuth, ad.delete); // delete a specific Sale by it's id
