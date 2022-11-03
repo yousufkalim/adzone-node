@@ -9,9 +9,10 @@ module.exports = passport => {
       {
         clientID: FB_CLIENT_ID,
         clientSecret: FB_CLIENT_SECRET,
-        callbackURL: FB_CALLBACK
+        callbackURL: FB_CALLBACK,
+        profileFields: ['id', 'emails', 'name'] //Fields required in response
       },
-      function (accessToken, refreshToken, profile, cb) {
+      async (accessToken, refreshToken, profile, cb) => {
         return cb(null, profile);
       }
     )

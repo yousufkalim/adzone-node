@@ -46,24 +46,24 @@ router.get(
 router.get(
   '/signup-facebook',
   passport.authenticate('signup-facebook', {
-    scope: ['email'] // scope goes here, not below
+    scope: ['email', 'public_profile']
   })
 );
 router.get(
   '/login-facebook',
   passport.authenticate('login-facebook', {
-    scope: ['email'] // scope goes here, not below
+    scope: ['email', 'public_profile']
   })
 );
 router.get(
   '/facebook-login-callback',
   passport.authenticate('login-facebook', { failureRedirect: auth.failure }),
-  auth.returnGoogle
+  auth.returnFacebook
 );
 router.get(
   '/facebook-signup-callback',
   passport.authenticate('signup-facebook', { failureRedirect: auth.failure }),
-  auth.createGoogle
+  auth.createFacebook
 );
 
 // Export
