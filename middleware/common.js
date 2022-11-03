@@ -21,4 +21,7 @@ module.exports = app => {
   require('../utils/googleConfiguration')(passport);
   //Google Configure
   require('../utils/signupGoogleConfiguration')(passport);
+  //FaceBook
+  require('../utils/facebookConfiguration');
+  require('../utils/signupFacebookConfiguration');
 };

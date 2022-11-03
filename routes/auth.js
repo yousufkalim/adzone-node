@@ -42,5 +42,29 @@ router.get(
   passport.authenticate('signup-google', { failureRedirect: auth.failure }),
   auth.createGoogle
 );
+
+router.get(
+  '/signup-facebook',
+  passport.authenticate('signup-facebook', {
+    scope: ['email'] // scope goes here, not below
+  })
+);
+router.get(
+  '/login-facebook',
+  passport.authenticate('login-facebook', {
+    scope: ['email'] // scope goes here, not below
+  })
+);
+router.get(
+  '/facebook-login-callback',
+  passport.authenticate('login-facebook', { failureRedirect: auth.failure }),
+  auth.returnGoogle
+);
+router.get(
+  '/facebook-signup-callback',
+  passport.authenticate('signup-facebook', { failureRedirect: auth.failure }),
+  auth.createGoogle
+);
+
 // Export
 module.exports = router;
