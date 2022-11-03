@@ -66,7 +66,7 @@ exports.changePassword = async (req, res) => {
     if (newPassword !== confirmPassword) {
       return res.status(400).json({
         success: false,
-        message: 'New password and confirm password are not same',
+        message: 'New password and confirm password are not same'
       });
     }
 
@@ -122,7 +122,7 @@ exports.forgot = async (req, res) => {
         // Done
         res.json({ success: true, message: 'Email sent successfully', user });
       })
-      .catch((err) => {
+      .catch(err => {
         // Error handling
         console.log('Error ----> ', err);
         res.status(500).json({ success: false, message: 'Internal server error' });
@@ -146,7 +146,7 @@ exports.verifyOtp = async (req, res) => {
     }
     res.json({
       success: true,
-      message: 'OTP verified',
+      message: 'OTP verified'
     });
   } catch (err) {
     // Error handling
@@ -163,4 +163,131 @@ exports.verifyOtp = async (req, res) => {
 exports.confirmAuth = async (req, res) => {
   // If user authenticated
   res.json({ success: true, user: req.user });
+};
+
+/**
+ * Failure
+ * @param {object} req
+ * @param {object} res
+ */
+exports.failure = async (req, res) => {
+  return res.redirect(process.env.CLIENT_URL);
+};
+
+exports.returnGoogle = async (req, res) => {
+  try {
+    const email = req.user.emails[0].value;
+    const user = await Users.findOne({ email: email, google_connected: true });
+    if (user) {
+      const payload = { user };
+
+      // Generating token
+      jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+
+        return res.redirect(
+          process.env.CLIENT_URL + `?LoginByGoogle=true&&token=${token}&&message=user-found`
+        );
+      });
+    } else {
+      return res.redirect(
+        process.env.CLIENT_URL + `?LoginByGoogle=false&&message=user-not-found&&token=null`
+      );
+    }
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+exports.createGoogle = async (req, res) => {
+  try {
+    const profile = req.user;
+    const email = req.user.emails[0].value;
+    const user = await Users.findOne({ email: email });
+    if (user) {
+      return res.redirect(
+        process.env.CLIENT_URL + `?SignupByGoogle=false&&message=user-already-exists&&token=null`
+      );
+    } else {
+      let newUser = await Users.create({
+        google_connected: true,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        email: email
+      });
+      // Generating token
+      const payload = { newUser };
+      jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+        return res.redirect(
+          process.env.CLIENT_URL + `?SignupByGoogle=true&&message=user-created&&token=${token}`
+        );
+      });
+    }
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+exports.returnFacebook = async (req, res) => {
+  try {
+    const email = req.user.emails[0].value;
+    const user = await Users.findOne({ email: email, google_connected: true });
+    if (user) {
+      const payload = { user };
+
+      // Generating token
+      jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+
+        return res.redirect(
+          process.env.CLIENT_URL + `?LoginFacebook=true&&token=${token}&&message=user-found`
+        );
+      });
+    } else {
+      return res.redirect(
+        process.env.CLIENT_URL + `?LoginByFacebook=false&&message=user-not-found&&token=null`
+      );
+    }
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+exports.createFacebook = async (req, res) => {
+  try {
+    const profile = req.user;
+    const email = req.user.emails[0].value;
+    const user = await Users.findOne({ email: email });
+    if (user) {
+      return res.redirect(
+        process.env.CLIENT_URL + `?SignupByFacebook=false&&message=user-already-exists&&token=null`
+      );
+    } else {
+      let newUser = await Users.create({
+        facebook_connected: true,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        email: email
+      });
+      // Generating token
+      const payload = { newUser };
+      jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err;
+        return res.redirect(
+          process.env.CLIENT_URL + `?SignupByFacebook=true&&message=user-created&&token=${token}`
+        );
+      });
+    }
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
 };

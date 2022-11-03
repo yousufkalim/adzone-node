@@ -38,24 +38,11 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth2": "^0.2.0",
     "socket.io": "^4.5.1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "uuid": "^8.3.2",
-    "yarn": "^1.22.19"
-=======
-=======
-    "uuid": "^8.3.2",
-    "yarn": "^1.22.19"
->>>>>>> 382955b5cb63c538b4570f313c7f26aa4392c60d
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "husky": "^8.0.0",
     "prettier": "^2.7.1",
     "pretty-quick": "^3.1.3"
-<<<<<<< HEAD
->>>>>>> 75ad8704afccd2f921f216bd6e95d9c62f7a7724
-=======
->>>>>>> 382955b5cb63c538b4570f313c7f26aa4392c60d
   }
 }
