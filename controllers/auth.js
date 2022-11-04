@@ -179,7 +179,7 @@ exports.failure = async (req, res) => {
 
 exports.returnGoogle = async (req, res) => {
   try {
-    const email = req.user.email;
+    const email = req.user.emails[0].value;
     const user = await Users.findOne({
       email: email
     });
@@ -188,7 +188,7 @@ exports.returnGoogle = async (req, res) => {
         const payload = { user };
 
         // Generating token
-        jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+        jwt.sign(payload, tokenSecret, { expiresIn: "2h" }, (err, token) => {
           if (err) throw err;
 
           return res.redirect(
@@ -210,7 +210,7 @@ exports.returnGoogle = async (req, res) => {
       });
       // Generating token
       const payload = { newUser };
-      jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+      jwt.sign(payload, tokenSecret, { expiresIn:  "2h"  }, (err, token) => {
         if (err) throw err;
         return res.redirect(
           process.env.CLIENT_URL + `?SignupByGoogle=true&&message=user-created&&token=${token}`
