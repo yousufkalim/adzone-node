@@ -19,9 +19,6 @@ module.exports = app => {
   app.use(passport.session());
   //Google Configure
   require('../utils/googleConfiguration')(passport);
-  //Google Configure
-  require('../utils/signupGoogleConfiguration')(passport);
   //FaceBook
   require('../utils/facebookConfiguration')(passport);
-  require('../utils/signupFacebookConfiguration')(passport);
 };

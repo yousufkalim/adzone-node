@@ -27,28 +27,13 @@ router.get('/', checkAuth, auth.confirmAuth);
 router.put('/password/:userId', changePasswordValidate, isValidated, auth.changePassword); // Change password route
 router.put('/otp/:userId', validateOtp, isValidated, auth.verifyOtp); // Change password route
 router.put('/forgot/:email', auth.forgot);
-router.get(
-  '/signup-google',
-  passport.authenticate('signup-google', { scope: ['email', 'profile'] })
-);
 router.get('/login-google', passport.authenticate('login-google', { scope: ['email', 'profile'] }));
 router.get(
   '/google-login-callback',
   passport.authenticate('login-google', { failureRedirect: auth.failure }),
   auth.returnGoogle
 );
-router.get(
-  '/google-signup-callback',
-  passport.authenticate('signup-google', { failureRedirect: auth.failure }),
-  auth.createGoogle
-);
 
-router.get(
-  '/signup-facebook',
-  passport.authenticate('signup-facebook', {
-    scope: ['email', 'public_profile']
-  })
-);
 router.get(
   '/login-facebook',
   passport.authenticate('login-facebook', {
@@ -59,11 +44,6 @@ router.get(
   '/facebook-login-callback',
   passport.authenticate('login-facebook', { failureRedirect: auth.failure }),
   auth.returnFacebook
-);
-router.get(
-  '/facebook-signup-callback',
-  passport.authenticate('signup-facebook', { failureRedirect: auth.failure }),
-  auth.createFacebook
 );
 
 // Export

@@ -20,11 +20,14 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     // Getting user from db
-    const user = await Users.findOne({ email });
+    const user = await Users.findOne({
+      email: email,
+      facebook_connected: false,
+      google_connected: false
+    });
 
     if (!user) {
       // If user not found
-      console.log(user);
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
@@ -171,50 +174,38 @@ exports.confirmAuth = async (req, res) => {
  * @param {object} res
  */
 exports.failure = async (req, res) => {
-  return res.redirect(process.env.CLIENT_URL);
+  return res.redirect(process.env.CLIENT_URL + `failure`);
 };
 
 exports.returnGoogle = async (req, res) => {
   try {
-    const email = req.user.emails[0].value;
-    const user = await Users.findOne({ email: email, google_connected: true });
+    const email = req.user.email;
+    const user = await Users.findOne({
+      email: email
+    });
     if (user) {
-      const payload = { user };
+      if (user.google_connected && !user.facebook_connected) {
+        const payload = { user };
 
-      // Generating token
-      jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
-        if (err) throw err;
+        // Generating token
+        jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+          if (err) throw err;
 
+          return res.redirect(
+            process.env.CLIENT_URL + `?LoginByGoogle=true&&token=${token}&&message=user-found`
+          );
+        });
+      } else {
         return res.redirect(
-          process.env.CLIENT_URL + `?LoginByGoogle=true&&token=${token}&&message=user-found`
+          process.env.CLIENT_URL +
+            `?LoginByGoogle=false&&token=null&&message=user associated with another account`
         );
-      });
-    } else {
-      return res.redirect(
-        process.env.CLIENT_URL + `?LoginByGoogle=false&&message=user-not-found&&token=null`
-      );
-    }
-  } catch (err) {
-    // Error handling
-    console.log('Error ----> ', err);
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
-};
-
-exports.createGoogle = async (req, res) => {
-  try {
-    const profile = req.user;
-    const email = req.user.emails[0].value;
-    const user = await Users.findOne({ email: email });
-    if (user) {
-      return res.redirect(
-        process.env.CLIENT_URL + `?SignupByGoogle=false&&message=user-already-exists&&token=null`
-      );
+      }
     } else {
       let newUser = await Users.create({
         google_connected: true,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
+        first_name: req.user.name.givenName,
+        last_name: req.user.name.familyName,
         email: email
       });
       // Generating token
@@ -236,44 +227,29 @@ exports.createGoogle = async (req, res) => {
 exports.returnFacebook = async (req, res) => {
   try {
     const email = req.user.emails[0].value;
-    const user = await Users.findOne({ email: email, google_connected: true });
-    if (user) {
-      const payload = { user };
-
-      // Generating token
-      jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
-        if (err) throw err;
-
-        return res.redirect(
-          process.env.CLIENT_URL + `?LoginFacebook=true&&token=${token}&&message=user-found`
-        );
-      });
-    } else {
-      return res.redirect(
-        process.env.CLIENT_URL + `?LoginByFacebook=false&&message=user-not-found&&token=null`
-      );
-    }
-  } catch (err) {
-    // Error handling
-    console.log('Error ----> ', err);
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
-};
-
-exports.createFacebook = async (req, res) => {
-  try {
-    const profile = req.user;
-    const email = req.user.emails[0].value;
     const user = await Users.findOne({ email: email });
     if (user) {
-      return res.redirect(
-        process.env.CLIENT_URL + `?SignupByFacebook=false&&message=user-already-exists&&token=null`
-      );
+      if (user.facebook_connected && !user.google_connected) {
+        const payload = { user };
+        // Generating token
+        jwt.sign(payload, tokenSecret, { expiresIn: 360000 }, (err, token) => {
+          if (err) throw err;
+
+          return res.redirect(
+            process.env.CLIENT_URL + `?LoginFacebook=true&&token=${token}&&message=user-found`
+          );
+        });
+      } else {
+        return res.redirect(
+          process.env.CLIENT_URL +
+            `?LoginByFacebook=false&&token=null&&message=user associated with another account`
+        );
+      }
     } else {
       let newUser = await Users.create({
         facebook_connected: true,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
+        first_name: req.user.name.givenName,
+        last_name: req.user.name.familyName,
         email: email
       });
       // Generating token
