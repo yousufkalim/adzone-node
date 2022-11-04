@@ -11,7 +11,7 @@ module.exports = passport => {
         clientID: GCP_CLIENT_ID,
         clientSecret: GCP_CLIENT_SECRET,
         callbackURL: GOOGLE_CALLBACK,
-        scope: ['profile'],
+        scope: ['profile', 'email'],
         state: true
       },
       function (accessToken, refreshToken, profile, cb) {
