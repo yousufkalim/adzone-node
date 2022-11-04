@@ -17,16 +17,16 @@ exports.create = async (req, res) => {
   try {
     // Getting url of the image
     if (!req.file) {
-      res.status(404).json({ success: false, message: 'Store Picture Required' });
-      }
-      req.body.picture = req.file.path; // Creating a new property called photo in body object
+      return res.status(404).json({ success: false, message: 'Store Picture Required' });
+    }
+    req.body.picture = req.file.path; // Creating a new property called photo in body object
     const brand = await Brands.findById(req.body.brand); // Finding brand by id
     if (!brand) {
       return res.json({ success: false, message: 'Brand not exist' }); //Success
     }
     const users = await Users.find({
       'notification_setting.brand': true,
-      $or: [{ 'interest.brands': brand }, { 'favourites.brands': brand }],
+      $or: [{ 'interest.brands': brand }, { 'favourites.brands': brand }]
     });
     if (users.length > 0) {
       await sendNotifications(users, brand);
@@ -89,7 +89,7 @@ exports.update = async (req, res) => {
       req.body.picture = req.file.path; // Creating a new property called photo in body object
     }
     const store = await Stores.findByIdAndUpdate(storeId, req.body, {
-      new: true,
+      new: true
     }); // Updating the brand
     res.json({ success: true, store }); // Success
   } catch (err) {
@@ -132,14 +132,14 @@ const sendNotifications = async (users, brand) => {
   for (i = 0; i < users.length; i++) {
     if (io.socket) {
       io.socket.emit(`${users[i]._id}storecreated`, {
-        message: `congrats ${brand.name} created a new store... :)`,
+        message: `congrats ${brand.name} created a new store... :)`
       });
     }
     await Notifications.create({
       user: users[i]._id,
       title: `congrats ${brand.name} created a new store... :)`,
       description: `congrats ${brand.name} created a new store... :)`,
-      brandImage: brand.picture,
+      brandImage: brand.picture
     });
   }
 };

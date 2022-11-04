@@ -2,7 +2,7 @@
  * Sale Type CRUD controllers
  * @author Shuja Naqvi
  */
-const Category = require("../models/Category");
+const Category = require('../models/Category');
 
 /**
  * Create Category
@@ -11,17 +11,17 @@ const Category = require("../models/Category");
  */
 exports.create = async (req, res) => {
   try {
-    if(!req.file){
-    return  res.status(404).json({ success: false, message: "File Not Found" });
+    if (!req.file) {
+      return res.status(404).json({ success: false, message: 'File Not Found' });
     }
-    req.body.photo=req.file.path
+    req.body.photo = req.file.path;
     const category = await Category.create(req.body); // Adding category in db
     // Done
     res.json({ success: true, category }); //Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -36,8 +36,8 @@ exports.getAll = async (req, res) => {
     res.json({ success: true, categories }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -53,8 +53,8 @@ exports.getById = async (req, res) => {
     res.json({ success: true, category }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -65,19 +65,18 @@ exports.getById = async (req, res) => {
  */
 exports.update = async (req, res) => {
   try {
-    
     const categoryId = req.params.categoryId; // Getting category id from URL parameter
-    if(req.file){
-      req.body.photo=req.file.path
-      }
+    if (req.file) {
+      req.body.photo = req.file.path;
+    }
     const category = await Category.findByIdAndUpdate(categoryId, req.body, {
-      new: true,
+      new: true
     }); // Updating the category
     res.json({ success: true, category }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
@@ -93,7 +92,7 @@ exports.delete = async (req, res) => {
     res.json({ success: true, category }); // Success
   } catch (err) {
     // Error handling
-    console.log("Error ----> ", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
