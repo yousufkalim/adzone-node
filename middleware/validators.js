@@ -13,13 +13,17 @@ Validations
 // You can create multiple validations strategies (Read express-validator documentation for more details)
 // User Signup Validation
 exports.validateUser = [
-  check('name', 'Name is required. ').notEmpty().trim(),
+  check('fist_name', 'Name is required. ').notEmpty().trim(),
+  check('last_name', 'Name is required. ').notEmpty().trim(),
   check('email', 'Email is required.').notEmpty().isEmail().trim(),
-  check('password', 'Password is required.').notEmpty().trim().isLength({ min: 8 }),
+  check('password', 'Password is required.').notEmpty().trim().isLength({ min: 8 })
 ];
 
 // User Signup Validation
-exports.validateUserUpdate = [check('name', 'Name is required.').notEmpty().trim()];
+exports.validateUserUpdate = [
+  check('fist_name', 'Name is required. ').notEmpty().trim(),
+  check('last_name', 'Name is required. ').notEmpty().trim()
+];
 //Validate Create Sale Type
 exports.validateSale = [check('name', 'Name is required.').notEmpty().trim()];
 //Validate Create Category
@@ -35,7 +39,7 @@ exports.validateBrand = [
   check('about', 'About is required.').notEmpty().trim(),
   check('category', 'categoryId is required.').notEmpty().trim(),
   check('founded_on', 'founded_on is required.').notEmpty().trim(),
-  check('annual_sale', 'annual_sale is required.').notEmpty().trim(),
+  check('annual_sale', 'annual_sale is required.').notEmpty().trim()
 ];
 //validatestore
 exports.validatestore = [
@@ -44,7 +48,7 @@ exports.validatestore = [
   check('location.area', 'area is required.').notEmpty().trim(),
   check('location.city', 'city is required.').notEmpty().trim(),
   check('location.lat', 'lat is required.').notEmpty().trim(),
-  check('location.lng', 'lng is required.').notEmpty().trim(),
+  check('location.lng', 'lng is required.').notEmpty().trim()
 ];
 //validateAd
 exports.validateAd = [
@@ -53,20 +57,20 @@ exports.validateAd = [
   check('category', 'categoryId is required.').notEmpty().trim(),
   check('sale_type', 'SaleTypeId is required.').notEmpty().trim(),
   check('sale_date.start_date', 'sale_date.start_date is required.').notEmpty().trim(),
-  check('sale_date.end_date', 'sale_date.end_date is required.').notEmpty().trim(),
+  check('sale_date.end_date', 'sale_date.end_date is required.').notEmpty().trim()
 ];
 
 exports.validateAddress = [
   check('address.area', 'area is required.').notEmpty().trim(),
   check('address.city', 'city is required.').notEmpty().trim(),
   check('address.lat', 'lat is required.').notEmpty().trim(),
-  check('address.lng', 'lng is required.').notEmpty().trim(),
+  check('address.lng', 'lng is required.').notEmpty().trim()
 ];
 exports.validateNotificationSetting = [
   check('notification.brand', 'Brand is required.').notEmpty().isBoolean(),
   check('notification.phone', 'Phone is required.').notEmpty().isBoolean(),
   check('notification.email', 'Email is required.').notEmpty().isBoolean(),
-  check('notification.sale', 'sale is required. ').notEmpty().isBoolean(),
+  check('notification.sale', 'sale is required. ').notEmpty().isBoolean()
 ];
 
 exports.validateFavourites = [check('favid', 'favid Id is required.').notEmpty().trim()];
@@ -75,13 +79,15 @@ exports.validateBrandFavourites = [check('brand', 'Brand Id is required.').notEm
 exports.validateSaleInterest = [check('sale', 'SaleTypeId is required.').notEmpty().trim()];
 exports.validateSaleLength = [check('sale', 'saleId required').isArray({ min: 1 })];
 exports.validateCategoryInterest = [check('category', 'categoryId is required.').notEmpty().trim()];
-exports.validateCategoriesLength = [check('categories', 'categories  required.').isArray({ min: 1})];
-exports.validateBrandsLength = [check('brands', 'brands  required.').isArray({ min: 1})];
+exports.validateCategoriesLength = [
+  check('categories', 'categories  required.').isArray({ min: 1 })
+];
+exports.validateBrandsLength = [check('brands', 'brands  required.').isArray({ min: 1 })];
 
 // Login validation
 exports.validateLogin = [
   check('email', 'Email is required').notEmpty().isEmail().trim().toLowerCase(),
-  check('password', 'Password is required.').notEmpty().trim().isLength({ min: 8 }),
+  check('password', 'Password is required.').notEmpty().trim().isLength({ min: 8 })
 ];
 
 // User Signup Validation
@@ -92,7 +98,7 @@ exports.validateOtp = [check('otp', 'otp is required.').notEmpty().trim()];
 exports.changePasswordValidate = [
   check('oldPassword', 'Old Password is required.').notEmpty().trim().isLength({ min: 8 }),
   check('newPassword', 'New password is required.').notEmpty().trim().isLength({ min: 8 }),
-  check('confirmPassword', 'Confirm password is required.').notEmpty().trim().isLength({ min: 8 }),
+  check('confirmPassword', 'Confirm password is required.').notEmpty().trim().isLength({ min: 8 })
 ];
 
 /*
