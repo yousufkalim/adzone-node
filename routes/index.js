@@ -15,6 +15,6 @@ router.use('/stores', require('./stores')); // All the Store routes
 router.use('/ads', require('./ads')); // All the Ads routes
 router.use('/tags', require('./tags')); // All the brands routes
 router.use('/notifications', require('./notifications')); // All the Notification routes
-
+router.use('/address', require('./address')); // All the address routes
 // Export
 module.exports = router;
