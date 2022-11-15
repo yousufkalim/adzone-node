@@ -18,7 +18,7 @@ exports.address = async (req, res) => {
 
     places = places.map(item => {
       return {
-        area: item.name,
+        area: item.formatted_address,
         ...item.geometry.location
       };
     });
