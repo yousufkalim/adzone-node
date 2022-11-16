@@ -1,5 +1,5 @@
 const axios = require('axios');
-var distance = require('google-distance-matrix');
+
 const API_KEY_AREA = process.env.GOOGLE_API_KEY_AREA;
 const API_KEY = process.env.GOOGLE_API_KEY;
 exports.address = async (req, res) => {
