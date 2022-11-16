@@ -1,4 +1,6 @@
 const axios = require('axios');
+var distance = require('google-distance-matrix');
+const API_KEY_AREA = process.env.GOOGLE_API_KEY_AREA;
 const API_KEY = process.env.GOOGLE_API_KEY;
 exports.address = async (req, res) => {
   try {
@@ -24,6 +26,30 @@ exports.address = async (req, res) => {
     });
 
     res.json({ success: true, results: places });
+  } catch (err) {
+    // Error handling
+    // eslint-disable-next-line no-console
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+exports.getArea = async (req, res) => {
+  try {
+    const { lat, lng } = req.query;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?key=${API_KEY_AREA}&latlng=${lat},${lng}&sensor=true/false`;
+    let results = await axios.get(url);
+    return res.json({
+      success: true,
+      address: {
+        area: results?.data?.plus_code?.compound_code ? results.data.plus_code.compound_code : '',
+        lat: lat,
+        lng: lng,
+        city: results?.data?.plus_code?.compound_code
+          ? results.data.plus_code.compound_code.split(',')[1]
+          : ''
+      }
+    });
   } catch (err) {
     // Error handling
     // eslint-disable-next-line no-console
