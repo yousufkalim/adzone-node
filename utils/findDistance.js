@@ -11,7 +11,6 @@ exports.findNearByStores = async (latitude, longitude, stores) => {
     const lat2 = parseFloat(latitude);
     const lon2 = parseFloat(longitude);
     for (var i = 0; i < stores.length; i++) {
-      console.log(stores[i], 'stores[i]');
       for (var j = 0; j < stores[i].storeData.length; j++) {
         var lat1 = stores[i].storeData[j].location.lat;
         var lon1 = stores[i].storeData[j].location.lng;
@@ -20,13 +19,16 @@ exports.findNearByStores = async (latitude, longitude, stores) => {
         var a = parseFloat(
           0.5 -
             Math.cos(dLat) / 2 +
-            (Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * (1 - Math.cos(dLon))) / 2
+            (Math.cos((lat1 * Math.PI) / 180) *
+              Math.cos((lat2 * Math.PI) / 180) *
+              (1 - Math.cos(dLon))) /
+              2
         );
         var distance = parseFloat(R * 2 * Math.asin(Math.sqrt(a)));
         tempStore.push({
           store: stores[i].storeData[j]._id,
           brand: stores[i].storeData[j].brand._id,
-          distance: distance,
+          distance: distance
         });
       }
       let max = tempStore.reduce(function (prev, current) {
@@ -57,7 +59,10 @@ exports.findStores = async (latitude, longitude, stores) => {
         var a = parseFloat(
           0.5 -
             Math.cos(dLat) / 2 +
-            (Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * (1 - Math.cos(dLon))) / 2
+            (Math.cos((lat1 * Math.PI) / 180) *
+              Math.cos((lat2 * Math.PI) / 180) *
+              (1 - Math.cos(dLon))) /
+              2
         );
         var distance = parseFloat(R * 2 * Math.asin(Math.sqrt(a)));
         var payload = { distance: distance, store: stores[i] };
@@ -90,13 +95,16 @@ exports.findBrandStore = async (latitude, longitude, brands) => {
         var a = parseFloat(
           0.5 -
             Math.cos(dLat) / 2 +
-            (Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * (1 - Math.cos(dLon))) / 2
+            (Math.cos((lat1 * Math.PI) / 180) *
+              Math.cos((lat2 * Math.PI) / 180) *
+              (1 - Math.cos(dLon))) /
+              2
         );
         var distance = parseFloat(R * 2 * Math.asin(Math.sqrt(a)));
         tempStore.push({
           store: brand.stores[i],
           brand: brand,
-          distance: distance,
+          distance: distance
         });
       }
       let max = tempStore.reduce(function (prev, current) {
@@ -128,13 +136,16 @@ exports.findMybrandStores = async (latitude, longitude, stores) => {
       var a = parseFloat(
         0.5 -
           Math.cos(dLat) / 2 +
-          (Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * (1 - Math.cos(dLon))) / 2
+          (Math.cos((lat1 * Math.PI) / 180) *
+            Math.cos((lat2 * Math.PI) / 180) *
+            (1 - Math.cos(dLon))) /
+            2
       );
       var distance = parseFloat(R * 2 * Math.asin(Math.sqrt(a)));
       console.log(distance, 'distance');
       tempStore.push({
         distance: distance,
-        store: stores[i],
+        store: stores[i]
       });
     }
     let max = tempStore.reduce(function (prev, current) {

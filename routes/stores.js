@@ -36,7 +36,8 @@ router.put(
 
 //Find NearBy Stores
 router.post('/nearByStores', validateNearByStore, isValidated, store.nearByStores);
-
+//getOneStore
+router.get('/getOneStore', store.getOneStore);
 // Delete
 router.delete('/:storeId', checkAdminAuth, store.delete); // delete a specific Sale by it's id
 

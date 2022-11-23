@@ -128,6 +128,37 @@ exports.nearByStores = async (req, res) => {
   }
 };
 
+//Get NearBy Stores
+exports.getOneStore = async (req, res) => {
+  try {
+    const { brand, lat, lng } = req.query;
+    if (!brand || !lat || lng) {
+      return res.status(400).json({ success: false, message: 'brand || lat || lng missing' }); // Success
+    }
+    const stores = await Stores.find({ brand: brand }).populate('brand'); // Finding all the stores from db
+    if (stores.length < 1) {
+      return res.status(404).json({ success: false, message: 'NearBy Stores not found' }); // Success
+    }
+    const nearByStores = await findStores(lat, lng, stores);
+    if (nearByStores.length > 0) {
+      let distance = Infinity;
+      let resp;
+      for (let i = 0; i < nearByStores.length; i++) {
+        if (nearByStores[i].distance < distance) {
+          resp = nearByStores[i];
+        }
+      }
+      return res.status(200).json({ success: true, resp }); // Success
+    } else {
+      return res.status(404).json({ success: false, message: 'NearBy Stores not found' }); // Success
+    }
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
 const sendNotifications = async (users, brand) => {
   for (i = 0; i < users.length; i++) {
     if (io.socket) {
