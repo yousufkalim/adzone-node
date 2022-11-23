@@ -121,7 +121,11 @@ exports.addAddress = async (req, res) => {
     const userId = req.params.userId; // Getting user id from URL parameter
     const { address } = req.body;
 
-    const user = await Users.findByIdAndUpdate(userId, { $push: { locations: address } }, { new: true }); // Updating the user
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $push: { locations: address } },
+      { new: true }
+    ); // Updating the user
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -156,7 +160,11 @@ exports.updateNotificationSetting = async (req, res) => {
   try {
     const userId = req.params.userId; // Getting user id from URL parameter
     const { notification } = req.body;
-    const user = await Users.findByIdAndUpdate(userId, { notification_setting: notification }, { new: true }); // Setting notification
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { notification_setting: notification },
+      { new: true }
+    ); // Setting notification
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -178,18 +186,22 @@ exports.AddtoFavourites = async (req, res) => {
     if (ad) {
       const existingFav = await Users.findOne({
         _id: userId,
-        'favourites.ads': favid,
+        'favourites.ads': favid
       });
       if (existingFav) {
         return res.status(404).json({
           success: false,
-          message: 'Already Added into Your Favourites',
+          message: 'Already Added into Your Favourites'
         });
       }
-      let user = await Users.findByIdAndUpdate(userId, { $push: { 'favourites.ads': favid } }, { new: true });
+      let user = await Users.findByIdAndUpdate(
+        userId,
+        { $push: { 'favourites.ads': favid } },
+        { new: true }
+      );
       const existingSale = await Users.findOne({
         _id: userId,
-        'interest.sale_type': ad.sale_type,
+        'interest.sale_type': ad.sale_type
       });
       if (!existingSale) {
         user.interest.sale_type.push(ad.sale_type);
@@ -201,15 +213,19 @@ exports.AddtoFavourites = async (req, res) => {
     if (brand) {
       const existingFav = await Users.findOne({
         _id: userId,
-        'favourites.brands': favid,
+        'favourites.brands': favid
       });
       if (existingFav) {
         return res.status(404).json({
           success: false,
-          message: 'Already Added into Your Favourites',
+          message: 'Already Added into Your Favourites'
         });
       }
-      const user = await Users.findByIdAndUpdate(userId, { $push: { 'favourites.brands': favid } }, { new: true });
+      const user = await Users.findByIdAndUpdate(
+        userId,
+        { $push: { 'favourites.brands': favid } },
+        { new: true }
+      );
       return res.json({ success: true, user }); // Success
     }
     return res.json({ success: false, message: 'Id not found' }); // Success
@@ -233,21 +249,29 @@ exports.RemoveFavourites = async (req, res) => {
     if (ad) {
       const existingFav = await Users.findOne({
         _id: userId,
-        'favourites.ads': favid,
+        'favourites.ads': favid
       });
       if (!existingFav) {
         return res.status(404).json({
           success: false,
-          message: 'Already Removed',
+          message: 'Already Removed'
         });
       }
-      const user = await Users.findByIdAndUpdate(userId, { $pull: { 'favourites.ads': favid } }, { new: true });
+      const user = await Users.findByIdAndUpdate(
+        userId,
+        { $pull: { 'favourites.ads': favid } },
+        { new: true }
+      );
       const existingSale = await Users.findOne({
         _id: userId,
-        'interest.sale_type': ad.sale_type,
+        'interest.sale_type': ad.sale_type
       });
       if (existingSale) {
-        const user = await Users.findByIdAndUpdate(userId, { $pull: { 'interest.sale_type': ad.sale_type } }, { new: true });
+        const user = await Users.findByIdAndUpdate(
+          userId,
+          { $pull: { 'interest.sale_type': ad.sale_type } },
+          { new: true }
+        );
       }
       return res.json({ success: true, user }); // Success
     }
@@ -255,15 +279,19 @@ exports.RemoveFavourites = async (req, res) => {
     if (brand) {
       const existingFav = await Users.findOne({
         _id: userId,
-        'favourites.brands': favid,
+        'favourites.brands': favid
       });
       if (!existingFav) {
         return res.status(404).json({
           success: false,
-          message: 'Already Removed',
+          message: 'Already Removed'
         });
       }
-      const user = await Users.findByIdAndUpdate(userId, { $pull: { 'favourites.brands': favid } }, { new: true });
+      const user = await Users.findByIdAndUpdate(
+        userId,
+        { $pull: { 'favourites.brands': favid } },
+        { new: true }
+      );
       return res.json({ success: true, user }); // Success
     }
     res.json({ success: false, message: 'Id not found' }); // Success
@@ -284,7 +312,11 @@ exports.AddSaleInterest = async (req, res) => {
     const { userId } = req.params; // Getting user id from URL parameter
     const { sale } = req.body;
 
-    const user = await Users.findByIdAndUpdate(userId, { $set: { 'interest.sale_type': sale } }, { new: true });
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $set: { 'interest.sale_type': sale } },
+      { new: true }
+    );
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -302,7 +334,11 @@ exports.AddBrandInterest = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
     const { brands } = req.body;
-    const user = await Users.findByIdAndUpdate(userId, { $set: { 'interest.brands': brands } }, { new: true });
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $set: { 'interest.brands': brands } },
+      { new: true }
+    );
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling
@@ -320,8 +356,12 @@ exports.AddCatgoryInterest = async (req, res) => {
   try {
     const { userId } = req.params; // Getting user id from URL parameter
     const { categories } = req.body;
-   
-    const user = await Users.findByIdAndUpdate(userId, { $set: { 'interest.categories': categories } }, { new: true });
+
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { $set: { 'interest.categories': categories } },
+      { new: true }
+    );
     res.json({ success: true, user }); // Success
   } catch (err) {
     // Error handling-
@@ -343,13 +383,13 @@ exports.FavouriteSale = async (req, res) => {
       $or: [
         { sale_type: { $in: userInterest.interest.sale_type } },
         { brand: { $in: userInterest.interest.brands } },
-        { category: { $in: userInterest.interest.categories } },
-      ],
+        { category: { $in: userInterest.interest.categories } }
+      ]
     }).populate({
       path: 'brand',
       populate: {
-        path: 'stores',
-      },
+        path: 'stores'
+      }
     });
     res.json({ success: true, ads: ads }); // Success
   } catch (err) {
@@ -368,11 +408,11 @@ exports.InterestBrands = async (req, res) => {
   try {
     const { userId } = req.params; // Getting sale id from URL parameter
     const userInterest = await Users.findById(userId);
-    console.log(userInterest.interest.brands,"userInterest.interest.brands")
+    console.log(userInterest.interest.brands, 'userInterest.interest.brands');
     const brands = await Brands.find({
-      _id: { $in: userInterest.interest.brands },
+      _id: { $in: userInterest.interest.brands }
     }).populate({
-      path: 'stores',
+      path: 'stores'
     });
     res.json({ success: true, brands: brands }); // Success
   } catch (err) {
@@ -392,12 +432,12 @@ exports.FavouriteAds = async (req, res) => {
     const { userId } = req.params; // Getting sale id from URL parameter
     const userFav = await Users.findById(userId);
     const ads = await Ads.find({
-      _id: { $in: userFav.favourites.ads },
+      _id: { $in: userFav.favourites.ads }
     }).populate({
       path: 'brand',
       populate: {
-        path: 'stores',
-      },
+        path: 'stores'
+      }
     });
     res.json({ success: true, ads: ads }); // Success
   } catch (err) {
@@ -417,9 +457,9 @@ exports.FavouriteBrands = async (req, res) => {
     const { userId } = req.params; // Getting sale id from URL parameter
     const userFav = await Users.findById(userId);
     const brands = await Brands.find({
-      _id: { $in: userFav.favourites.brands },
+      _id: { $in: userFav.favourites.brands }
     }).populate({
-      path: 'stores',
+      path: 'stores'
     });
     res.json({ success: true, brands: brands }); // Success
   } catch (err) {
@@ -442,28 +482,31 @@ exports.nearByStores = async (req, res) => {
           from: 'brands',
           localField: 'brand',
           foreignField: '_id',
-          as: 'brand',
-        },
+          as: 'brand'
+        }
       },
       {
         $unwind: {
           path: '$brand',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $group: {
           _id: '$brand._id',
           storeData: {
-            $push: '$$ROOT',
-          },
-        },
-      },
+            $push: '$$ROOT'
+          }
+        }
+      }
     ]);
 
     const NearByStores = await findNearByStores(req.body.address.lat, req.body.address.lng, stores);
-    console.log(NearByStores, 'NearByStores');
-    const user = await Users.findByIdAndUpdate(req.body.userId, { nearby_stores: NearByStores }, { new: true });
+    const user = await Users.findByIdAndUpdate(
+      req.body.userId,
+      { nearby_stores: NearByStores },
+      { new: true }
+    );
     res.status(200).json({ success: true, user });
   } catch (err) {
     // Error handling
@@ -484,25 +527,25 @@ exports.getFavouriteBrands = async (req, res) => {
       .populate({
         path: 'nearby_stores',
         populate: {
-          path: 'brand',
-        },
+          path: 'brand'
+        }
       })
       .populate('nearby_stores.store');
     if (user.nearby_stores.length < 1) {
       const brands = await Brands.find({
-        _id: { $in: user.favourites.brands },
+        _id: { $in: user.favourites.brands }
       }).populate({
-        path: 'stores',
+        path: 'stores'
       });
       return res.json({
         success: true,
-        brands: brands,
+        brands: brands
       }); // Success
     }
-    const favBrand = user.nearby_stores.filter((e) => user.favourites.brands.includes(e.brand._id));
+    const favBrand = user.nearby_stores.filter(e => user.favourites.brands.includes(e.brand._id));
     res.json({
       success: true,
-      brands: favBrand,
+      brands: favBrand
     }); // Success
   } catch (err) {
     // Error handling
@@ -522,17 +565,17 @@ exports.search = async (req, res) => {
     const categories = await Category.find({ name: { $regex: keyword, $options: '$i' } });
     const sales = await SaleType.find({ name: { $regex: keyword, $options: '$i' } });
     if (categories.length > 0) {
-      categoriesIds = categories.map((e) => {
+      categoriesIds = categories.map(e => {
         return e._id;
       });
     }
     if (sales.length > 0) {
-      sales.forEach((e) => {
+      sales.forEach(e => {
         saleIds.push(e._id);
       });
     }
     const brands = await Brands.find({
-      $or: [{ name: { $regex: keyword, $options: '$i' } }, { category: { $in: categoriesIds } }],
+      $or: [{ name: { $regex: keyword, $options: '$i' } }, { category: { $in: categoriesIds } }]
     }).populate('stores');
     if (brands.length > 0) {
       for (let i = 0; i < brands.length; i++) {
@@ -544,14 +587,14 @@ exports.search = async (req, res) => {
         { name: { $regex: keyword, $options: '$i' } },
         { category: { $in: categoriesIds } },
         { brand: { $in: brands } },
-        { sale_type: { $in: saleIds } },
-      ],
+        { sale_type: { $in: saleIds } }
+      ]
     })
       .populate({
         path: 'brand',
         populate: {
-          path: 'stores',
-        },
+          path: 'stores'
+        }
       })
       .populate('sale_type')
       .populate('category');

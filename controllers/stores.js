@@ -118,8 +118,8 @@ exports.delete = async (req, res) => {
 //Get NearBy Stores
 exports.nearByStores = async (req, res) => {
   try {
-    const stores = await Stores.find().populate('brand'); // Finding all the stores from db
-    const nearByStores = findStores(req.body.address.lat, req.body.address.lng, stores);
+    const stores = await Stores.find({ brand: req.body.brand }).populate('brand'); // Finding all the stores from db
+    const nearByStores = await findStores(req.body.lat, req.body.lng, stores);
     res.json({ success: true, nearByStores }); // Success
   } catch (err) {
     // Error handling

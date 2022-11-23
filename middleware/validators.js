@@ -66,6 +66,12 @@ exports.validateAddress = [
   check('address.lat', 'lat is required.').notEmpty().trim(),
   check('address.lng', 'lng is required.').notEmpty().trim()
 ];
+
+exports.validateNearByStore = [
+  check('brand', 'brandId is required.').notEmpty().trim(),
+  check('lat', 'lat is required.').notEmpty().trim(),
+  check('lng', 'lng is required.').notEmpty().trim()
+];
 exports.validateNotificationSetting = [
   check('notification.brand', 'Brand is required.').notEmpty().isBoolean(),
   check('notification.phone', 'Phone is required.').notEmpty().isBoolean(),

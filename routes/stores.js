@@ -5,7 +5,7 @@
 const router = require('express').Router();
 const store = require('../controllers/stores');
 const { checkAdminAuth } = require('../middleware/adminAuth');
-const { validatestore, validateAddress, isValidated } = require('../middleware/validators');
+const { validatestore, validateNearByStore, isValidated } = require('../middleware/validators');
 const { upload } = require('../middleware/multer');
 
 /**
@@ -25,10 +25,17 @@ router.get('/', store.getAll); // Get all stores at once
 router.get('/:storeId', store.getById); // Get one store by it's id
 
 // Update
-router.put('/:storeId', checkAdminAuth, upload.single('image'), validatestore, isValidated, store.update);
+router.put(
+  '/:storeId',
+  checkAdminAuth,
+  upload.single('image'),
+  validatestore,
+  isValidated,
+  store.update
+);
 
 //Find NearBy Stores
-router.post('/nearByStores', validateAddress, isValidated, store.nearByStores);
+router.post('/nearByStores', validateNearByStore, isValidated, store.nearByStores);
 
 // Delete
 router.delete('/:storeId', checkAdminAuth, store.delete); // delete a specific Sale by it's id
