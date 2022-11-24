@@ -17,9 +17,10 @@ const Notifications = require('../models/Notification');
 exports.create = async (req, res) => {
   try {
     // Getting url of the image
-    if (req.file) {
-      req.body.picture = req.file.path; // Creating a new property called photo in body object
+    if (!req.file) {
+      return res.status(404).json({ success: false, message: 'picture required' });
     }
+    req.body.picture = req.file.path; // Creating a new property called photo in body object
     const brand = await Brands.findById(req.body.brand); // Finding brand by id
     if (!brand) {
       return res.json({ success: false, message: 'Brand not exist' }); //Not Found
@@ -32,10 +33,14 @@ exports.create = async (req, res) => {
       $or: [
         {
           'notification_setting.brand': true,
-          'notification_setting.sale': true,
-        },
+          'notification_setting.sale': true
+        }
       ],
-      $or: [{ 'interest.brands': brand }, { 'favourites.brands': brand }, { 'interest.sale_type': sale_type }],
+      $or: [
+        { 'interest.brands': brand },
+        { 'favourites.brands': brand },
+        { 'interest.sale_type': sale_type }
+      ]
     });
     if (users.length > 0) {
       await sendNotifications(users, brand, req.body.picture, sale_type.name);
@@ -65,8 +70,8 @@ exports.getAll = async (req, res) => {
       .populate({
         path: 'brand',
         populate: {
-          path: 'stores',
-        },
+          path: 'stores'
+        }
       }); // Finding all the ad from db
     res.json({ success: true, ad }); // Success
   } catch (err) {
@@ -90,8 +95,8 @@ exports.getById = async (req, res) => {
       .populate({
         path: 'brand',
         populate: {
-          path: 'stores',
-        },
+          path: 'stores'
+        }
       }); // Finding ad by id
     res.json({ success: true, ad }); // Success
   } catch (err) {
@@ -114,8 +119,8 @@ exports.getAdsbyBrands = async (req, res) => {
       .populate({
         path: 'brand',
         populate: {
-          path: 'stores',
-        },
+          path: 'stores'
+        }
       });
     res.json({ success: true, ads }); // Success
   } catch (err) {
@@ -138,8 +143,8 @@ exports.trendingAds = async (req, res) => {
       .populate({
         path: 'brand',
         populate: {
-          path: 'stores',
-        },
+          path: 'stores'
+        }
       })
       .sort({ views: -1 })
       .limit(8); // Finding ad by id
@@ -164,7 +169,7 @@ exports.update = async (req, res) => {
       req.body.picture = req.file.path; // Creating a new property called photo in body object
     }
     const ad = await Ads.findByIdAndUpdate(adId, req.body, {
-      new: true,
+      new: true
     }); // Updating the ad
     res.json({ success: true, ad }); // Success
   } catch (err) {
@@ -228,8 +233,8 @@ exports.relatedAds = async (req, res) => {
       .populate({
         path: 'brand',
         populate: {
-          path: 'stores',
-        },
+          path: 'stores'
+        }
       }); // Finding brand by categoryId
     res.json({ success: true, brands }); // Success
   } catch (err) {
@@ -252,8 +257,8 @@ exports.getAdsbySaleId = async (req, res) => {
       .populate({
         path: 'brand',
         populate: {
-          path: 'stores',
-        },
+          path: 'stores'
+        }
       });
     // Finding ad by id
     res.json({ success: true, ads }); // Success
@@ -277,42 +282,42 @@ exports.groupbySaleType = async (req, res) => {
           from: 'brands',
           localField: 'brand',
           foreignField: '_id',
-          as: 'brand',
-        },
+          as: 'brand'
+        }
       },
       {
         $unwind: {
           path: '$brand',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $lookup: {
           from: 'sale_types',
           localField: 'sale_type',
           foreignField: '_id',
-          as: 'sale_type',
-        },
+          as: 'sale_type'
+        }
       },
       {
         $unwind: {
           path: '$sale_types',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $lookup: {
           from: 'categories',
           localField: 'category',
           foreignField: '_id',
-          as: 'category',
-        },
+          as: 'category'
+        }
       },
       {
         $unwind: {
           path: '$categories',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
 
       {
@@ -320,17 +325,17 @@ exports.groupbySaleType = async (req, res) => {
           from: 'stores',
           localField: 'brand.stores',
           foreignField: '_id',
-          as: 'brand.stores',
-        },
+          as: 'brand.stores'
+        }
       },
       {
         $group: {
           _id: '$sale_type.name',
           data: {
-            $push: '$$ROOT',
-          },
-        },
-      },
+            $push: '$$ROOT'
+          }
+        }
+      }
     ]);
     res.status(200).json({ success: true, ads });
   } catch (err) {
@@ -344,7 +349,7 @@ const sendNotifications = async (users, brand, AdImage, sale) => {
   for (i = 0; i < users.length; i++) {
     if (io.socket) {
       io.socket.emit(`${users[i]._id}adcreated`, {
-        message: `${brand.name} is offering  ${sale}`,
+        message: `${brand.name} is offering  ${sale}`
       });
     }
     await Notifications.create({
@@ -352,7 +357,7 @@ const sendNotifications = async (users, brand, AdImage, sale) => {
       title: `${brand.name} is offering  ${sale}`,
       description: `${brand.name} is offering  ${sale}`,
       brandImage: brand.picture,
-      AdIamge: AdImage,
+      AdIamge: AdImage
     });
   }
 };

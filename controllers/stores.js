@@ -17,16 +17,16 @@ exports.create = async (req, res) => {
   try {
     // Getting url of the image
     if (!req.file) {
-      res.status(404).json({ success: false, message: 'Store Picture Required' });
-      }
-      req.body.picture = req.file.path; // Creating a new property called photo in body object
+      return res.status(404).json({ success: false, message: 'Store Picture Required' });
+    }
+    req.body.picture = req.file.path; // Creating a new property called photo in body object
     const brand = await Brands.findById(req.body.brand); // Finding brand by id
     if (!brand) {
       return res.json({ success: false, message: 'Brand not exist' }); //Success
     }
     const users = await Users.find({
       'notification_setting.brand': true,
-      $or: [{ 'interest.brands': brand }, { 'favourites.brands': brand }],
+      $or: [{ 'interest.brands': brand }, { 'favourites.brands': brand }]
     });
     if (users.length > 0) {
       await sendNotifications(users, brand);
@@ -89,7 +89,7 @@ exports.update = async (req, res) => {
       req.body.picture = req.file.path; // Creating a new property called photo in body object
     }
     const store = await Stores.findByIdAndUpdate(storeId, req.body, {
-      new: true,
+      new: true
     }); // Updating the brand
     res.json({ success: true, store }); // Success
   } catch (err) {
@@ -118,9 +118,40 @@ exports.delete = async (req, res) => {
 //Get NearBy Stores
 exports.nearByStores = async (req, res) => {
   try {
-    const stores = await Stores.find().populate('brand'); // Finding all the stores from db
-    const nearByStores = findStores(req.body.address.lat, req.body.address.lng, stores);
+    const stores = await Stores.find({ brand: req.body.brand }).populate('brand'); // Finding all the stores from db
+    const nearByStores = await findStores(req.body.lat, req.body.lng, stores);
     res.json({ success: true, nearByStores }); // Success
+  } catch (err) {
+    // Error handling
+    console.log('Error ----> ', err);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+//Get NearBy Stores
+exports.getOneStore = async (req, res) => {
+  try {
+    const { brand, lat, lng } = req.query;
+    if (!brand || !lat || lng) {
+      return res.status(400).json({ success: false, message: 'brand || lat || lng missing' }); // Success
+    }
+    const stores = await Stores.find({ brand: brand }).populate('brand'); // Finding all the stores from db
+    if (stores.length < 1) {
+      return res.status(404).json({ success: false, message: 'NearBy Stores not found' }); // Success
+    }
+    const nearByStores = await findStores(lat, lng, stores);
+    if (nearByStores.length > 0) {
+      let distance = Infinity;
+      let resp;
+      for (let i = 0; i < nearByStores.length; i++) {
+        if (nearByStores[i].distance < distance) {
+          resp = nearByStores[i];
+        }
+      }
+      return res.status(200).json({ success: true, resp }); // Success
+    } else {
+      return res.status(404).json({ success: false, message: 'NearBy Stores not found' }); // Success
+    }
   } catch (err) {
     // Error handling
     console.log('Error ----> ', err);
@@ -132,14 +163,14 @@ const sendNotifications = async (users, brand) => {
   for (i = 0; i < users.length; i++) {
     if (io.socket) {
       io.socket.emit(`${users[i]._id}storecreated`, {
-        message: `congrats ${brand.name} created a new store... :)`,
+        message: `congrats ${brand.name} created a new store... :)`
       });
     }
     await Notifications.create({
       user: users[i]._id,
       title: `congrats ${brand.name} created a new store... :)`,
       description: `congrats ${brand.name} created a new store... :)`,
-      brandImage: brand.picture,
+      brandImage: brand.picture
     });
   }
 };

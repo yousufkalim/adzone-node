@@ -15,9 +15,9 @@ const { findStores, findBrandStore, findMybrandStores } = require('../utils/find
 exports.create = async (req, res) => {
   try {
     // Getting url of the image
-    
+
     if (!req.file) {
-    res.status(404).json({ success: false, message: 'Brand Picture Required' });
+      return res.status(404).json({ success: false, message: 'Brand Picture Required' });
     }
     req.body.picture = req.file.path; // Creating a new property called photo in body object
     const brand = await Brands.create(req.body); // Adding brand in db
@@ -37,7 +37,7 @@ exports.create = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const brands = await Brands.find().populate('stores').sort({ views: -1 }); // Finding all the brands from db
+    const brands = await Brands.find().populate('stores').populate('category').sort({ views: -1 }); // Finding all the brands from db
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
@@ -54,10 +54,14 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   try {
     const brandId = req.params.brandId; // Getting brand id from URL parameter
-    const brand = await Brands.findById(brandId).populate('stores'); // Finding brand by id
+    const brand = await Brands.findById(brandId).populate('stores').populate('category'); // Finding brand by id
     //if user send location
     if (req?.body?.location?.lat && req?.body?.location?.lng && brand.stores.length > 1) {
-      const NearByStore = await findMybrandStores(req.body.location.lat, req.body.location.lng, brand.stores);
+      const NearByStore = await findMybrandStores(
+        req.body.location.lat,
+        req.body.location.lng,
+        brand.stores
+      );
       console.log(NearByStore, 'NearByStore');
       return res.json({ success: true, brand, nearByStore: NearByStore }); // Success
     }
@@ -78,7 +82,9 @@ exports.getById = async (req, res) => {
 exports.relatedBrands = async (req, res) => {
   try {
     const categoryId = req.params.categoryId; // Getting categoryId from URL parameter
-    const brands = await Brands.find({ category: categoryId }).populate('stores').populate('category'); // Finding brand by categoryId
+    const brands = await Brands.find({ category: categoryId })
+      .populate('stores')
+      .populate('category'); // Finding brand by categoryId
     res.json({ success: true, brands }); // Success
   } catch (err) {
     // Error handling
@@ -110,7 +116,10 @@ exports.getStoresByBrand = async (req, res) => {
  */
 exports.getnewBrands = async (req, res) => {
   try {
-    const brands = await Brands.find().populate('stores').populate('category').sort({ createdAt: -1 }); // Finding brand by id
+    const brands = await Brands.find()
+      .populate('stores')
+      .populate('category')
+      .sort({ createdAt: -1 }); // Finding brand by id
     if (req?.body?.address) {
       const stores = await findBrandStore(req.body.address.lat, req.body.address.lng, brands);
       return res.json({ success: true, brands: stores }); // Success
@@ -154,7 +163,7 @@ exports.update = async (req, res) => {
       req.body.picture = req.file.path; // Creating a new property called photo in body object
     }
     const brand = await Brands.findByIdAndUpdate(brandId, req.body, {
-      new: true,
+      new: true
     }); // Updating the brand
     res.json({ success: true, brand }); // Success
   } catch (err) {
@@ -193,7 +202,11 @@ exports.increaseView = async (req, res) => {
  */
 exports.trendingBrands = async (req, res) => {
   try {
-    const brand = await Brands.find().populate('category').populate('stores').sort({ views: -1 }).limit(8); // Finding ad by id
+    const brand = await Brands.find()
+      .populate('category')
+      .populate('stores')
+      .sort({ views: -1 })
+      .limit(8); // Finding ad by id
 
     const stores = await findBrandStore(req.body.address.lat, req.body.address.lng, brand);
     res.json({ success: true, stores }); // Success
@@ -234,37 +247,37 @@ exports.groupbyCategory = async (req, res) => {
           from: 'stores',
           localField: 'stores',
           foreignField: '_id',
-          as: 'stores',
-        },
+          as: 'stores'
+        }
       },
       {
         $unwind: {
           path: '$stores',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $lookup: {
           from: 'categories',
           localField: 'category',
           foreignField: '_id',
-          as: 'category',
-        },
+          as: 'category'
+        }
       },
       {
         $unwind: {
           path: '$category',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $group: {
           _id: '$category.name',
           data: {
-            $push: '$$ROOT',
-          },
-        },
-      },
+            $push: '$$ROOT'
+          }
+        }
+      }
     ]);
     res.status(200).json({ success: true, brands });
   } catch (err) {
@@ -284,66 +297,66 @@ exports.groupAdsbySaleType = async (req, res) => {
     const brandId = mongoose.Types.ObjectId(req.body.brand);
     let ads = await Ads.aggregate([
       {
-        $match: { brand: brandId },
+        $match: { brand: brandId }
       },
       {
         $lookup: {
           from: 'brands',
           localField: 'brand',
           foreignField: '_id',
-          as: 'brand',
-        },
+          as: 'brand'
+        }
       },
       {
         $unwind: {
           path: '$brand',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $lookup: {
           from: 'categories',
           localField: 'category',
           foreignField: '_id',
-          as: 'category',
-        },
+          as: 'category'
+        }
       },
       {
         $unwind: {
           path: '$category',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $lookup: {
           from: 'sale_types',
           localField: 'sale_type',
           foreignField: '_id',
-          as: 'sale_type',
-        },
+          as: 'sale_type'
+        }
       },
       {
         $unwind: {
           path: '$sale_types',
-          preserveNullAndEmptyArrays: true,
-        },
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $lookup: {
           from: 'stores',
           localField: 'brand.stores',
           foreignField: '_id',
-          as: 'brand.stores',
-        },
+          as: 'brand.stores'
+        }
       },
       {
         $group: {
           _id: '$sale_type.name',
           data: {
-            $push: '$$ROOT',
-          },
-        },
-      },
+            $push: '$$ROOT'
+          }
+        }
+      }
     ]);
     res.status(200).json({ success: true, ads });
   } catch (err) {

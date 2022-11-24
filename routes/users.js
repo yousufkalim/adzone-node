@@ -6,6 +6,7 @@ const router = require('express').Router();
 const users = require('../controllers/users');
 const { checkAdminAuth } = require('../middleware/adminAuth');
 const { checkAuth } = require('../middleware/checkAuth');
+const address = require('../controllers/address');
 
 // const { validateUserId } = require("../middleware/validateIds");
 const { upload } = require('../middleware/multer');
@@ -21,7 +22,7 @@ const {
   validateSaleLength,
   validateKeywords,
   validateFindFavourite,
-  isValidated,
+  isValidated
 } = require('../middleware/validators');
 
 /**
@@ -42,7 +43,14 @@ router.post('/search', validateKeywords, isValidated, users.search);
 router.get('/:userId', users.getById); // Get one user by it's id
 
 // Update
-router.put('/:userId', checkAuth, upload.single('image'), validateUserUpdate, isValidated, users.update);
+router.put(
+  '/:userId',
+  checkAuth,
+  upload.single('image'),
+  validateUserUpdate,
+  isValidated,
+  users.update
+);
 // Add Adress
 router.put('/addAddress/:userId', checkAuth, validateAddress, isValidated, users.addAddress);
 //updateNotificationSetting
@@ -57,14 +65,38 @@ router.put(
 router.put('/Addtofavourite/:userId', validateFavourites, isValidated, users.AddtoFavourites);
 
 //Removed Product to  Favourites
-router.put('/RemoveFavourites/:userId', checkAuth, validateFavourites, isValidated, users.RemoveFavourites);
+router.put(
+  '/RemoveFavourites/:userId',
+  checkAuth,
+  validateFavourites,
+  isValidated,
+  users.RemoveFavourites
+);
 
 //ADD Sale to  Interest
-router.put('/InterestSale/:userId', checkAuth, validateSaleLength, isValidated, users.AddSaleInterest);
+router.put(
+  '/InterestSale/:userId',
+  checkAuth,
+  validateSaleLength,
+  isValidated,
+  users.AddSaleInterest
+);
 //ADD Brand to  Interest
-router.put('/InterestBrand/:userId', checkAuth, validateBrandsLength, isValidated, users.AddBrandInterest);
+router.put(
+  '/InterestBrand/:userId',
+  checkAuth,
+  validateBrandsLength,
+  isValidated,
+  users.AddBrandInterest
+);
 //ADD Category to  Interest
-router.put('/InterestCategory/:userId', checkAuth, validateCategoriesLength, isValidated, users.AddCatgoryInterest);
+router.put(
+  '/InterestCategory/:userId',
+  checkAuth,
+  validateCategoriesLength,
+  isValidated,
+  users.AddCatgoryInterest
+);
 
 // router.post("/checkuser/:userId", validateUserId, users.checkUser);
 
@@ -82,5 +114,6 @@ router.post('/nearByStores', validateAddress, isValidated, users.nearByStores);
 router.get('/getFavouriteBrands/:userId', users.FavouriteBrands);
 router.get('/getFavouriteAds/:userId', users.FavouriteAds);
 router.get('/brandsforyou/:userId', users.InterestBrands);
+
 // Export
 module.exports = router;

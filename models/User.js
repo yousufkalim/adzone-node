@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 // Schema
 const userSchema = new mongoose.Schema(
   {
-    name: String,
+    first_name: String,
+    last_name: String,
     photo: String,
     otp: String,
     phone_number: String,
@@ -16,60 +17,59 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true,
+      lowercase: true
     },
     password: {
       type: String,
-      required: true,
-      minlength: 8,
+      minlength: 8
     },
     facebook_connected: {
       type: Boolean,
-      default: false,
+      default: false
     },
     google_connected: {
       type: Boolean,
-      default: false,
+      default: false
     },
     current_location: {
       lat: Number,
       lng: Number,
       city: String,
-      area: String,
+      area: String
     },
     notification_setting: {
       phone: { type: Boolean, default: false },
       email: { type: Boolean, default: true },
       brand: { type: Boolean, default: true },
-      sale: { type: Boolean, default: true },
+      sale: { type: Boolean, default: true }
     },
     locations: [
       {
         lat: Number,
         lng: Number,
         city: String,
-        area: String,
-      },
+        area: String
+      }
     ],
     favourites: {
       brands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'brands' }],
-      ads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ads' }],
+      ads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ads' }]
     },
     interest: {
       brands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'brands' }],
       categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'categories' }],
-      sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'sale_types' }],
+      sale_type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'sale_types' }]
     },
     nearby_stores: [
       {
         brand: { type: mongoose.Schema.Types.ObjectId, ref: 'brands' },
         store: { type: mongoose.Schema.Types.ObjectId, ref: 'stores' },
-        distance: Number,
-      },
-    ],
+        distance: Number
+      }
+    ]
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
