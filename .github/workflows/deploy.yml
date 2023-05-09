@@ -26,9 +26,9 @@
 name: 'CI/CD'
 
 env:
-  APP_NAME: 'adzone' # Set this to your app name
-  COMPONENT_NAME: 'backend' # Set this to your component name (e.g, frontend, admin, backend)
-  RELEASE_PATH: /root/adzone/${{ github.event_name == 'push' && 'dev' || github.event.inputs.environment }}/backend # This is dyanmic release path and it will be unique for each environment, e.g: /root/node/dev/backend
+  APP_NAME: ${{ vars.APP_NAME }} # Set this to your app name
+  COMPONENT_NAME: ${{ vars.COMPONENT_NAME }} # Set this to your component name (e.g, frontend, admin, backend)
+  RELEASE_PATH: /root/${{ vars.APP_NAME }}/${{ github.event_name == 'push' && 'dev' || github.event.inputs.environment }}/${{ vars.COMPONENT_NAME }} # This is dyanmic release path and it will be unique for each environment, e.g: /root/node/dev/backend
   NODE_ENV: ${{ github.event_name == 'push' && 'dev' || github.event.inputs.environment }} # It will auto check the current environment
 
 on:
@@ -47,7 +47,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ contains('["yousufkalim"]', github.actor) || github.event_name == 'push' || github.event.inputs.environment == 'dev' }}
+    if: ${{ contains('["yousufkalim", "Zunairaali482"]', github.actor) || github.event_name == 'push' || github.event.inputs.environment == 'dev' }}
 
     steps:
       # The first step checks out the code from the repository.
