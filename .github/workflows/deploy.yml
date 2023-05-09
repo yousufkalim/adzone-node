@@ -46,7 +46,7 @@ on:
       
 jobs:
   deploy:
-    runs-on: sef-hosted
+    runs-on: ubuntu-latest
     if: ${{ contains('["yousufkalim"]', github.actor) || github.event_name == 'push' || github.event.inputs.environment == 'dev' }}
 
     steps:
