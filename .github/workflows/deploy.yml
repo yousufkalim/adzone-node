@@ -99,8 +99,8 @@ jobs:
           username: ${{ secrets[format('{0}_USER', env.NODE_ENV)] }}
           key: ${{ secrets[format('{0}_KEY', env.NODE_ENV)] }}
           script: |
-            echo '${{ secrets.ENV_FILE }}' > ${{ env.RELEASE_PATH }}/build/.env
-            echo '${{ secrets.NGINX_CONFIG }}' > ${{ env.RELEASE_PATH }}/build/nginx.conf
+            echo '${{ secrets[format('{0}_ENV_FILE', env.NODE_ENV)] }}' > ${{ env.RELEASE_PATH }}/build/.env
+            echo '${{ secrets[format('{0}_NGINX', env.NODE_ENV)] }}' > ${{ env.RELEASE_PATH }}/build/nginx.conf
             sudo systemctl restart nginx
 
       # The sixth step installs dependencies, builds the application, and starts it with PM2.
