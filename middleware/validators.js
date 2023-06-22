@@ -13,7 +13,7 @@ Validations
 // You can create multiple validations strategies (Read express-validator documentation for more details)
 // User Signup Validation
 exports.validateUser = [
-  check('fist_name', 'Name is required. ').notEmpty().trim(),
+  check('first_name', 'Name is required. ').notEmpty().trim(),
   check('last_name', 'Name is required. ').notEmpty().trim(),
   check('email', 'Email is required.').notEmpty().isEmail().trim(),
   check('password', 'Password is required.').notEmpty().trim().isLength({ min: 8 })
@@ -21,7 +21,7 @@ exports.validateUser = [
 
 // User Signup Validation
 exports.validateUserUpdate = [
-  check('fist_name', 'Name is required. ').notEmpty().trim(),
+  check('first_name', 'Name is required. ').notEmpty().trim(),
   check('last_name', 'Name is required. ').notEmpty().trim()
 ];
 //Validate Create Sale Type
