@@ -21,7 +21,7 @@
   "homepage": "https://github.com/falconitconsultant/Node-JS#readme",
   "dependencies": {
     "add": "^2.0.6",
-    "axios": "^1.1.3",
+    "axios": "^1.18.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "cron": "^2.0.0",
